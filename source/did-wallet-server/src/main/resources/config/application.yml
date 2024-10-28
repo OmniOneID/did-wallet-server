@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: wallet
+  profiles:
+    default: sample
+    group:
+      dev:
+        - wallet
+        - logging
+        - spring-docs
+        - database
+        - tas
+      sample:
+        - logging
+        - spring-docs
+        - database-sample
+        - wallet
+        - tas
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      fail-on-empty-beans: false
+
+server:
+  port: 8095

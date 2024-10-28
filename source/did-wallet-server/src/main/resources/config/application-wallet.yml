@@ -1,0 +1,7 @@
+wallet:
+  file-path:
+  password:
+
+wallet-provider:
+  did: did:omn:wallet
+  certificate-vc: "http://127.0.0.1:8095/wallet/api/v1/certificate-vc"
