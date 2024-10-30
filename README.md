@@ -38,9 +38,8 @@ did-wallet-server
             └── did-crypto-sdk-server-1.0.0.jar
             └── did-datamodel-sdk-server-1.0.0.jar
             └── did-wallet-sdk-server-1.0.0.jar
-        ├── sample
-        └── src
-        └── build.gradle
+        ├── src
+        ├── build.gradle
         └── README.md
 ```
 
@@ -67,7 +66,6 @@ Below is a description of each folder and file in the directory:
 | ┖ did-wallet-server     | Wallet Server source code and build files       |
 |    ┖ gradle             | Gradle build configurations and scripts         |
 |    ┖ libs               | External libraries and dependencies             |
-|    ┖ sample             | Sample files                                    |
 |    ┖ src                | Main source code directory                      |
 |    ┖ build.gradle       | Gradle build configuration file                 |
 |    ┖ README.md          | Overview and instructions for the source code   |
