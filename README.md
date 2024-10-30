@@ -34,7 +34,7 @@ did-wallet-server
         ├── libs
             └── did-sdk-common-1.0.0.jar
             └── did-blockchain-sdk-server-1.0.0.jar
-            └── did-core-sdk-server-1.0.0..jar
+            └── did-core-sdk-server-1.0.0.jar
             └── did-crypto-sdk-server-1.0.0.jar
             └── did-datamodel-sdk-server-1.0.0.jar
             └── did-wallet-sdk-server-1.0.0.jar
@@ -49,7 +49,7 @@ did-wallet-server
 Below is a description of each folder and file in the directory:
 
 | Name                    | Description                                     |
-| ----------------------- | ----------------------------------------------- |
+|-------------------------|-------------------------------------------------|
 | CHANGELOG.md            | Version-specific changes in the project         |
 | CODE_OF_CONDUCT.md      | Code of conduct for contributors                |
 | CONTRIBUTING.md         | Contribution guidelines and procedures          |
@@ -64,13 +64,13 @@ Below is a description of each folder and file in the directory:
 | ┖ errorCode             | Error codes and troubleshooting guides          |
 | ┖ installation          | Installation and setup instructions             |
 | source                  | Server source code project                      |
-| ┖ wallet                | Wallet Server source code and build files       |
-|   ┖ gradle              | Gradle build configurations and scripts         |
-|   ┖ libs                | External libraries and dependencies             |
-|   ┖ sample              | Sample files                                    |
-|   ┖ src                 | Main source code directory                      |
-|   ┖ build.gradle        | Gradle build configuration file                 |
-|   ┖ README.md           | Overview and instructions for the source code   |
+| ┖ did-wallet-server     | Wallet Server source code and build files       |
+|    ┖ gradle             | Gradle build configurations and scripts         |
+|    ┖ libs               | External libraries and dependencies             |
+|    ┖ sample             | Sample files                                    |
+|    ┖ src                | Main source code directory                      |
+|    ┖ build.gradle       | Gradle build configuration file                 |
+|    ┖ README.md          | Overview and instructions for the source code   |
 
 <br/>
 
@@ -105,7 +105,7 @@ API documentation is available in two main types:
 ## Change Log
 
 The Change Log provides a detailed record of version-specific changes and updates. You can find it here:
-- [Change Log](./CHANGELOG.md)  
+- [Change Log](CHANGELOG.md)  
 
 ## OpenDID Demonstration Videos <br>
 To watch our demonstration videos of the OpenDID system in action, please visit our [Demo Repository](https://github.com/OmniOneID/did-demo-server). <br>
