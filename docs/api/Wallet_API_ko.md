@@ -174,7 +174,6 @@ curl -v -X POST "http://${Host}:${Port}/wallet/api/v1/certificate-vc" \
 ```json
 //data.json
 {
-    //작성필요
 }
 ```
 
@@ -185,7 +184,6 @@ HTTP/1.1 200 OK
 Content-Type: application/json;charset=utf-8
 
 {
-    작성필요
 }
 ```
 
