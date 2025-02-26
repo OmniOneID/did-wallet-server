@@ -10,6 +10,7 @@ spring:
         - spring-docs
         - database
         - tas
+        - blockchain
       sample:
         - logging
         - spring-docs
