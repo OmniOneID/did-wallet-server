@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package org.omnione.did.base.config;
+package org.omnione.did.wallet.v1.agent.service;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Configuration;
+import org.omnione.did.base.datamodel.data.AttestedDidDoc;
+import org.omnione.did.data.model.did.DidDocument;
 
 /**
- * The OpenFeignConfig class provides configuration for OpenFeign clients.
- * This class enables Feign clients for the specified base package, allowing for easy
- * communication with external services defined by Feign interfaces.
+ * Wallet service interface for handling wallet operations.
  */
-@Configuration
-@EnableFeignClients("org.omnione.did.wallet.v1.agent.api")
-public class OpenFeignConfig {
-
+public interface WalletService {
+    /**
+     * Signs a wallet and returns the attested DID Document.
+     *
+     * @param request the wallet document to sign
+     * @return the attested DID Document
+     */
+    AttestedDidDoc signWallet(DidDocument request);
 }

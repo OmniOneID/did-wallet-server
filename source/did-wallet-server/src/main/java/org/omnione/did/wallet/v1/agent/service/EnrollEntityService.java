@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package org.omnione.did.base.config;
+package org.omnione.did.wallet.v1.agent.service;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Configuration;
+
+import org.omnione.did.wallet.v1.common.dto.agent.EnrollEntityResDto;
 
 /**
- * The OpenFeignConfig class provides configuration for OpenFeign clients.
- * This class enables Feign clients for the specified base package, allowing for easy
- * communication with external services defined by Feign interfaces.
+ * EnrollEntityService interface for handling entity enrollment.
  */
-@Configuration
-@EnableFeignClients("org.omnione.did.wallet.v1.agent.api")
-public class OpenFeignConfig {
-
+public interface EnrollEntityService {
+    EnrollEntityResDto enrollEntity();
 }

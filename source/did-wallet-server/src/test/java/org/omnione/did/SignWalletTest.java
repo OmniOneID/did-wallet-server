@@ -54,7 +54,7 @@ class SignWalletTest {
 
 
         // 2. 요청
-        MvcResult result = mockMvc.perform(post(UrlConstant.Wallet.V1 + UrlConstant.Wallet.REQUEST_SIGN_WALLET)
+        MvcResult result = mockMvc.perform(post(UrlConstant.Wallet.AGENT_V1 + UrlConstant.Wallet.REQUEST_SIGN_WALLET)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(didDocument)))
                 .andExpect(status().isOk())

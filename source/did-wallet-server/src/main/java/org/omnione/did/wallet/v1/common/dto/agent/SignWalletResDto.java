@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package org.omnione.did.base.config;
+package org.omnione.did.wallet.v1.common.dto.agent;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Configuration;
+import lombok.*;
+import org.omnione.did.base.datamodel.data.AttestedDidDoc;
 
 /**
- * The OpenFeignConfig class provides configuration for OpenFeign clients.
- * This class enables Feign clients for the specified base package, allowing for easy
- * communication with external services defined by Feign interfaces.
+ * SignWalletResDto class is a data transfer object that represents the response to signing a wallet.
  */
-@Configuration
-@EnableFeignClients("org.omnione.did.wallet.v1.agent.api")
-public class OpenFeignConfig {
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
+public class SignWalletResDto {
+    private String txId;
+    private AttestedDidDoc attDidDoc;
 }

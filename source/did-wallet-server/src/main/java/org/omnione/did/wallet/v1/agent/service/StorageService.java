@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package org.omnione.did.base.config;
+package org.omnione.did.wallet.v1.agent.service;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Configuration;
+import org.omnione.did.data.model.did.DidDocument;
 
 /**
- * The OpenFeignConfig class provides configuration for OpenFeign clients.
- * This class enables Feign clients for the specified base package, allowing for easy
- * communication with external services defined by Feign interfaces.
+ * The StorageService interface defines the methods for finding DID documents.
  */
-@Configuration
-@EnableFeignClients("org.omnione.did.wallet.v1.agent.api")
-public class OpenFeignConfig {
-
+public interface StorageService {
+    /**
+     * Finds a DID document with the given DID key URL.
+     *
+     * @param didKeyUrl the DID key URL to search for
+     * @return the corresponding DidDocument object
+     */
+    DidDocument findDidDoc(String didKeyUrl);
 }

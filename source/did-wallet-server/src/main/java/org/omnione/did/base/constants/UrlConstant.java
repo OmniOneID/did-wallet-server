@@ -26,7 +26,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UrlConstant {
     public static class Wallet {
-        public static final String V1 = "/wallet/api/v1";
+        public static final String AGENT_V1 = "/wallet/api/v1";
+        public static final String ADMIN_V1 = "/wallet/admin/v1";
         public static final String REQUEST_SIGN_WALLET = "/request-sign-wallet";
     }
 }
