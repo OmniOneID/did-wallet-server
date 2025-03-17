@@ -22,6 +22,7 @@ import org.omnione.did.base.datamodel.enums.OpenDidEnum;
 import org.omnione.did.base.datamodel.enums.SymmetricCipherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -51,7 +52,11 @@ public class GsonConfig implements WebMvcConfigurer {
                 .create();
     }
 
-    @Bean
+//     This method creates and configures a GsonHttpMessageConverter that uses Gson for HTTP message conversion.
+//     The GsonHttpMessageConverter is responsible for serializing and deserializing HTTP requests and responses using Gson.
+//     By including this, Spring MVC will use Gson instead of the default Jackson for converting JSON.
+//     However, Gson has limitations when serializing complex types like Page<AdminDto>, so it's disabled here.
+//    @Bean
     public GsonHttpMessageConverter gsonHttpMessageConverter(Gson gson) {
         GsonHttpMessageConverter converter = new GsonHttpMessageConverter();
         converter.setGson(gson);

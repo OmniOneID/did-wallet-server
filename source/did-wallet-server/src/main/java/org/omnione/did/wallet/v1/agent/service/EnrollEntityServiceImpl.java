@@ -49,8 +49,7 @@ import org.omnione.did.wallet.v1.agent.api.dto.RequestEnrollEntityApiReqDto;
 import org.omnione.did.wallet.v1.agent.api.dto.RequestEnrollEntityApiResDto;
 import org.omnione.did.wallet.v1.agent.service.query.CertificateVcQueryService;
 import org.omnione.did.wallet.v1.agent.api.EnrollFeign;
-import org.omnione.did.wallet.v1.agent.api.dto.*;
-import org.omnione.did.wallet.v1.common.dto.agent.EnrollEntityResDto;
+import org.omnione.did.wallet.v1.agent.dto.EnrollEntityResDto;
 import org.springframework.stereotype.Service;
 
 import java.security.interfaces.ECPrivateKey;

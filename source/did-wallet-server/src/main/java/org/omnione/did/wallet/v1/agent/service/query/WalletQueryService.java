@@ -19,7 +19,16 @@ package org.omnione.did.wallet.v1.agent.service.query;
 import lombok.RequiredArgsConstructor;
 import org.omnione.did.base.db.domain.Wallet;
 import org.omnione.did.base.db.repository.WalletRepository;
+import org.omnione.did.base.exception.ErrorCode;
+import org.omnione.did.base.exception.OpenDidException;
+import org.omnione.did.wallet.v1.admin.dto.wallet.WalletDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The WalletQueryService class provides methods for saving and retrieving Wallet data.
@@ -37,8 +46,22 @@ public class WalletQueryService {
      * @return The saved Wallet object.
      */
     public Wallet save(Wallet wallet) {
-
         return walletRepository.save(wallet);
+    }
+
+    public Page<WalletDto> searchWalletList(String searchKey, String searchValue, Pageable pageable) {
+        Page<Wallet> walletPage = walletRepository.searchWallets(searchKey, searchValue, pageable);
+
+        List<WalletDto> walletDtos = walletPage.getContent().stream()
+                .map(WalletDto::fromWallet)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(walletDtos, pageable, walletPage.getTotalElements());
+    }
+
+    public Wallet findById(Long id) {
+        return walletRepository.findById(id)
+                .orElseThrow(() -> new OpenDidException(ErrorCode.WALLET_INFO_NOT_FOUND));
     }
 }
 

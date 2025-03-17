@@ -72,11 +72,17 @@ public enum ErrorCode {
     BLOCKCHAIN_VC_META_REGISTRATION_FAILED("00604", "Failed to register VC meta on the blockchain.", 500),
     BLOCKCHAIN_VC_META_RETRIEVAL_FAILED("00605", "Failed to retrieve VC meta on the blockchain.", 500),
     BLOCKCHAIN_VC_STATUS_UPDATE_FAILED("00606", "Failed to update VC status on the blockchain.", 500),
-    BLOCKCHAIN_TO_REMOVE_INDEX_FAILED("00607", "Failed to remove index on the blockchain", 500);
+    BLOCKCHAIN_TO_REMOVE_INDEX_FAILED("00607", "Failed to remove index on the blockchain", 500),
 
+    // Admin Errors (007xx)
+    ADMIN_INFO_NOT_FOUND("00701", "Failed to find admin: admin is not registered.", 400),
+    ADMIN_ALREADY_EXISTS("00702", "Failed to register admin: admin is already registered.", 400),
 
+    // Wallet Service Errors (008xx)
+    WALLET_SERVICE_INFO_NOT_FOUND("00801", "Failed to find wallet service: wallet service is not registered.", 400),
 
-
+    // Wallet Management Errors (009xx)
+    WALLET_INFO_NOT_FOUND("00901", "Failed to find wallet: wallet is not registered.", 400)
     ;
 
     private final String code;

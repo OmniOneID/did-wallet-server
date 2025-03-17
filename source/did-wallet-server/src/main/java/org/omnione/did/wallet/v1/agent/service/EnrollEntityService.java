@@ -17,7 +17,7 @@
 package org.omnione.did.wallet.v1.agent.service;
 
 
-import org.omnione.did.wallet.v1.common.dto.agent.EnrollEntityResDto;
+import org.omnione.did.wallet.v1.agent.dto.EnrollEntityResDto;
 
 /**
  * EnrollEntityService interface for handling entity enrollment.
