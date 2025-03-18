@@ -20,7 +20,7 @@ package org.omnione.did.wallet.v1.admin.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.omnione.did.base.db.constant.WalletServiceStatus;
-import org.omnione.did.base.db.domain.WalletService;
+import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.data.model.did.DidDocument;
 import org.omnione.did.wallet.v1.admin.dto.admin.GetWalletServiceInfoReqDto;
 import org.omnione.did.wallet.v1.admin.service.query.WalletServiceQueryService;
@@ -35,13 +35,13 @@ public class WalletServiceManagementService {
     private final StorageService storageService;
 
     public GetWalletServiceInfoReqDto getCasInfo() {
-        WalletService existingCas = walletServiceQueryService.findWalletService();
+        WalletServiceInfo existingWalletService = walletServiceQueryService.findWalletService();
 
-        if (existingCas.getStatus() != WalletServiceStatus.ACTIVATE) {
-            return GetWalletServiceInfoReqDto.fromEntity(existingCas);
+        if (existingWalletService.getStatus() != WalletServiceStatus.ACTIVATE) {
+            return GetWalletServiceInfoReqDto.fromEntity(existingWalletService);
         }
 
-        DidDocument didDocument = storageService.findDidDoc(existingCas.getDid());
-        return GetWalletServiceInfoReqDto.fromEntity(existingCas, didDocument);
+        DidDocument didDocument = storageService.findDidDoc(existingWalletService.getDid());
+        return GetWalletServiceInfoReqDto.fromEntity(existingWalletService, didDocument);
     }
 }

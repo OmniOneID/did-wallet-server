@@ -25,7 +25,6 @@ import org.omnione.did.base.datamodel.data.EcdhReqData;
 import org.omnione.did.base.datamodel.enums.ProofPurpose;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.property.WalletProviderProperty;
 import org.omnione.did.base.utils.BaseCoreDidUtil;
 import org.omnione.did.base.utils.BaseMultibaseUtil;
 import org.omnione.did.common.util.JsonUtil;
@@ -47,7 +46,6 @@ import org.springframework.stereotype.Service;
 public class SignatureService {
     private final DidDocService didDocService;
     private final FileWalletService fileWalletService;
-    private final WalletProviderProperty walletProviderProperty;
 
     /**
      * Sign the given attested DID document and generate a proof.

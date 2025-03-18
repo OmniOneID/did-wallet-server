@@ -27,9 +27,9 @@ import org.omnione.did.base.datamodel.enums.EccCurveType;
 import org.omnione.did.base.datamodel.enums.ProofPurpose;
 import org.omnione.did.base.datamodel.enums.SymmetricCipherType;
 import org.omnione.did.base.db.domain.CertificateVc;
+import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.property.WalletProviderProperty;
 import org.omnione.did.base.utils.*;
 import org.omnione.did.common.util.DateTimeUtil;
 import org.omnione.did.common.util.JsonUtil;
@@ -39,6 +39,7 @@ import org.omnione.did.data.model.did.DidDocument;
 import org.omnione.did.data.model.did.Proof;
 import org.omnione.did.data.model.enums.did.ProofType;
 import org.omnione.did.data.model.vc.VerifiableCredential;
+import org.omnione.did.wallet.v1.admin.service.query.WalletServiceQueryService;
 import org.omnione.did.wallet.v1.agent.api.dto.ConfirmEnrollEntityApiReqDto;
 import org.omnione.did.wallet.v1.agent.api.dto.ConfirmEnrollEntityApiResDto;
 import org.omnione.did.wallet.v1.agent.api.dto.ProposeEnrollEntityApiReqDto;
@@ -65,9 +66,9 @@ import java.util.Arrays;
 public class EnrollEntityServiceImpl implements EnrollEntityService {
     private final EnrollFeign enrollFeign;
     private final CertificateVcQueryService certificateVcQueryService;
-    private final WalletProviderProperty walletProviderProperty;
     private final DidDocService didDocService;
     private final SignatureService signatureService;
+    private final WalletServiceQueryService walletServiceQueryService;
 
     /**
      * Enrolls an entity.
@@ -80,9 +81,12 @@ public class EnrollEntityServiceImpl implements EnrollEntityService {
         try {
             log.debug("=== Starting enrollEntity ===");
 
+            // Retrieve Wallet Service.
+            WalletServiceInfo existedWalletService = walletServiceQueryService.findWalletService();
+
             // Retrieve Wallet DID Document.
             log.debug("\t--> Retrieving Wallet DID Document");
-            DidDocument walletDidDocument = didDocService.getDidDocument(walletProviderProperty.getDid());
+            DidDocument walletDidDocument = didDocService.getDidDocument(existedWalletService.getDid());
 
             // Send propose-enroll-entity.
             log.debug("\t--> Send propose-enroll-entity");

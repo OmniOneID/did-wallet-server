@@ -17,7 +17,7 @@ package org.omnione.did.wallet.v1.admin.service.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.omnione.did.base.db.domain.WalletService;
+import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.db.repository.WalletServiceRepository;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 public class WalletServiceQueryService {
     private final WalletServiceRepository walletServiceRepository;
 
-    public WalletService findWalletService() {
+    public WalletServiceInfo findWalletService() {
         try {
             return walletServiceRepository.findTop1ByOrderByIdAsc()
                     .orElseThrow(() -> new OpenDidException(ErrorCode.WALLET_SERVICE_INFO_NOT_FOUND));

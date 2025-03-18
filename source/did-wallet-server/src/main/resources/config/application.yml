@@ -17,7 +17,6 @@ spring:
         - database-sample
         - wallet
         - tas
-
   jackson:
     default-property-inclusion: non_null
     serialization:

@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.omnione.did.base.db.constant.WalletServiceStatus;
-import org.omnione.did.base.db.domain.WalletService;
+import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.data.model.did.DidDocument;
 
 import java.time.Instant;
@@ -56,7 +56,7 @@ public class GetWalletServiceInfoReqDto {
                 .orElse(null);
     }
 
-    public static GetWalletServiceInfoReqDto fromEntity(WalletService walletService) {
+    public static GetWalletServiceInfoReqDto fromEntity(WalletServiceInfo walletService) {
         return Optional.ofNullable(walletService)
                 .map(t -> GetWalletServiceInfoReqDto.builder()
                         .id(t.getId())
@@ -71,7 +71,7 @@ public class GetWalletServiceInfoReqDto {
                 .orElse(null);
     }
 
-    public static GetWalletServiceInfoReqDto fromEntity(WalletService walletService, DidDocument didDocument) {
+    public static GetWalletServiceInfoReqDto fromEntity(WalletServiceInfo walletService, DidDocument didDocument) {
         return Optional.ofNullable(walletService)
                 .map(t -> GetWalletServiceInfoReqDto.builder()
                         .id(t.getId())

@@ -16,13 +16,13 @@
 
 package org.omnione.did.base.db.repository;
 
-import org.omnione.did.base.db.domain.WalletService;
+import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface WalletServiceRepository extends JpaRepository<WalletService, Long> {
-    Optional<WalletService> findTop1ByOrderByIdAsc();
+public interface WalletServiceRepository extends JpaRepository<WalletServiceInfo, Long> {
+    Optional<WalletServiceInfo> findTop1ByOrderByIdAsc();
 }

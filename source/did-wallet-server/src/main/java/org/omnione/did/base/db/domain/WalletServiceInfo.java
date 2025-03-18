@@ -41,7 +41,7 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name = "wallet_service")
-public class WalletService extends BaseEntity implements Serializable {
+public class WalletServiceInfo extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

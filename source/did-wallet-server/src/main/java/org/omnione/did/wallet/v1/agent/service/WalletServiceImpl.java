@@ -20,9 +20,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.datamodel.data.AttestedDidDoc;
 import org.omnione.did.base.datamodel.enums.ProofPurpose;
+import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.property.WalletProviderProperty;
 import org.omnione.did.base.utils.BaseMultibaseUtil;
 import org.omnione.did.base.utils.RandomUtil;
 import org.omnione.did.common.util.DateTimeUtil;
@@ -34,6 +34,7 @@ import org.omnione.did.data.model.did.DidDocument;
 import org.omnione.did.data.model.did.Proof;
 import org.omnione.did.data.model.enums.did.ProofType;
 import org.omnione.did.data.model.provider.Provider;
+import org.omnione.did.wallet.v1.admin.service.query.WalletServiceQueryService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ import java.nio.charset.StandardCharsets;
 public class WalletServiceImpl implements WalletService {
     private final SignatureService signatureService;
     private final DidDocService didDocService;
-    private final WalletProviderProperty walletProviderProperty;
+    private final WalletServiceQueryService walletServiceQueryService;
 
     /**
      * Signs a wallet by creating an attested DID document.
@@ -100,13 +101,17 @@ public class WalletServiceImpl implements WalletService {
      */
     private AttestedDidDoc generateAttestedDidDoc(String walletId, DidDocument didDocument) {
         try {
+
+            // Retrieve Wallet Service Info.
+            WalletServiceInfo existedWalletService = walletServiceQueryService.findWalletService();
+
             // Retrieve Wallet DID Document.
             log.debug("\t--> Retrieving Wallet DID Document");
-            DidDocument walletDidDocument = didDocService.getDidDocument(walletProviderProperty.getDid());
+            DidDocument walletDidDocument = didDocService.getDidDocument(existedWalletService.getDid());
 
             // Generate signature object.
             log.debug("\t--> Generating Signature Object");
-            AttestedDidDoc signatureObject = generateSignatureMessage(walletId, didDocument, walletDidDocument);
+            AttestedDidDoc signatureObject = generateSignatureMessage(walletId, didDocument, walletDidDocument, existedWalletService);
 
             // Sign data.
             log.debug("\t--> Signing Data");
@@ -128,12 +133,12 @@ public class WalletServiceImpl implements WalletService {
      * @return An AttestedDidDoc object containing the signature message.
      * @throws OpenDidException signature generation fails.
      */
-    private AttestedDidDoc generateSignatureMessage(String walletId, DidDocument holderDidDocument, DidDocument walletDidDocument) {
+    private AttestedDidDoc generateSignatureMessage(String walletId, DidDocument holderDidDocument, DidDocument walletDidDocument, WalletServiceInfo walletServiceInfo) {
         try {
             // Generate Provider object.
             Provider provider = new Provider();
-            provider.setDid(walletProviderProperty.getDid());
-            provider.setCertVcRef(walletProviderProperty.getCertificateVc());
+            provider.setDid(walletServiceInfo.getDid());
+            provider.setCertVcRef(walletServiceInfo.getCertificateUrl());
 
             // Encode DID Document.
             String encodedDidDocument = BaseMultibaseUtil.encode(holderDidDocument.toJson().getBytes(StandardCharsets.UTF_8), MultiBaseType.base64url);
