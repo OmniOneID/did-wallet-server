@@ -1,2 +1,2 @@
-id,did,name,status
-1,did:omn:wallet,Wallet,ACTIVATE
+id,did,name,status,server_url,certificate_url
+1,did:omn:wallet,Wallet,ACTIVATE,http://127.0.0.1:8095/wallet,http://127.0.0.1:8095/wallet/api/v1/certificate-vc
