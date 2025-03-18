@@ -31,6 +31,7 @@ import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import org.omnione.did.base.utils.*;
+import org.omnione.did.common.exception.CommonSdkException;
 import org.omnione.did.common.util.DateTimeUtil;
 import org.omnione.did.common.util.JsonUtil;
 import org.omnione.did.crypto.exception.CryptoException;
@@ -166,7 +167,7 @@ public class EnrollEntityServiceImpl implements EnrollEntityService {
         try {
             log.debug("Request ECDH: ");
             log.debug(JsonUtil.serializeToJson(request));
-        } catch (JsonProcessingException e) {
+        } catch (CommonSdkException e) {
             log.error("Error occurred while serializing request: {}", e.getMessage());
             throw new OpenDidException(ErrorCode.JSON_PROCESSING_ERROR);
         }

@@ -27,6 +27,7 @@ import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import org.omnione.did.base.utils.BaseCoreDidUtil;
 import org.omnione.did.base.utils.BaseMultibaseUtil;
+import org.omnione.did.common.exception.CommonSdkException;
 import org.omnione.did.common.util.JsonUtil;
 import org.omnione.did.data.model.did.DidDocument;
 import org.omnione.did.data.model.did.Proof;
@@ -80,7 +81,7 @@ public class SignatureService {
                     .proof(proof)
                     .build();
 
-        } catch (JsonProcessingException e) {
+        } catch (CommonSdkException e) {
             log.error("Json Processing error: {}", e.getMessage());
             throw new OpenDidException(ErrorCode.JSON_PROCESSING_ERROR);
         } catch (Exception e) {
@@ -155,7 +156,7 @@ public class SignatureService {
                     .candidate(signatureObject.getCandidate())
                     .proof(proof)
                     .build();
-        } catch (JsonProcessingException e) {
+        } catch (CommonSdkException e) {
             log.error("Json Processing error: {}", e.getMessage());
             throw new OpenDidException(ErrorCode.JSON_PROCESSING_ERROR);
         } catch (Exception e) {
@@ -193,7 +194,7 @@ public class SignatureService {
                     .did(walletDidDocument.getId())
                     .proof(proof)
                     .build();
-        } catch (JsonProcessingException e) {
+        } catch (CommonSdkException e) {
             log.error("Json Processing error: {}", e.getMessage());
             throw new OpenDidException(ErrorCode.JSON_PROCESSING_ERROR);
         } catch (Exception e) {
