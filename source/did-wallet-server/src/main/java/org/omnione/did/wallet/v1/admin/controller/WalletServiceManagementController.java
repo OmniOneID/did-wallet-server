@@ -19,10 +19,15 @@ package org.omnione.did.wallet.v1.admin.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.omnione.did.base.constants.UrlConstant;
+import org.omnione.did.wallet.v1.admin.dto.walletservice.SendCertificateVcReqDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.GetWalletServiceInfoReqDto;
+import org.omnione.did.wallet.v1.admin.dto.walletservice.SendEntityInfoReqDto;
 import org.omnione.did.wallet.v1.admin.service.WalletServiceManagementService;
+import org.omnione.did.wallet.v1.common.dto.EmptyResDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -35,5 +40,15 @@ public class WalletServiceManagementController {
     @GetMapping("/wallet-service/info")
     public GetWalletServiceInfoReqDto getCasInfo() {
         return walletServiceManagementService.getCasInfo();
+    }
+
+    @RequestMapping(value = "/certificate-vc", method = RequestMethod.POST)
+    public EmptyResDto createCertificateVc(@RequestBody SendCertificateVcReqDto sendCertificateVcReqDto) {
+        return walletServiceManagementService.createCertificateVc(sendCertificateVcReqDto);
+    }
+
+    @RequestMapping(value = "/entity-info", method = RequestMethod.POST)
+    public EmptyResDto updateEntityInfo(@RequestBody SendEntityInfoReqDto sendEntityInfoReqDto) {
+        return walletServiceManagementService.updateEntityInfo(sendEntityInfoReqDto);
     }
 }

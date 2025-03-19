@@ -1,4 +1,4 @@
-package org.omnione.did.wallet.v1.admin.dto;
+package org.omnione.did.wallet.v1.admin.dto.walletservice;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

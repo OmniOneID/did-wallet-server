@@ -44,4 +44,8 @@ public class WalletServiceQueryService {
             throw new OpenDidException(ErrorCode.WALLET_SERVICE_INFO_NOT_FOUND);
         }
     }
+
+    public WalletServiceInfo findWalletServiceOrNull() {
+        return walletServiceRepository.findTop1ByOrderByIdAsc().orElse(null);
+    }
 }
