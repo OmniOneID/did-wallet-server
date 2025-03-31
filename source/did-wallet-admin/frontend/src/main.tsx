@@ -7,7 +7,7 @@ import AdminManagementPage from './pages/admins/AdminManagementPage';
 import SignInPage from './pages/auth/SignIn';
 import ErrorPage from './pages/ErrorPage';
 import WalletServiceManagementPage from './pages/wallet-service/WalletServiceManagementPage';
-import TrustAgentRegistrationPage from './pages/wallet-service/WalletServiceRegistrationPage';
+import WalletServiceRegistrationPage from './pages/wallet-service/WalletServiceRegistrationPage';
 import AdminDetailPage from './pages/admins/AdminDetailPage';
 import AdminRegisterPage from './pages/admins/AdminRegisterPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/wallet-service-registration',
-            Component: TrustAgentRegistrationPage,
+            Component: WalletServiceRegistrationPage,
           },
           {
             path: '/wallet-service-management',
