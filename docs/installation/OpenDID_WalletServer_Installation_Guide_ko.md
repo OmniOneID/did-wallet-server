@@ -70,8 +70,10 @@ Open DID Wallet Server Installation Guide
     - [5.3.3. JPA 설정](#533-jpa-설정)
   - [5.4. wallet.yml](#54-walletyml)
     - [5.4.1. 월렛 설정](#541-월렛-설정)
-  - [5.5. blockchain.properties](#55-blockchainproperties)
-    - [5.5.1. 블록체인 연동 설정](#551-블록체인-연동-설정)
+  - [5.5. blockchain.yml](#55-blockchainyml)
+  - [5.5.1. Blockchain 설정](#551-blockchain-설정)
+  - [5.6. blockchain.properties](#56-blockchainproperties)
+    - [5.6.1. 블록체인 연동 설정](#561-블록체인-연동-설정)
 - [6. 프로파일 설정 및 사용](#6-프로파일-설정-및-사용)
   - [6.1. 프로파일 개요 (`sample`, `dev`)](#61-프로파일-개요-sample-dev)
     - [6.1.1. `sample` 프로파일](#611-sample-프로파일)
@@ -552,12 +554,18 @@ JPA 설정은 애플리케이션의 데이터베이스와 상호작용하는 방
     - 예시: `your_secure_wallet_password`
 
 
-## 5.5. blockchain.properties
+## 5.5. blockchain.yml
+## 5.5.1. Blockchain 설정
+ * `blockchain.file-path`:
+    - [5.6. blockchain.properties](#56-blockchainproperties) 파일의 위치를 설정합니다.
+    - 예시: `/path/to/your/blockchain.properties`
+
+## 5.6. blockchain.properties
 - 역할: Wallet 서버에서 연동할 블록체인 서버 정보를 설정합니다. [Open DID Installation Guide]의 '5.1.1. Hyperledger Fabric 테스트 네트워크 설치'에 따라 Hyperledger Fabric 테스트 네트워크를 설치하면, 개인 키, 인증서, 서버 접속 정보 설정 파일이 자동으로 생성됩니다. blockchain.properties에서는 이들 파일이 위치한 경로와, Hyperledger Fabric 테스트 네트워크 설치 시 입력한 네트워크 이름을 설정합니다. 또한, '5.1.2. Open DID 체인코드 배포'에서 배포한 Open DID의 체인코드 이름도 설정합니다.
 
 - 위치: `src/main/resources/properties`
 
-### 5.5.1. 블록체인 연동 설정 
+### 5.6.1. 블록체인 연동 설정 
 
 * `fabric.configFilePath:`: 
   - Hyperledger Fabric의 접속 정보 파일이 위치한 경로를 설정합니다. 해당 파일은 Hyperledger Fabric 테스트 네트워크 설치시 자동으로 생성되며, 기본 파일명은 'connection-org1.json' 입니다.
