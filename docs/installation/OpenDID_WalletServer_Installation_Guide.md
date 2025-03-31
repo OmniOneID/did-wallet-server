@@ -23,6 +23,8 @@ Open DID Wallet Server Installation And Operation Guide
 
 Table of Contents
 ==
+- [Open DID Wallet Server Installation And Operation Guide](#open-did-wallet-server-installation-and-operation-guide)
+- [Table of Contents](#table-of-contents)
 - [1. Introduction](#1-introduction)
   - [1.1. Overview](#11-overview)
   - [1.2. Wallet Server Definition](#12-wallet-server-definition)
@@ -672,4 +674,4 @@ docker-compose up -d
 This command runs the PostgreSQL container in the background. The PostgreSQL server will start based on the configured environment variables, and the database will be prepared. You can proceed with the integration settings to allow your application to use this database.
 
 <!-- References -->
-[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/docs/guide/installation/OepnDID_Installation_Guide.md
+[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/feature/yklee0911/v1.0.1.0/release-V1.0.0.1/OepnDID_Installation_Guide-V1.0.0.1_ko.md
