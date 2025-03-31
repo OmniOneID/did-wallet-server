@@ -22,7 +22,7 @@ This document defines the structure of the database tables used in the Wallet se
 
 ### 1.1 ERD
 
-Access the [ERD](https://www.erdcloud.com/d/A4igYToBGfHTnNfvA) site to view the diagram, which visually represents the relationships between the tables in the Wallet server database, including key attributes, primary keys, and foreign key relationships.
+Access the [ERD](https://www.erdcloud.com/d/KBdJJZYMbJLuWAWPD) site to view the diagram, which visually represents the relationships between the tables in the Wallet server database, including key attributes, primary keys, and foreign key relationships.
 
 ## 2. Table Definition
 
