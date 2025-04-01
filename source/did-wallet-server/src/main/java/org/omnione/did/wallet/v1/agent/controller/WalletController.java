@@ -43,13 +43,13 @@ public class WalletController {
     /**
      * Sign the given wallet.
      *
-     * @param Map<String, Object> the wallet to sign
+     * @param didDocuemntJson the wallet diddocument to sign
      * @return the signed wallet
      */
     @PostMapping(value = UrlConstant.Wallet.REQUEST_SIGN_WALLET)
-    public AttestedDidDoc signWallet(@RequestBody String didDocumentJson) {
+    public AttestedDidDoc signWallet(@RequestBody String didDocuemntJson) {
         DidDocument didDocument = new DidDocument();
-        didDocument.fromJson(didDocumentJson);
+        didDocument.fromJson(didDocuemntJson);
 
         return walletService.signWallet(didDocument);
     }
