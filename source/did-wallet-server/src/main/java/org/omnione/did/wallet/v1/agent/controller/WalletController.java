@@ -16,6 +16,7 @@
 
 package org.omnione.did.wallet.v1.agent.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.constants.UrlConstant;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * The WalletController class is a controller that handles the wallet request.
@@ -40,11 +43,15 @@ public class WalletController {
     /**
      * Sign the given wallet.
      *
-     * @param request the wallet to sign
+     * @param Map<String, Object> the wallet to sign
      * @return the signed wallet
      */
     @PostMapping(value = UrlConstant.Wallet.REQUEST_SIGN_WALLET)
-    public AttestedDidDoc signWallet(@RequestBody DidDocument request) {
-        return walletService.signWallet(request);
+    public AttestedDidDoc signWallet(@RequestBody String didDocumentJson) {
+        DidDocument didDocument = new DidDocument();
+        didDocument.fromJson(didDocumentJson);
+
+        return walletService.signWallet(didDocument);
     }
+
 }
