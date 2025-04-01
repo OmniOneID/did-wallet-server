@@ -34,7 +34,6 @@ ext {
     set("skipFrontendBuild", System.getProperty("skipFrontendBuild"))
     set("frontendResourceDir", "${project.projectDir}/../did-wallet-admin/frontend")
     set("backendResourceDir", "${projectDir}/src/main/resources/static")
-    set("skipFrontendBuild", true)
 }
 
 dependencies {
