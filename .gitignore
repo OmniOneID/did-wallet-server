@@ -208,6 +208,7 @@ README.html
 !**/opendid-*.jar
 /source/did-wallet-server/files/**
 !source/did-wallet-server/gradle/wrapper/gradle-wrapper.jar
+!source/did-wallet-server/src/main/resources/static/**
 
 ### react ###
 .DS_*
