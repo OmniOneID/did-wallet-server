@@ -15,17 +15,14 @@
  */
 package org.omnione.did.wallet.v1.admin.dto.walletservice;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.omnione.did.data.model.enums.vc.RoleType;
 
 /**
- * Data Transfer Object for updating entity information in the Admin Console.
+ * Data Transfer Object for requesting DID registration to the Trusted Authority (TA).
  * <p>
- * Includes DID, entity name, and endpoint URLs for service and certificate access.
+ * Contains DID Document, service metadata, role, and endpoint URLs required for registration.
  */
 @Getter
 @Setter
@@ -33,9 +30,19 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class SendEntityInfoReqDto {
-    private String did;
+public class RegisterDidToTaReqDto {
+    @NotNull(message = "didDoc cannot be null")
+    private String didDoc;
+
+    @NotNull(message = "name cannot be null")
     private String name;
+
+    @NotNull(message = "role cannot be null")
+    private RoleType role;
+
+    @NotNull(message = "serverUrl cannot be null")
     private String serverUrl;
+
+    @NotNull(message = "certificateUrl cannot be null")
     private String certificateUrl;
 }

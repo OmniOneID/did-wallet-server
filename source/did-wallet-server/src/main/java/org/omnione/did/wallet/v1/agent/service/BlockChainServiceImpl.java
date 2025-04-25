@@ -25,6 +25,7 @@ import org.omnione.did.base.exception.OpenDidException;
 import org.omnione.did.base.property.BlockchainProperty;
 import org.omnione.did.data.model.did.DidDocAndStatus;
 import org.omnione.did.data.model.did.DidDocument;
+import org.omnione.exception.BlockChainException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -80,9 +81,9 @@ public class BlockChainServiceImpl implements StorageService {
             DidDocAndStatus didDocAndStatus = (DidDocAndStatus) contractApi.getDidDoc(didKeyUrl);
 
             return didDocAndStatus.getDocument();
-        } catch (OpenDidException e) {
+        } catch (BlockChainException e) {
             log.error("Failed to find DID Document: " + e.getMessage());
-            throw e;
+            throw new OpenDidException(ErrorCode.BLOCKCHAIN_GET_DID_DOC_FAILED);
         } catch (Exception e) {
             log.error("Failed to find DID Document: " + e.getMessage());
             throw new OpenDidException(ErrorCode.FIND_DID_DOC_FAILURE);

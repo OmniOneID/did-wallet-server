@@ -28,19 +28,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for managing wallet information in the Admin Console.
+ * <p>
+ * Provides endpoints to search for wallets and retrieve wallet details by ID.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = UrlConstant.Wallet.ADMIN_V1)
+@RequestMapping(value = UrlConstant.Admin.V1)
 public class WalletManagementController {
+
     private final WalletManagementService walletManagementService;
 
+    /**
+     * Searches for wallet records using search criteria with pagination.
+     *
+     * @param searchKey the field to search by (e.g., wallet name, DID)
+     * @param searchValue the value to match
+     * @param pageable pagination information
+     * @return a page of matching WalletDto objects
+     */
     @GetMapping(value = "/wallets/list")
     @ResponseBody
     public Page<WalletDto> searchWallets(String searchKey, String searchValue, Pageable pageable) {
         return walletManagementService.searchWallets(searchKey, searchValue, pageable);
     }
 
+    /**
+     * Retrieves detailed information about a specific wallet by ID.
+     *
+     * @param id the wallet ID
+     * @return the WalletDto containing wallet details
+     */
     @GetMapping(value = "/wallets")
     public WalletDto getWallet(@RequestParam Long id) {
         return walletManagementService.findById(id);

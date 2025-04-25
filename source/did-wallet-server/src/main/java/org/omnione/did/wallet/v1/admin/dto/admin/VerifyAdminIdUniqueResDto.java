@@ -21,6 +21,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data Transfer Object for checking admin ID duplication in the Admin Console.
+ * <p>
+ * Indicates whether the provided login ID is unique.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

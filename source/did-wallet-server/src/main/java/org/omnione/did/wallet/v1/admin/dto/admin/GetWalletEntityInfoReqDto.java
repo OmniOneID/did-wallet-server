@@ -31,13 +31,18 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/**
+ * Data Transfer Object representing wallet service entity information in the Admin Console.
+ * <p>
+ * Includes DID, service metadata, status, endpoint URLs, and associated DID Document.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
-public class GetWalletServiceInfoReqDto {
+public class GetWalletEntityInfoReqDto {
     private Long id;
     private String did;
     private String name;
@@ -56,9 +61,9 @@ public class GetWalletServiceInfoReqDto {
                 .orElse(null);
     }
 
-    public static GetWalletServiceInfoReqDto fromEntity(WalletServiceInfo walletService) {
+    public static GetWalletEntityInfoReqDto fromEntity(WalletServiceInfo walletService) {
         return Optional.ofNullable(walletService)
-                .map(t -> GetWalletServiceInfoReqDto.builder()
+                .map(t -> GetWalletEntityInfoReqDto.builder()
                         .id(t.getId())
                         .did(t.getDid())
                         .name(t.getName())
@@ -71,9 +76,9 @@ public class GetWalletServiceInfoReqDto {
                 .orElse(null);
     }
 
-    public static GetWalletServiceInfoReqDto fromEntity(WalletServiceInfo walletService, DidDocument didDocument) {
+    public static GetWalletEntityInfoReqDto fromEntity(WalletServiceInfo walletService, DidDocument didDocument) {
         return Optional.ofNullable(walletService)
-                .map(t -> GetWalletServiceInfoReqDto.builder()
+                .map(t -> GetWalletEntityInfoReqDto.builder()
                         .id(t.getId())
                         .did(t.getDid())
                         .name(t.getName())

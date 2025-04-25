@@ -15,41 +15,38 @@
  */
 package org.omnione.did.wallet.v1.admin.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.constants.UrlConstant;
-import org.omnione.did.wallet.v1.admin.dto.admin.AdminDto;
-import org.omnione.did.wallet.v1.admin.dto.admin.RequestAdminLoginReqDto;
-import org.omnione.did.wallet.v1.admin.service.SessionService;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.omnione.did.wallet.v1.admin.dto.server.VerifyServerUrlReqDto;
+import org.omnione.did.wallet.v1.admin.dto.server.VerifyServerUrlResDto;
+import org.omnione.did.wallet.v1.admin.service.UrlPingChecker;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller for handling admin login sessions in the Admin Console.
+ * Controller for verifying server URL connectivity from the Admin Console.
  * <p>
- * Provides an endpoint for authenticating admin credentials and initiating a session.
+ * Provides an endpoint to check whether a given server URL is reachable.
  */
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = UrlConstant.Admin.V1)
-public class SessionController {
+public class ServerCheckController {
 
-    private final SessionService sessionService;
+    private final UrlPingChecker urlPingChecker;
 
     /**
-     * Authenticates an admin and returns admin details upon successful login.
+     * Verifies if the specified server URL is reachable.
      *
-     * @param requestAdminLoginReqDto DTO containing login ID and password
-     * @return authenticated admin details
+     * @param verifyServerUrlReqDto the request DTO containing the target server URL
+     * @return response DTO indicating whether the server is reachable
      */
-    @PostMapping(value = "/login")
-    @ResponseBody
-    public AdminDto requestAdminLogin(@Valid @RequestBody RequestAdminLoginReqDto requestAdminLoginReqDto) {
-        return sessionService.requestAdminLogin(requestAdminLoginReqDto);
+    @RequestMapping(value = "/servers/ping", method = RequestMethod.POST)
+    public VerifyServerUrlResDto verifyServerUrl(@RequestBody VerifyServerUrlReqDto verifyServerUrlReqDto) {
+        return urlPingChecker.isUrlReachable(verifyServerUrlReqDto);
     }
 }

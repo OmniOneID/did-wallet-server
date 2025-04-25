@@ -24,17 +24,37 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for managing wallet entities in the Admin Console.
+ * <p>
+ * Provides functionality to search and retrieve wallet records.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
 public class WalletManagementService {
+
     private final WalletQueryService walletQueryService;
 
+    /**
+     * Searches wallet records with optional filtering by search key and value.
+     *
+     * @param searchKey   the field name to search by (e.g. "walletId")
+     * @param searchValue the value to match against the specified key
+     * @param pageable    pagination configuration
+     * @return a page of wallet DTOs that match the search criteria
+     */
     public Page<WalletDto> searchWallets(String searchKey, String searchValue, Pageable pageable) {
         return walletQueryService.searchWalletList(searchKey, searchValue, pageable);
     }
 
+    /**
+     * Retrieves a wallet entity by its unique identifier.
+     *
+     * @param id the ID of the wallet to retrieve
+     * @return the corresponding Wallet DTO
+     */
     public WalletDto findById(Long id) {
         return WalletDto.fromWallet(walletQueryService.findById(id));
     }

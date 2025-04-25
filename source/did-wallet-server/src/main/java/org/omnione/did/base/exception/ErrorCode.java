@@ -46,6 +46,7 @@ public enum ErrorCode {
     HASH_GENERATION_FAILED("00213", "Failed to generate hash value.", 500),
     ENCODING_FAILED("00214", "Failed to encode data.", 500),
     DECODING_FAILED("00215", "Failed to decode data: incorrect encoding.", 400),
+    CRYPTO_KEY_PAIR_ALREADY_EXISTS("00216", "Failed to generate keys: key already exists.", 500),
 
     // DID and VC Related Errors (003xx)
     CERTIFICATE_DATA_NOT_FOUND("00301", "Certificate VC data not found.", 500),
@@ -59,6 +60,9 @@ public enum ErrorCode {
     SIGNATURE_GENERATION_FAILED("00403", "Failed to generate signature.", 500),
     WALLET_CREATION_FAILED("00404", "Failed to create wallet.", 500),
     FAILED_TO_GET_FILE_WALLET_MANAGER("00405", "Failed to get File Wallet Manager", 500),
+    WALLET_ALREADY_EXISTS("00406", "Failed to create wallet: wallet already exists.", 500),
+    INVALID_PROOF_PURPOSE("00407", "Invalid proof purpose.", 400),
+
 
     // General and Server Errors (005xx)
     JSON_PROCESSING_ERROR("00501", "Error occurred while processing JSON data.", 400),
@@ -80,10 +84,30 @@ public enum ErrorCode {
 
     // Wallet Service Errors (008xx)
     WALLET_SERVICE_INFO_NOT_FOUND("00801", "Failed to find wallet service: wallet service is not registered.", 400),
+    APPLICATION_CONFIG_NOT_FOUND("00802", "Application config not found.", 400),
+    NAMESPACE_DELETE_CONFLICT("00803", "Cannot delete namespace: it is referenced by a VC schema.", 400),
+    VC_SCHEMA_DELETE_CONFLICT("00804", "Cannot delete vc schema: it is referenced by a Issue Profile.", 400),
+    NAMESPACE_NOT_FOUND("00805", "Namespace not found for the given ID.", 400),
+    WALLET_SERVICE_DID_DOCUMENT_ALREADY_REQUESTED("00807", "Failed to register Wallet Service DID Document: document is already requested.", 400),
+    WALLET_SERVICE_DID_DOCUMENT_ALREADY_REGISTERED("00808", "Failed to register Wallet Service DID Document: document is already registered.", 400),
+    FAILED_TO_GENERATE_DID_DOCUMENT("00809", "Failed to generate DID document.", 500),
+    FAILED_TO_REGISTER_WALLET_SERVICE_DID_DOCUMENT("00810","Failed to register Wallet Service DID Document.", 500),
+    WALLET_SERVICE_DID_DOCUMENT_NOT_FOUND("00811","Failed to find Wallet Service DID Document: o registration request has been made.", 400),
+    INVALID_CERTIFICATE_VC_JSON_FORMAT("00812", "Failed to process certificate VC: invalid JSON format.", 500),
+    FAILED_TO_REQUEST_CERTIFICATE_VC("00813","Failed to process the 'request-certificate-vc' API request.", 500),
+    FAILED_TO_LOAD_KEY_ELEMENT("00814", "Failed to load key element.", 500),
+    TAS_COMMUNICATION_ERROR("00815","Failed to communicate with tas: unknown error occurred.", 500),
+    URL_PING_ERROR("00816", "Failed to ping the URL.", 400),
+    WALLET_SERVICE_ALREADY_REGISTERED("00817", "Wallet Service is already registered", 400),
+
+
 
     // Wallet Management Errors (009xx)
-    WALLET_INFO_NOT_FOUND("00901", "Failed to find wallet: wallet is not registered.", 400)
-    ;
+    WALLET_INFO_NOT_FOUND("00901", "Failed to find wallet: wallet is not registered.", 400),
+    INVALID_DID_DOCUMENT("00102", "Invalid DID Document", 400),
+
+
+;
 
     private final String code;
     private final String message;

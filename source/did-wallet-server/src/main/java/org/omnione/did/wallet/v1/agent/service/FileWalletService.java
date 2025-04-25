@@ -94,4 +94,14 @@ public class FileWalletService {
             throw new OpenDidException(ErrorCode.WALLET_SIGNATURE_GENERATION_FAILED);
         }
     }
+
+    public WalletManagerInterface initializeWalletWithKeys() {
+        WalletManagerInterface walletManager = BaseWalletUtil.initializeWalletWithKeys(
+                walletProperty.getFilePath(),
+                walletProperty.getPassword(),
+                "auth", "assert", "keyagree", "invoke"
+        );
+
+        return walletManager;
+    }
 }

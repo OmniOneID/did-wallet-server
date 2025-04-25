@@ -23,6 +23,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Data Transfer Object for requesting admin login in the Admin Console.
+ * <p>
+ * Contains login credentials including ID and password.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,6 +37,7 @@ import lombok.ToString;
 public class RequestAdminLoginReqDto {
     @NotNull(message = "loginId cannot be null")
     private String loginId;
+
     @NotNull(message = "loginPassword cannot be null")
     private String loginPassword;
 }

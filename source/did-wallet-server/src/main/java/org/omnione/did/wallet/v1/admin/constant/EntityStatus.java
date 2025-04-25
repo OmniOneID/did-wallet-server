@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package org.omnione.did.base.db.constant;
+package org.omnione.did.wallet.v1.admin.constant;
 
-public enum WalletServiceStatus {
-    ACTIVATE,
-    DEACTIVATE,
+/**
+ * Enum class representing the status of an entity as managed by the TAS.
+ */
+public enum EntityStatus {
+    NOT_REGISTERED,
     DID_DOCUMENT_REQUIRED,
-    DID_DOCUMENT_REQUESTED,
     CERTIFICATE_VC_REQUIRED,
+    COMPLETED,
 }

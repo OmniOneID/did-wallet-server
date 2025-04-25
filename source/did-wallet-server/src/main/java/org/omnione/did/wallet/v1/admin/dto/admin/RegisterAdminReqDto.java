@@ -24,6 +24,11 @@ import lombok.Setter;
 import lombok.ToString;
 import org.omnione.did.base.db.constant.AdminRole;
 
+/**
+ * Data Transfer Object for registering a new administrator in the Admin Console.
+ * <p>
+ * Includes login ID, role, and initial password.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

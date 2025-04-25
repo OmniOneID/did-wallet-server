@@ -15,17 +15,13 @@
  */
 package org.omnione.did.wallet.v1.admin.dto.walletservice;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.omnione.did.wallet.v1.admin.constant.EntityStatus;
 
 /**
- * Data Transfer Object for updating entity information in the Admin Console.
+ * Data Transfer Object representing the response of entity status from the Trusted Authority.
  * <p>
- * Includes DID, entity name, and endpoint URLs for service and certificate access.
+ * Indicates the current registration or verification status of the entity.
  */
 @Getter
 @Setter
@@ -33,9 +29,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class SendEntityInfoReqDto {
-    private String did;
-    private String name;
-    private String serverUrl;
-    private String certificateUrl;
+public class RequestEntityStatusResDto {
+    private EntityStatus status;
 }

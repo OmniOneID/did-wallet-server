@@ -15,17 +15,13 @@
  */
 package org.omnione.did.wallet.v1.admin.dto.walletservice;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 /**
- * Data Transfer Object for updating entity information in the Admin Console.
+ * Data Transfer Object for registering wallet service information in the Admin Console.
  * <p>
- * Includes DID, entity name, and endpoint URLs for service and certificate access.
+ * Includes the service name and its endpoint URL.
  */
 @Getter
 @Setter
@@ -33,9 +29,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class SendEntityInfoReqDto {
-    private String did;
+public class RegisterWallerServiceInfoReqDto {
+    @NotNull(message = "name cannot be null")
     private String name;
+
+    @NotNull(message = "serverUrl cannot be null")
     private String serverUrl;
-    private String certificateUrl;
 }

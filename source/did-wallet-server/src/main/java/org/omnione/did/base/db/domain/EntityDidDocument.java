@@ -13,29 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.omnione.did.wallet.v1.admin.dto.walletservice;
+package org.omnione.did.base.db.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
-/**
- * Data Transfer Object for updating entity information in the Admin Console.
- * <p>
- * Includes DID, entity name, and endpoint URLs for service and certificate access.
- */
+import java.io.Serializable;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
-@Builder
-public class SendEntityInfoReqDto {
-    private String did;
-    private String name;
-    private String serverUrl;
-    private String certificateUrl;
+@Entity
+@Table(name = "did_document")
+public class EntityDidDocument extends BaseEntity implements Serializable {
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "did_document", nullable = false)
+    private String didDocument;
 }
