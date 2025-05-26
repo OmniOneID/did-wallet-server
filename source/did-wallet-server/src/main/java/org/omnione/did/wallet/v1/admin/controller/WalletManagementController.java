@@ -19,11 +19,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.constants.UrlConstant;
 import org.omnione.did.wallet.v1.admin.dto.wallet.WalletDto;
+import org.omnione.did.wallet.v1.admin.dto.walletservice.SendCertificateVcReqDto;
+import org.omnione.did.wallet.v1.admin.dto.walletservice.SendEntityInfoReqDto;
+import org.omnione.did.wallet.v1.admin.service.WalletEntityManagementService;
 import org.omnione.did.wallet.v1.admin.service.WalletManagementService;
+import org.omnione.did.wallet.v1.common.dto.EmptyResDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +46,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WalletManagementController {
 
     private final WalletManagementService walletManagementService;
+    private final WalletEntityManagementService walletEntityManagementService;
 
     /**
      * Searches for wallet records using search criteria with pagination.
@@ -64,5 +71,27 @@ public class WalletManagementController {
     @GetMapping(value = "/wallets")
     public WalletDto getWallet(@RequestParam Long id) {
         return walletManagementService.findById(id);
+    }
+
+    /**
+     * Issues a certificate VC by decoding and storing it.
+     *
+     * @param sendCertificateVcReqDto request containing encoded certificate VC
+     * @return empty response DTO
+     */
+    @RequestMapping(value = "/certificate-vc", method = RequestMethod.POST)
+    public EmptyResDto createCertificateVc(@RequestBody SendCertificateVcReqDto sendCertificateVcReqDto) {
+        return walletEntityManagementService.createCertificateVc(sendCertificateVcReqDto);
+    }
+
+    /**
+     * Updates the wallet entity information.
+     *
+     * @param sendEntityInfoReqDto request containing DID, name, and endpoint URLs
+     * @return empty response DTO
+     */
+    @RequestMapping(value = "/entity-info", method = RequestMethod.POST)
+    public EmptyResDto updateEntityInfo(@RequestBody SendEntityInfoReqDto sendEntityInfoReqDto) {
+        return walletEntityManagementService.updateEntityInfo(sendEntityInfoReqDto);
     }
 }

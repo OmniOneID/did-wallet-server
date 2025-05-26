@@ -49,28 +49,6 @@ public class WalletAdminController {
     }
 
     /**
-     * Issues a certificate VC by decoding and storing it.
-     *
-     * @param sendCertificateVcReqDto request containing encoded certificate VC
-     * @return empty response DTO
-     */
-    @RequestMapping(value = "/certificate-vc", method = RequestMethod.POST)
-    public EmptyResDto createCertificateVc(@RequestBody SendCertificateVcReqDto sendCertificateVcReqDto) {
-        return walletEntityManagementService.createCertificateVc(sendCertificateVcReqDto);
-    }
-
-    /**
-     * Updates the wallet entity information.
-     *
-     * @param sendEntityInfoReqDto request containing DID, name, and endpoint URLs
-     * @return empty response DTO
-     */
-    @RequestMapping(value = "/entity-info", method = RequestMethod.POST)
-    public EmptyResDto updateEntityInfo(@RequestBody SendEntityInfoReqDto sendEntityInfoReqDto) {
-        return walletEntityManagementService.updateEntityInfo(sendEntityInfoReqDto);
-    }
-
-    /**
      * Registers wallet service entity information.
      *
      * @param registerCaInfoReqDto request data to register wallet info
