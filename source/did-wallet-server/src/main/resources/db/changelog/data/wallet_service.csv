@@ -1,1 +1,2 @@
-id,did,name,status,server_url,certificate_url
+did,name,status,server_url,certificate_url
+did:omn:wallet,Wallet,DID_DOCUMENT_REQUIRED,http://127.0.0.1:8095/wallet,http://127.0.0.1:8095/wallet/api/v1/certificate-vc

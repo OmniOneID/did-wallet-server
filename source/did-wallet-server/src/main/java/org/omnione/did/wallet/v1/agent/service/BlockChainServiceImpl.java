@@ -39,32 +39,7 @@ import org.springframework.stereotype.Service;
 @Profile("!repository")
 public class BlockChainServiceImpl implements StorageService {
 
-    private ContractApi contractApiInstance = null;
-    private final BlockchainProperty blockchainProperty;
-
-    /**
-     * Initializes the blockchain connection.
-     *
-     * @return a ContractApi instance.
-     */
-    public ContractApi initBlockChain() {
-        return ContractFactory.EVM.create(blockchainProperty.getFilePath());
-    }
-
-    /**
-     * Resets the ContractApi instance.
-     * Use this method to reinitialize the blockchain connection.
-     */
-    public ContractApi getContractApiInstance() {
-        if (contractApiInstance == null) {
-            synchronized (BlockChainServiceImpl.class) {
-                if (contractApiInstance == null) {
-                    contractApiInstance = initBlockChain();
-                }
-            }
-        }
-        return contractApiInstance;
-    }
+    private final ContractApi contractApi;
 
     /**
      * Register the given DID Document with the blockchain.
@@ -77,7 +52,6 @@ public class BlockChainServiceImpl implements StorageService {
     @Override
     public DidDocument findDidDoc(String didKeyUrl) {
         try {
-            ContractApi contractApi = getContractApiInstance();
             DidDocAndStatus didDocAndStatus = (DidDocAndStatus) contractApi.getDidDoc(didKeyUrl);
 
             return didDocAndStatus.getDocument();
