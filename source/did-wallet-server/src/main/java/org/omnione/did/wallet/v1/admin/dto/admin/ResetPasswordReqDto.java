@@ -23,6 +23,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Data Transfer Object for resetting an admin's password in the Admin Console.
+ * <p>
+ * Includes login ID, current password, and the new password to be applied.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,8 +37,10 @@ import lombok.ToString;
 public class ResetPasswordReqDto {
     @NotNull(message = "loginId cannot be null")
     private String loginId;
+
     @NotNull(message = "oldPassword cannot be null")
     private String oldPassword;
+
     @NotNull(message = "newPassword cannot be null")
     private String newPassword;
 }

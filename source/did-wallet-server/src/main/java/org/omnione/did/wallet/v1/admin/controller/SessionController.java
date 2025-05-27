@@ -28,14 +28,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for handling admin login sessions in the Admin Console.
+ * <p>
+ * Provides an endpoint for authenticating admin credentials and initiating a session.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = UrlConstant.Wallet.ADMIN_V1)
+@RequestMapping(value = UrlConstant.Admin.V1)
 public class SessionController {
 
     private final SessionService sessionService;
 
+    /**
+     * Authenticates an admin and returns admin details upon successful login.
+     *
+     * @param requestAdminLoginReqDto DTO containing login ID and password
+     * @return authenticated admin details
+     */
     @PostMapping(value = "/login")
     @ResponseBody
     public AdminDto requestAdminLogin(@Valid @RequestBody RequestAdminLoginReqDto requestAdminLoginReqDto) {

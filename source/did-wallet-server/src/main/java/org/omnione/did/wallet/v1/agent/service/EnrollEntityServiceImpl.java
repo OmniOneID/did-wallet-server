@@ -26,6 +26,7 @@ import org.omnione.did.base.datamodel.data.EcdhReqData;
 import org.omnione.did.base.datamodel.enums.EccCurveType;
 import org.omnione.did.base.datamodel.enums.ProofPurpose;
 import org.omnione.did.base.datamodel.enums.SymmetricCipherType;
+import org.omnione.did.base.db.constant.WalletServiceStatus;
 import org.omnione.did.base.db.domain.CertificateVc;
 import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.exception.ErrorCode;
@@ -126,6 +127,9 @@ public class EnrollEntityServiceImpl implements EnrollEntityService {
                     .vc(vc.toJson())
                     .build());
 
+            log.debug("\t\t--> Update Wallet Service Status");
+            existedWalletService.setStatus(WalletServiceStatus.ACTIVATE);
+            walletServiceQueryService.save(existedWalletService);
             log.debug("*** Finished enrollEntity ***");
 
             return EnrollEntityResDto.builder()

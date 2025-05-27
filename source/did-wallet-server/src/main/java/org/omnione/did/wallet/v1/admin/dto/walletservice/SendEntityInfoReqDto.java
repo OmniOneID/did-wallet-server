@@ -22,6 +22,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Data Transfer Object for updating entity information in the Admin Console.
+ * <p>
+ * Includes DID, entity name, and endpoint URLs for service and certificate access.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

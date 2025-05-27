@@ -24,14 +24,23 @@ import org.omnione.did.base.exception.OpenDidException;
 import org.springframework.stereotype.Service;
 
 /**
- * Description...
+ * Service for querying and managing wallet service entity information.
+ * <p>
+ * Provides methods to retrieve or persist wallet service data, including handling exceptions.
  */
 @RequiredArgsConstructor
 @Service
 @Slf4j
 public class WalletServiceQueryService {
+
     private final WalletServiceRepository walletServiceRepository;
 
+    /**
+     * Retrieves the first wallet service record ordered by ID.
+     *
+     * @return the WalletServiceInfo entity
+     * @throws OpenDidException if the wallet service information is not found or an error occurs
+     */
     public WalletServiceInfo findWalletService() {
         try {
             return walletServiceRepository.findTop1ByOrderByIdAsc()
@@ -45,7 +54,22 @@ public class WalletServiceQueryService {
         }
     }
 
+    /**
+     * Retrieves the first wallet service record ordered by ID, or null if not found.
+     *
+     * @return the WalletServiceInfo entity or null
+     */
     public WalletServiceInfo findWalletServiceOrNull() {
         return walletServiceRepository.findTop1ByOrderByIdAsc().orElse(null);
+    }
+
+    /**
+     * Persists the given wallet service entity.
+     *
+     * @param existedWalletService the wallet service to save
+     * @return the saved WalletServiceInfo
+     */
+    public WalletServiceInfo save(WalletServiceInfo existedWalletService) {
+        return walletServiceRepository.save(existedWalletService);
     }
 }

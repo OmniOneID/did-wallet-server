@@ -23,6 +23,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Data Transfer Object for resetting an admin's password using root authority in the Admin Console.
+ * <p>
+ * Contains the admin's login ID and the new password to be set.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,6 +37,7 @@ import lombok.ToString;
 public class ResetPasswordByRootReqDto {
     @NotNull(message = "loginId cannot be null")
     private String loginId;
+
     @NotNull(message = "newPassword cannot be null")
     private String newPassword;
 }

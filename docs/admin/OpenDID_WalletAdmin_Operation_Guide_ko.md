@@ -37,12 +37,17 @@ OpenDID IssuerAdmin Operation Guide
     - [2.3.2. Wallet 등록 상태](#232-wallet-등록-상태)
   - [2.4. 비밀번호 변경 관리](#24-비밀번호-변경-관리)
 - [3. 기능별 상세 메뉴얼](#3-기능별-상세-메뉴얼)
-  - [3.1. Wallet Service Management](#31-wallet-service-management)
+  - [3.1. Wallet Service Registration](#31-wallet-service-registration)
+    - [▸ Step 1 – Enter Wallet Service Info](#-step-1--enter-wallet-service-info)
+    - [▸ Step 2 – Register DID Document](#-step-2--register-did-document)
+    - [▸ Step 3 – Register Entity and Issue Certificate VC](#-step-3--register-entity-and-issue-certificate-vc)
+    - [▸ 등록 완료 화면](#-등록-완료-화면)
+  - [3.2. Wallet Service Management](#32-wallet-service-management)
     - [▸ Wallet Service Manegement](#-wallet-service-manegement)
-  - [3.2. User Wallet Management](#32-user-wallet-management)
+  - [3.3. User Wallet Management](#33-user-wallet-management)
     - [▸ User Wallet 목록](#-user-wallet-목록)
     - [▸ User Wallet 상세 정보](#-user-wallet-상세-정보)
-  - [3.3. Admin Management](#33-admin-management)
+  - [3.4. Admin Management](#34-admin-management)
     - [▸ Admin 목록 조회](#-admin-목록-조회)
   - [| **Updated At**          | 마지막으로 수정된 일시입니다.](#-updated-at-----------마지막으로-수정된-일시입니다)
     - [▸ Admin 등록](#-admin-등록)
@@ -164,7 +169,87 @@ Wallet 등록이 완료되면 전체 관리 기능이 활성화되며, 사이드
 
 이 장에서는 Wallet Admin Console의 주요 기능에 대한 상세 사용 방법을 안내합니다.
 
-## 3.1. Wallet Service Management
+## 3.1. Wallet Service Registration
+
+Wallet Service Registration은 Wallet Admin Console에서 발급 주체인 **Wallet 서비스**를 등록하는 절차입니다.  
+전체 등록은 총 3단계로 구성되며, 각 단계별로 입력, 요청, 승인 과정을 거쳐 등록이 완료됩니다.
+모든 단계가 완료되면 Wallet 서비스는 OpenDID 네트워크에 정식 등록됩니다.
+
+<br/>
+
+### ▸ Step 1 – Enter Wallet Service Info
+
+<img src="./images/3-1-1.wallet-registration-step1.png" width="700"/>
+
+Wallet 서비스의 이름과 서버 URL을 입력하는 단계입니다.
+
+- **Name**: 등록할 Wallet의 이름  
+- **Wallet Service URL**: `http://{IP}:8095/wallet` 형식의 서버 엔드포인트  
+
+> **Note**  
+> Wallet 서비스 서버와 Admin Console은 동일한 Base URL을 사용하며, 내부적으로 패키지로 분리되어 있습니다.
+
+- 필수 항목 입력 후 **NEXT** 버튼을 클릭합니다.
+
+<br/>
+
+### ▸ Step 2 – Register DID Document
+
+Wallet 서비스의 DID Document를 생성하고, TAS(Trust Agent Service)에 등록 요청 및 승인을 받는 단계입니다. 아래 순서를 따릅니다:
+
+<br/>
+
+**1. Generate DID Document**  
+<img src="./images/3-1-1.wallet-registration-step2-1.png" width="700"/>  
+`GENERATE` 버튼을 클릭하면 DID 문서가 자동 생성되며, 화면에 JSON 형식으로 출력됩니다.  
+> 생성 완료 메시지: ✅ DID Document has been successfully created.
+> 
+<br/>
+
+**2. Submit Registration Request**  
+<img src="./images/3-1-1.wallet-registration-step2-2.png" width="700"/>  
+`REQUEST` 버튼 클릭 시 TAS에 DID 문서 등록 요청이 전송됩니다.  
+> 요청 완료 메시지: ✅ Registration request has been submitted.
+
+
+<br/>
+
+**3. Check Approval Status**  
+<img src="./images/3-1-1.wallet-registration-step2-3.png" width="700"/>  
+`CHECK` 버튼을 클릭하여 TAS 관리자의 승인을 확인합니다.  
+> 승인 완료 메시지: ✅ Approval confirmed. You can proceed.
+
+<br/>
+
+**4. 모든 과정을 완료한 화면**  
+<img src="./images/3-1-1.wallet-registration-step2-4.png" width="700"/>
+
+<br/>
+
+### ▸ Step 3 – Register Entity and Issue Certificate VC
+
+<img src="./images/3-1-1.wallet-registration-step3.png" width="700"/>
+
+Wallet 서비스를 OpenDID 네트워크의 엔터티로 등록하고, **Certificate VC(신뢰 증명용 VC)**를 발급받는 마지막 단계입니다.
+
+- `REQUEST` 버튼을 클릭하면 TAS를 통해 Entity가 등록됩니다.
+- 등록이 완료되면 `FINISH` 버튼을 클릭하여 전체 등록을 마무리합니다
+
+> **참고**  
+> Certificate VC는 OpenDID 구성 요소 간의 신뢰 관계를 증명하는 자격 증명입니다.
+
+<br/>
+
+### ▸ 등록 완료 화면
+
+등록이 완료되면 아래와 같은 완료 화면이 표시됩니다.
+
+<img src="./images/3-1-1.wallet-registration-completed.png" width="700"/>
+
+- "Completed" 메시지가 나타나며, `GO TO HOME` 버튼을 클릭하여 Admin Console 메인 화면으로 이동할 수 있습니다.
+
+
+## 3.2. Wallet Service Management
 
 Wallet Service Management는 Wallet 서버의 기본 정보를 등록하고 관리하는 메뉴입니다. Wallet은 User Wallet의 관리 주체로서 시스템 내에서 고유한 DID를 가지고 등록되어야 하며, 최초 1회만 등록이 필요합니다.  
 
@@ -177,7 +262,7 @@ Wallet가 등록되면 시스템에 활성 상태(`ACTIVATE`)로 표시되며, �
 
 Wallet Service Manegement 화면은 다음 항목들로 구성되어 있습니다.
 
-<img src="./images/3-1-1.wallet-management-info.png" width="700"/>
+<img src="./images/3-2-1.wallet-management-info.png" width="700"/>
 
 | 항목              | 설명                                                           |
 |-------------------|----------------------------------------------------------------|
@@ -192,7 +277,7 @@ Wallet Service Manegement 화면은 다음 항목들로 구성되어 있습니�
 - 등록된 Wallet 정보는 삭제가 불가능하며, 일부 항목에 대해 제한된 범위 내에서만 수정이 가능합니다.
 
 
-## 3.2. User Wallet Management
+## 3.3. User Wallet Management
 
 User Wallet Management는 User가 등록한 Wallet을 확인하고 관리하는 메뉴입니다. 
 
@@ -201,7 +286,7 @@ User Wallet Management는 User가 등록한 Wallet을 확인하고 관리하는 
 
 User Wallet 목록 화면에서는 등록된 Wallet들을 확인할 수 있습니다.
 
-<img src="./images/3-2.wallet-management.png" width="700"/>
+<img src="./images/3-3.wallet-management.png" width="700"/>
 
 | 항목              | 설명                             |
 |----------------- |----------------------------------|
@@ -215,7 +300,7 @@ User Wallet 목록 화면에서는 등록된 Wallet들을 확인할 수 있습�
 
 User Wallet 목록에서 ID를 클릭하면 상세 정보를 확인할 수 있습니다.
 
-<img src="./images/3-2.wallet-detail.png" width="700"/>
+<img src="./images/3-3.wallet-detail.png" width="700"/>
 
 | 항목              | 설명                             |
 |----------------- |----------------------------------|
@@ -225,7 +310,7 @@ User Wallet 목록에서 ID를 클릭하면 상세 정보를 확인할 수 있�
 | **Updated At**   | Wallet이 업데이트된 일시입니다. |
 
 
-## 3.3. Admin Management
+## 3.4. Admin Management
 
 `Admin Management` 메뉴는 Wallet Admin Console에 접근할 수 있는 관리자 계정을 관리하는 기능입니다.  
 
@@ -249,7 +334,7 @@ ROOT 계정은 `Admin Management` 메뉴에서 모든 기능을 수행할 수 �
 
 `Admin Management` 메뉴에 진입하면 등록된 관리자 계정들의 목록이 테이블 형태로 표시됩니다.
 
-<img src="./images/3-3.admin-management.png" width="800"/>
+<img src="./images/3-4.admin-management.png" width="800"/>
 
 | 항목                    | 설명                                                             |
 | ----------------------- | ---------------------------------------------------------------- |
@@ -268,7 +353,7 @@ ROOT 계정은 `Admin Management` 메뉴에서 모든 기능을 수행할 수 �
 
 `Admin Management` 화면에서 **REGISTER** 버튼을 클릭하면, 아래와 같은 등록 화면으로 이동합니다.
 
-<img src="./images/3-3.admin-registration.png" width="600"/>
+<img src="./images/3-4.admin-registration.png" width="600"/>
 
 | 항목                         | 설명                                                                |
 | --------------------------- | ------------------------------------------------------------------- |

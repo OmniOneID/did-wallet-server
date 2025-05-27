@@ -27,6 +27,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Data Transfer Object representing an administrator in the Admin Console.
+ * <p>
+ * Includes account information, role, email verification status, and audit metadata.
+ */
 @Getter
 @Builder
 @AllArgsConstructor

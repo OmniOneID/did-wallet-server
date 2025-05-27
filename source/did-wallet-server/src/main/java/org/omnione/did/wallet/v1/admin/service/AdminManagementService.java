@@ -33,30 +33,66 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for managing administrator accounts in the Admin Console.
+ * <p>
+ * Handles operations such as password resets, admin registration, duplication checks, and deletion.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
 public class AdminManagementService {
+
     private final AdminQueryService adminQueryService;
     private final AdminRepository adminRepository;
 
+    /**
+     * Resets an admin's password after verifying their old password.
+     *
+     * @param resetPasswordReqDto request containing login ID, old password, and new password
+     * @return updated admin information
+     */
     public AdminDto resetPassword(ResetPasswordReqDto resetPasswordReqDto) {
-        Admin admin = adminQueryService.findByLoginIdAndLoginPassword(resetPasswordReqDto.getLoginId(), resetPasswordReqDto.getOldPassword());
+        Admin admin = adminQueryService.findByLoginIdAndLoginPassword(
+                resetPasswordReqDto.getLoginId(),
+                resetPasswordReqDto.getOldPassword()
+        );
         admin.setLoginPassword(resetPasswordReqDto.getNewPassword());
         admin.setRequirePasswordReset(false);
 
         return AdminDto.fromAdmin(adminRepository.save(admin));
     }
 
+    /**
+     * Retrieves a paginated list of admins filtered by search key and value.
+     *
+     * @param searchKey the field to search
+     * @param searchValue the value to match
+     * @param pageable pagination options
+     * @return a page of matching admin DTOs
+     */
     public Page<AdminDto> searchAdmins(String searchKey, String searchValue, Pageable pageable) {
         return adminQueryService.searchAdminList(searchKey, searchValue, pageable);
     }
 
+    /**
+     * Finds an admin by ID.
+     *
+     * @param id admin ID
+     * @return corresponding admin DTO
+     */
     public AdminDto findById(Long id) {
         return AdminDto.fromAdmin(adminQueryService.findById(id));
     }
 
+    /**
+     * Registers a new administrator account.
+     *
+     * @param registerAdminReqDto registration data including login ID, password, and role
+     * @return empty response upon success
+     * @throws OpenDidException if the login ID already exists
+     */
     public EmptyResDto registerAdmin(RegisterAdminReqDto registerAdminReqDto) {
         Admin existingAdmin = adminQueryService.findByLoginIdOrNull(registerAdminReqDto.getLoginId());
         if (existingAdmin != null) {
@@ -79,6 +115,12 @@ public class AdminManagementService {
         return new EmptyResDto();
     }
 
+    /**
+     * Checks whether a login ID is unique among admins.
+     *
+     * @param loginId the login ID to verify
+     * @return result indicating uniqueness
+     */
     public VerifyAdminIdUniqueResDto verifyAdminIdUnique(String loginId) {
         long count = adminQueryService.countByLoginId(loginId);
         return VerifyAdminIdUniqueResDto.builder()
@@ -86,12 +128,24 @@ public class AdminManagementService {
                 .build();
     }
 
+    /**
+     * Deletes an admin account by ID.
+     *
+     * @param id the admin ID
+     * @return empty response upon successful deletion
+     */
     public EmptyResDto deleteAdmin(Long id) {
-        adminQueryService.findById(id);
+        adminQueryService.findById(id); // throws if not found
         adminRepository.deleteById(id);
         return new EmptyResDto();
     }
 
+    /**
+     * Resets an admin's password using root privileges (no old password check).
+     *
+     * @param resetPasswordByRootReqDto request containing login ID and new password
+     * @return empty response upon success
+     */
     public EmptyResDto resetPasswordByRoot(ResetPasswordByRootReqDto resetPasswordByRootReqDto) {
         Admin admin = adminQueryService.findByLoginId(resetPasswordByRootReqDto.getLoginId());
         admin.setLoginPassword(resetPasswordByRootReqDto.getNewPassword());

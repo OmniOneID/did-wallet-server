@@ -24,15 +24,30 @@ import org.omnione.did.wallet.v1.admin.dto.admin.RequestAdminLoginReqDto;
 import org.omnione.did.wallet.v1.admin.service.query.AdminQueryService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for handling admin session logic in the Admin Console.
+ * <p>
+ * Provides login functionality by validating credentials and returning admin information.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
 public class SessionService {
+
     private final AdminQueryService adminQueryService;
 
+    /**
+     * Authenticates an admin using provided login credentials.
+     *
+     * @param requestAdminLoginReqDto login request containing login ID and password
+     * @return authenticated admin information
+     */
     public AdminDto requestAdminLogin(RequestAdminLoginReqDto requestAdminLoginReqDto) {
-        Admin admin = adminQueryService.findByLoginIdAndLoginPassword(requestAdminLoginReqDto.getLoginId(), requestAdminLoginReqDto.getLoginPassword());
+        Admin admin = adminQueryService.findByLoginIdAndLoginPassword(
+                requestAdminLoginReqDto.getLoginId(),
+                requestAdminLoginReqDto.getLoginPassword()
+        );
         return AdminDto.fromAdmin(admin);
     }
 }
