@@ -83,7 +83,7 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     // Web3
-    implementation("org.web3j:core:4.13.0")
+    implementation("org.web3j:core:4.14.0")
 }
 
 dependencyManagement {
