@@ -114,8 +114,8 @@ node {
     version = "22.9.0"
     download = true
     nodeProjectDir = file("${frontendResourceDir}")
-    workDir = file("${projectDir}/.gradle/nodejs")
-    npmWorkDir = file("${projectDir}/.gradle/npm")
+    workDir = layout.buildDirectory.dir("nodejs").get().asFile
+    npmWorkDir = layout.buildDirectory.dir("npm").get().asFile
 }
 
 import com.github.gradle.node.npm.task.NpmTask
@@ -151,9 +151,7 @@ tasks.named('copyFrontResources') {
 }
 
 tasks.named('processResources') {
-    println "## skipFrontendBuild : ${skipFrontendBuild}"
     if (!Boolean.valueOf(skipFrontendBuild)) {
         dependsOn('npm_build', 'copyFrontResources')
     }
-
 }
