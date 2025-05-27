@@ -96,6 +96,8 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+
+import com.github.gradle.node.npm.task.NpmTask
 import com.github.jk1.license.render.*
 import com.github.jk1.license.filter.LicenseBundleNormalizer
 import com.github.jk1.license.filter.ExcludeTransitiveDependenciesFilter
