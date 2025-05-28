@@ -330,7 +330,7 @@ public class WalletEntityManagementService {
                 .name(walletServiceInfo.getName())
                 .serverUrl(walletServiceInfo.getServerUrl())
                 .certificateUrl(walletServiceInfo.getCertificateUrl())
-                .role(RoleType.APP_PROVIDER)
+                .role(RoleType.WALLET_PROVIDER)
                 .build();
         try {
             String request = JsonUtil.serializeToJson(registerDidToTaReqDto);
