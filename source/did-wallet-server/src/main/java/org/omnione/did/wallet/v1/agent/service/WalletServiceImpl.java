@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.datamodel.data.AttestedDidDoc;
 import org.omnione.did.base.datamodel.enums.ProofPurpose;
+import org.omnione.did.base.db.domain.Wallet;
 import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
@@ -35,6 +36,7 @@ import org.omnione.did.data.model.did.Proof;
 import org.omnione.did.data.model.enums.did.ProofType;
 import org.omnione.did.data.model.provider.Provider;
 import org.omnione.did.wallet.v1.admin.service.query.WalletServiceQueryService;
+import org.omnione.did.wallet.v1.agent.service.query.WalletQueryService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +54,7 @@ public class WalletServiceImpl implements WalletService {
     private final SignatureService signatureService;
     private final DidDocService didDocService;
     private final WalletServiceQueryService walletServiceQueryService;
+    private final WalletQueryService walletQueryService;
 
     /**
      * Signs a wallet by creating an attested DID document.
@@ -80,6 +83,13 @@ public class WalletServiceImpl implements WalletService {
 
             log.debug("*** Finished signWallet ***");
             log.debug("response: {}", JsonUtil.serializeToJson(attestedDidDoc));
+
+            // Save the wallet information.
+            log.debug("\t--> Saving Wallet Information");
+            walletQueryService.save(Wallet.builder()
+                    .walletId(walletId)
+                    .walletDid(didDocument.getId())
+                    .build());
 
             return attestedDidDoc;
         } catch (OpenDidException e) {
