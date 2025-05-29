@@ -10,10 +10,11 @@ Contents
 - [Open DID Wallet Database Table Definition](#open-did-wallet-database-table-definition)
   - [Contents](#contents)
   - [1. Overview](#1-overview)
+    - [1.1 ERD](#11-erd)
   - [2. Table Definition](#2-table-definition)
-    - [2.1 WALLET](#21-wallet)
-    - [2.2 CERTIFICATE VC](#22-certificate-vc)
-    - [2.3 WALLET SERVICE](#23-wallet-service)
+    - [2.1 Wallet](#21-wallet)
+    - [2.2 Certificate VC](#22-certificate-vc)
+    - [2.3 Wallet Service](#23-wallet-service)
     - [2.4. Admin](#24-admin)
 
 ## 1. Overview

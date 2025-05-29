@@ -28,8 +28,13 @@ Wallet Server Error
 <div style="page-break-after: always;"></div>
 
 # Table of Contents
+- [Wallet Server Error](#wallet-server-error)
+- [Table of Contents](#table-of-contents)
 - [Model](#model)
   - [Error Response](#error-response)
+    - [Description](#description)
+    - [Declaration](#declaration)
+    - [Property](#property)
 - [Error Code](#error-code)
   - [1. Transaction Errors (001xx)](#1-transaction-errors-001xx)
   - [2. Cryptography and Security Errors (002xx)](#2-cryptography-and-security-errors-002xx)
@@ -37,6 +42,7 @@ Wallet Server Error
   - [4. Wallet Errors (004xx)](#4-wallet-errors-004xx)
   - [5. General and Server Errors (005xx)](#5-general-and-server-errors-005xx)
   - [6. Blockchain Errors (006xx)](#6-blockchain-errors-006xx)
+  - [7. Admin Errors (007xx)](#7-admin-errors-007xx)
 
 # Model
 ## Error Response
@@ -90,6 +96,7 @@ public class ErrorResponse {
 | SSRVWLT00213     | Failed to generate hash value.                          | -           | Verify hash generation process.                |
 | SSRVWLT00214     | Failed to encode data.                                  | -           | Check encoding process and input data.         |
 | SSRVWLT00215     | Failed to decode data: incorrect encoding.              | -           | Verify encoded data and decoding method.       |
+| SSRVWLT00216 | Failed to generate keys: key already exists. | -           | Check if the key already exists. Avoid duplication before generation. |
 
 ## 3. DID and VC Related Errors (003xx)
 
@@ -109,6 +116,8 @@ public class ErrorResponse {
 | SSRVWLT00403     | Failed to generate signature.                  | -           | Check signature generation process.            |
 | SSRVWLT00404     | Failed to create wallet.                       | -           | Verify wallet creation process.                |
 | SSRVWLT00405     | Failed to get File Wallet Manager              | -           | Check File Wallet Manager initialization.      |
+| SSRVWLT00406 | Failed to create wallet: wallet already exists. | -         | Ensure the wallet doesn't already exist before creation. |
+| SSRVWLT00407 | Invalid proof purpose.                        | -           | Verify that the proof purpose is valid and correctly set. |
 
 ## 5. General and Server Errors (005xx)
 
@@ -129,3 +138,11 @@ public class ErrorResponse {
 | SSRVWLT00605     | Failed to retrieve VC meta on the blockchain.           | -           | Check VC meta retrieval from blockchain.       |
 | SSRVWLT00606     | Failed to update VC status on the blockchain.           | -           | Verify VC status update process on blockchain. |
 | SSRVWLT00607     | Failed to remove index on the blockchain                | -           | Check index removal process on blockchain.     |
+
+
+## 7. Admin Errors (007xx)
+
+| Error Code   | Error Message                                | Description | Action Required                          |
+|--------------|-----------------------------------------------|-------------|------------------------------------------|
+| SSRVWLT00701 | Failed to find admin: admin is not registered. | -          | Ensure the admin is properly registered. |
+| SSRVWLT00702 | Failed to register admin: admin is already registered. | -     | Check for duplicate registration before proceeding. |

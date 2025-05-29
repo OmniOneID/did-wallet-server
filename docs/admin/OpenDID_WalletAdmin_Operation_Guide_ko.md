@@ -18,13 +18,22 @@ puppeteer:
 OpenDID IssuerAdmin Operation Guide
 ==
 
-- Date: 2025-03-31
-- Version: v1.0.0
+- Date: 2025-05-29
+- Version: v2.0.0
+
+개정 이력
+==
+| 버전   | 일자       | 변경 내용 |
+| ------ | ---------- | --------- |
+| v1.0.0 | 2025-03-31 | 최초 작성 |
+| v2.0.0 | 2025-05-29 | 버전 업   |
+
 
 목차
 ==
 
 - [OpenDID IssuerAdmin Operation Guide](#opendid-issueradmin-operation-guide)
+- [개정 이력](#개정-이력)
 - [목차](#목차)
 - [1. 소개](#1-소개)
   - [1.1. 개요](#11-개요)
