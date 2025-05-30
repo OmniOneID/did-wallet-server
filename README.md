@@ -21,13 +21,17 @@ did-wallet-server
 ├── SECURITY.md
 ├── docs
 │   └── api
-│       └── Wallet_API.md
-│   └── db
-│       └── OpenDID_TableDefinition_Wallet.md
+│       ├── Wallet_API.md
+│       └── Wallet_API_ko.md
 │   └── errorCode
-│       └── Wallet_ErrorCode.md
+│       ├── Wallet_ErrorCode.md
+│       └── Wallet_ErrorCode_ko.md
 │   └── installation
-│       └── OpenDID_WalletServer_InstallationAndOperation_Guide.md
+│       ├── OpenDID_WalletServer_InstallationAndOperation_Guide.md
+│       └── OpenDID_WalletServer_InstallationAndOperation_Guide_ko.md
+│   └── db
+│       ├── OpenDID_TableDefinition_Wallet.md
+│       └── OpenDID_TableDefinition_Wallet_ko.md
 └── source
     └── did-wallet-admin
         ├── frontend
