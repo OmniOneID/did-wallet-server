@@ -18,8 +18,8 @@ puppeteer:
 Open DID Wallet Server Installation And Operation Guide
 ==
 
-- Date: 2024-09-02
-- Version: v1.0.0
+- Date: 2025-05-29
+- Version: v2.0.0
 
 Table of Contents
 ==
@@ -64,7 +64,7 @@ Table of Contents
   - [5.4. wallet.yml](#54-walletyml)
     - [5.4.1. Wallet Access Information Configuration](#541-wallet-access-information-configuration)
   - [5.5. blockchain.properties](#55-blockchainproperties)
-    - [5.5.1. Blockchain Integration Settings](#551-blockchain-integration-settings)
+    - [5.5.1. Blockchain Integration Configuration](#551-blockchain-integration-configuration)
 - [6. Profile Configuration and Usage](#6-profile-configuration-and-usage)
   - [6.1. Profile Overview (`sample`, `dev`)](#61-profile-overview-sample-dev)
     - [6.1.1. `sample` Profile](#611-sample-profile)
@@ -90,7 +90,8 @@ Table of Contents
 ## 1.1. Overview
 This document provides a guide for the installation and operation of the Wallet server. It explains the Wallet server installation process, configuration methods, and operation procedures step-by-step, helping users install and manage the server efficiently.
 
-For the complete installation guide of OpenDID, please refer to the [Open DID Installation Guide].
+- For the complete installation guide of OpenDID, please refer to the [Open DID Installation Guide].
+- For the Admin console guide, please refer to [Open DID Admin Console Guide]
 
 <br/>
 
@@ -101,7 +102,7 @@ The Wallet server provides the Device Key Attestation signature API functionalit
 <br/>
 
 ## 1.3. System Requirements
-- **Java 17** or higher
+- **Java 21** or higher
 - **Gradle 7.0** or higher
 - **Docker** and **Docker Compose** (when using Docker)
 - At least **2GB RAM** and **10GB of disk space**
@@ -183,12 +184,13 @@ did-wallet-server
     └── wallet
         ├── gradle
         ├── libs
-            └── did-sdk-common-1.0.0.jar
-            └── did-blockchain-sdk-server-1.0.0.jar
-            └── did-core-sdk-server-1.0.0..jar
-            └── did-crypto-sdk-server-1.0.0.jar
-            └── did-datamodel-sdk-server-1.0.0.jar
-            └── did-wallet-sdk-server-1.0.0.jar
+            └── did-sdk-common-2.0.0.jar
+            └── did-blockchain-sdk-server-2.0.0.jar
+            └── did-core-sdk-server-2.0.0..jar
+            └── did-crypto-sdk-server-2.0.0.jar
+            └── did-datamodel-server-2.0.0.jar
+            └── did-wallet-sdk-server-2.0.0.jar
+            └── did-zkp-sdk-server-2.0.0.jar
         ├── sample
         └── src
         └── build.gradle
@@ -256,7 +258,7 @@ IntelliJ IDEA is a widely used Integrated Development Environment (IDE) for Java
 - In the Gradle tab of IntelliJ IDEA, select `Tasks -> application -> bootRun` and run it.
 - Gradle will automatically build and run the server.
 - Check the console log for the message "Started [ApplicationName] in [time] seconds" to confirm that the server has started successfully.
-- Once the server is running properly, open your browser and navigate to http://localhost:8090/swagger-ui/index.html to verify that the API documentation is displayed correctly through Swagger UI.
+- Once the server is running properly, open your browser and navigate to http://localhost:8095/swagger-ui/index.html to verify that the API documentation is displayed correctly through Swagger UI.
 
 > **Note**
 > - The Wallet server is initially configured to use the `sample` profile.
@@ -300,7 +302,7 @@ This section provides instructions on how to run the Open DID server using conso
       cd build/libs
       ls
     ```
-- This command generates the file `did-wallet-server-1.0.0.jar`.
+- This command generates the file `did-wallet-server-2.0.0.jar`.
 
 <br/>
 
@@ -308,7 +310,7 @@ This section provides instructions on how to run the Open DID server using conso
 Run the server using the built JAR file:
 
 ```bash
-java -jar did-wallet-server-1.0.0.jar
+java -jar did-wallet-server-2.0.0.jar
 ```
 
 > **Note**
@@ -500,31 +502,43 @@ JPA settings control how the application interacts with the database, significan
 <br/>
 
 ## 5.5. blockchain.properties
-- Role: Configures the blockchain server information for integration with the Wallet server. After installing the Hyperledger Fabric test network according to section '5.1.1. Installing the Hyperledger Fabric Test Network' in the [Open DID Installation Guide], files for the private key, certificates, and server connection information will be automatically generated. In the blockchain.properties file, you need to set the paths to these files and specify the network name that was used during the installation of the Hyperledger Fabric test network. Additionally, you will configure the chaincode name for Open DID that was deployed in '5.1.2. Deploying the Open DID Chaincode'.
+- Role: Configures blockchain server information to be integrated with the CA server. When you install the Hyperledger Besu network according to '5.3. Step 3: Blockchain Installation' in the [Open DID Installation Guide], private keys, certificates, and server connection information configuration files are automatically generated. In blockchain.properties, you configure the paths where these files are located and the network name entered during Hyperledger Besu installation.
 
 - Location: `src/main/resources/properties`
 
-### 5.5.1. Blockchain Integration Settings
+### 5.5.1. Blockchain Integration Configuration 
 
-* `fabric.configFilePath:`: 
-  - Specifies the path to the connection information file for Hyperledger Fabric. This file is automatically generated when the Hyperledger Fabric test network is installed, and the default filename is 'connection-org1.json'
-  - Example: {yourpath}/connection-org1.json
+#### EVM Network Configuration
 
-* `fabric.privateKeyFilePath:`: 
-  - Specifies the path to the private key file used by the Hyperledger Fabric client for signing transactions and authentication on the network. This file is automatically generated during the installation of the Hyperledger Fabric test netw
-  - Example: {yourpath}/{private key filename}
+- `evm.network.url:`:
+  - EVM Network address. When running Besu locally on the same machine as the client, use this fixed value. (Default Port: 8545)
+  - Example: http://localhost:8545
 
-* `fabric.certificateFilePath:`: 
-  - Specifies the path to the client certificate for Hyperledger Fabric. This file is automatically generated when the Hyperledger Fabric test network is installed, and the default filename is 'cert.pem' 
-  - Example: {yourpath}/cert.pem
+- `evm.chainId:`:
+  - Chain ID identifier. Currently using a fixed value of 1337. (Default Value: 1337)
+  - Example: 1337
 
-* `fabric.mychannel:`: 
-  - The name of the private network (channel) used in Hyperledger Fabric. You must set this to the channel name entered during the installation of the Hyperledger Fabric test network.
-  - Example: mychannel
+- `evm.gas.limit:`:
+  - Maximum gas limit allowed for Hyperledger Besu EVM transactions. Currently used as fixed value for Free Gas. (Default Value: 100000000)
+  - Example: 100000000
 
-* `fabric.chaincodeName:`: 🔒
-  - The name of the Open DID chaincode used in Hyperledger Fabric. This value is fixed as opendid.
-  - Example: opendid
+- `evm.gas.price :`:
+  - Gas price per unit. Currently used as fixed value 0 for Free Gas. (Default Value: 0)
+  - Example: 0
+
+- `evm.connection.timeout:`: 
+  - Network connection timeout value (milliseconds). Currently using the recommended fixed value of 10000. (Default Value: 10000)
+  - Example: 10000
+
+#### EVM Contract Configuration
+
+- `evm.connection.address:`: 
+  - Address value of the OpenDID Contract returned when deploying Smart Contract with Hardhat. For detailed guide, refer to [DID Besu Contract].
+  - Example: 0xa0E49611FB410c00f425E83A4240e1681c51DDf4
+
+- `evm.connection.privateKey:`: 
+  - k1 key used for API access control. Enter the key string defined in accounts inside hardhat.config.js (remove the 0x prefix) to enable API calls with Owner permissions (Default setting). For detailed guide, refer to [DID Besu Contract].
+  - Example: 0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63
 
 <br/>
 
@@ -560,7 +574,7 @@ This section explains how to switch profiles for each server operation method.
 - **Specify Profile:** Add the option `--spring.profiles.active={profile}` to the server startup command to activate the desired profile.
   
   ```bash
-  java -jar build/libs/did-wallet-server-1.0.0.jar --spring.profiles.active={profile}
+  java -jar build/libs/did-wallet-server-2.0.0.jar --spring.profiles.active={profile}
   ```
 
 - **Apply Configuration:** The configuration file corresponding to the activated profile will be applied.
@@ -674,4 +688,6 @@ docker-compose up -d
 This command runs the PostgreSQL container in the background. The PostgreSQL server will start based on the configured environment variables, and the database will be prepared. You can proceed with the integration settings to allow your application to use this database.
 
 <!-- References -->
-[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/feature/yklee0911/v1.0.1.0/release-V1.0.0.1/OepnDID_Installation_Guide-V1.0.0.1_ko.md
+[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/develop/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md
+[Open DID Admin Console Guide]: ../admin/OpenDID_WalletAdmin_Operation_Guide_ko.md
+[DID Besu Contract]: https://github.com/OmniOneID/did-besu-contract
