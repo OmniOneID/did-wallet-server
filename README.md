@@ -20,6 +20,9 @@ did-wallet-server
 ├── RELEASE-PROCESS.md
 ├── SECURITY.md
 ├── docs
+│   └── admin
+│       ├── OpenDID_WalletAdmin_Operation_Guide.md
+│       └── OpenDID_WalletAdmin_Operation_Guide_ko.md
 │   └── api
 │       ├── Wallet_API.md
 │       └── Wallet_API_ko.md
