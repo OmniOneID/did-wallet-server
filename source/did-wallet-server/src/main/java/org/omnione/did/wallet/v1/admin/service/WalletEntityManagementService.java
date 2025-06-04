@@ -131,7 +131,7 @@ public class WalletEntityManagementService {
      * @return an empty response DTO upon success
      */
     public EmptyResDto updateEntityInfo(SendEntityInfoReqDto sendEntityInfoReqDto) {
-        WalletServiceInfo existingWalletService = walletServiceQueryService.findWalletService();
+        WalletServiceInfo existingWalletService = walletServiceQueryService.findWalletServiceOrNull();
 
         if (existingWalletService == null) {
             walletServiceRepository.save(WalletServiceInfo.builder()
