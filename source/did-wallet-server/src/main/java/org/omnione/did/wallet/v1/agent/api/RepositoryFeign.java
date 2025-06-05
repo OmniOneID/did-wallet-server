@@ -16,6 +16,7 @@
 
 package org.omnione.did.wallet.v1.agent.api;
 
+import org.omnione.did.base.constants.UrlConstant;
 import org.omnione.did.wallet.v1.agent.api.dto.DidDocApiResDto;
 import org.omnione.did.wallet.v1.agent.api.dto.VcMetaApiResDto;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -26,16 +27,17 @@ import org.springframework.web.bind.annotation.RequestParam;
  * The RepositoryFeign interface is a Feign client that provides endpoints for getting a DID document and a verifiable credential metadata.
  * It is used to communicate with the Repository service.
  */
-@FeignClient(value = "Storage", url = "http://127.0.0.1:8097/repository", path = "/api/v1")
+@FeignClient(value = "Storage", url = "${lls.url:htt://127.0.0.1:8098}" + UrlConstant.LLS.V1)
 public interface RepositoryFeign {
+
     /**
-     * Get the DID document.
+     * Gets a DID document by its DID.
      *
-     * @param did the DID to get
-     * @return the DID document
+     * @param did DID to get the document for.
+     * @return Found DID document.
      */
-    @GetMapping("/did-doc")
-    DidDocApiResDto getDid(@RequestParam(name = "did") String did);
+    @GetMapping(UrlConstant.LLS.DID)
+    String getDid(@RequestParam(name = "did") String did);
     /**
      * Get the verifiable credential metadata.
      *

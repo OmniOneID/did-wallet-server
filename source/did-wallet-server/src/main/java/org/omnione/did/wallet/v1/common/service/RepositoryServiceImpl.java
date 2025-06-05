@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omnione.did.wallet.v1.agent.service;
+package org.omnione.did.wallet.v1.common.service;
 
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -40,30 +40,28 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 @Primary
-@Profile("repository")
+@Profile("lls")
 public class RepositoryServiceImpl implements StorageService {
     private final RepositoryFeign repositoryFeign;
 
     /**
-     * Retrieves a DID document from the repository.
+     * Finds a DID document by DID key URL.
      *
-     * @param didKeyUrl The DID key URL to retrieve the DID document.
-     * @return The retrieved DID document.
-     * @throws OpenDidException find DID document failure
+     * @param didKeyUrl The DID key URL of the document to find
+     * @return The found DID document
+     * @throws OpenDidException If the DID document cannot be found
      */
     @Override
     public DidDocument findDidDoc(String didKeyUrl) {
         try {
-            String did = DidUtil.extractDid(didKeyUrl);
+            String didDocument = repositoryFeign.getDid(didKeyUrl);
 
-            DidDocApiResDto didDocApiResDto = repositoryFeign.getDid(did);
-
-            byte[] decodedDidDoc = BaseMultibaseUtil.decode(didDocApiResDto.getDidDoc());
-
-            String didDocJson = new String(decodedDidDoc);
-            DidManager didManager = BaseCoreDidUtil.parseDidDoc(didDocJson);
+            DidManager didManager = BaseCoreDidUtil.parseDidDoc(didDocument);
 
             return didManager.getDocument();
+        } catch (OpenDidException e) {
+            log.error("Failed to find DID document.", e);
+            throw e;
         } catch (FeignException e) {
             log.error("Failed to find DID document.", e);
             throw new OpenDidException(ErrorCode.FIND_DID_DOC_FAILURE);

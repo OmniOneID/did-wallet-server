@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package org.omnione.did.wallet.v1.agent.service;
+package org.omnione.did.wallet.v1.common.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.ContractApi;
-import org.omnione.did.ContractFactory;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.property.BlockchainProperty;
 import org.omnione.did.data.model.did.DidDocAndStatus;
 import org.omnione.did.data.model.did.DidDocument;
 import org.omnione.exception.BlockChainException;
@@ -36,7 +34,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Profile("!repository")
+@Profile("!lls")
 public class BlockChainServiceImpl implements StorageService {
 
     private final ContractApi contractApi;
