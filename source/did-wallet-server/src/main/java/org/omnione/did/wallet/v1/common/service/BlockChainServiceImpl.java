@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Profile("!lss")
+@Profile("!sample & !lss")
 public class BlockChainServiceImpl implements StorageService {
 
     private final ContractApi contractApi;
