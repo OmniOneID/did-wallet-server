@@ -65,6 +65,8 @@ Table of Contents
     - [5.4.1. Wallet Access Information Configuration](#541-wallet-access-information-configuration)
   - [5.5. blockchain.properties](#55-blockchainproperties)
     - [5.5.1. Blockchain Integration Configuration](#551-blockchain-integration-configuration)
+      - [EVM Network Configuration](#evm-network-configuration)
+      - [EVM Contract Configuration](#evm-contract-configuration)
 - [6. Profile Configuration and Usage](#6-profile-configuration-and-usage)
   - [6.1. Profile Overview (`sample`, `dev`)](#61-profile-overview-sample-dev)
     - [6.1.1. `sample` Profile](#611-sample-profile)
@@ -74,12 +76,16 @@ Table of Contents
     - [6.2.2. Running the Server Using Console Commands](#622-running-the-server-using-console-commands)
     - [6.2.3. Running the Server Using Docker](#623-running-the-server-using-docker)
 - [7. Running After Building with Docker](#7-running-after-building-with-docker)
-  - [7.1. How to Build a Docker Image (Based on `Dockerfile`)](#71-how-to-build-a-docker-image-based-on-dockerfile)
-  - [7.2. Running the Docker Image](#72-running-the-docker-image)
-  - [7.3. Running with Docker Compose](#73-running-with-docker-compose)
-    - [7.3.1. `docker-compose.yml` File Explanation](#731-docker-composeyml-file-explanation)
-    - [7.3.2. Running and Managing Containers](#732-running-and-managing-containers)
-    - [7.3.3. How to Configure the Server](#733-how-to-configure-the-server)
+  - [7.1. Docker Image Build Method (Based on `Dockerfile`)](#71-docker-image-build-method-based-on-dockerfile)
+    - [7.1.1. Build Docker image](#711-build-docker-image)
+  - [7.2. Running with Docker Compose](#72-running-with-docker-compose)
+    - [7.2.1. Preparing Directories and Configuration Files](#721-preparing-directories-and-configuration-files)
+      - [1. Create docker-compose directory and config directory](#1-create-docker-compose-directory-and-config-directory)
+      - [2. Copy configuration files (yml) to config directory](#2-copy-configuration-files-yml-to-config-directory)
+      - [3. Modify blockchain.properties file](#3-modify-blockchainproperties-file)
+      - [4. Modify application-database.yml file](#4-modify-application-databaseyml-file)
+    - [7.2.2. Create `docker-compose.yml` file](#722-create-docker-composeyml-file)
+    - [7.2.3. Run Container](#723-run-container)
 - [8. Installing PostgreSQL with Docker](#8-installing-postgresql-with-docker)
   - [8.1. Installing PostgreSQL Using Docker Compose](#81-installing-postgresql-using-docker-compose)
   - [8.2. Running the PostgreSQL Container](#82-running-the-postgresql-container)
@@ -592,54 +598,85 @@ This section explains how to switch profiles for each server operation method.
 
 By following these methods, you can flexibly switch profile-specific settings and easily apply the appropriate configuration for your project environment.
 
+
 # 7. Running After Building with Docker
 
-## 7.1. How to Build a Docker Image (Based on `Dockerfile`)
-Build the Docker image using the following command:
+## 7.1. Docker Image Build Method (Based on `Dockerfile`)
+
+### 7.1.1. Build Docker image
+Build the Docker image with the following command:
 
 ```bash
-docker build -t did-wallet-server .
+cd {source_directory}
+docker build -t did-wallet-server -f did-wallet-server/Dockerfile .
 ```
 
-## 7.2. Running the Docker Image
-Run the built image with the following command:
+<br/>
 
+## 7.2. Running with Docker Compose
+
+### 7.2.1. Preparing Directories and Configuration Files
+
+#### 1. Create docker-compose directory and config directory
 ```bash
-docker run -d -p 8095:8095 did-wallet-server
+mkdir -p {docker_compose_directory}/config
 ```
 
-## 7.3. Running with Docker Compose
+#### 2. Copy configuration files (yml) to config directory
+```bash
+cp {application_yml_directory}/* {docker_compose_directory}/config/
+cp {blockchain_properties_path} {docker_compose_directory}/config/
+```
 
-### 7.3.1. `docker-compose.yml` File Explanation
-The `docker-compose.yml` file allows you to easily manage multiple containers.
+#### 3. Modify blockchain.properties file
+```yml
+evm.network.url=http://host.docker.internal:8545
+... (omitted)
+```
 
-```yaml
+> **host.docker.internal** is a special address that points to the host machine from within a Docker container.  
+> Since localhost inside a container refers to the container itself, you must use host.docker.internal to access services (PostgreSQL, blockchain) running on the host.
+
+#### 4. Modify application-database.yml file
+```yml
+spring:
+ ... (omitted)
+ datasource:
+   driver-class-name: org.postgresql.Driver
+   url: jdbc:postgresql://host.docker.internal:5430/wallet
+   username: omn
+   password: omn
+ ... (omitted)
+```
+
+### 7.2.2. Create `docker-compose.yml` file
+You can easily manage multiple containers using the `docker-compose.yml` file.
+
+```yml
 version: '3'
 services:
-  app:
-    image: did-wallet-server
-    ports:
-      - "8095:8095"
-    volumes:
-      - ${your-config-dir}:/app/config
-    environment:
-      - SPRING_PROFILES_ACTIVE=sample
+ app:
+   image: did-wallet-server
+   ports:
+     - "8095:8095"
+   volumes:
+     - {config_directory}:/app/config
+   environment:
+     - SPRING_PROFILES_ACTIVE=dev
+   extra_hosts:
+     - "host.docker.internal:host-gateway"
 ```
 
-### 7.3.2. Running and Managing Containers
-Run the container using Docker Compose with the following command:
+> - In the example above, the `config_directory` is mounted to `/app/config` inside the container to share configuration files.
+>   - Configuration files located in `config_directory` take priority over default configuration files.
+>   - For detailed configuration instructions, please refer to [5. Configuration Guide](#5-configuration-guide).
 
+
+### 7.2.3. Run Container
 ```bash
+cd {docker_compose_directory}
 docker-compose up -d
 ```
-
-### 7.3.3. How to Configure the Server
-In the example above, the `${your-config-dir}` directory is mounted to `/app/config` inside the container to share configuration files.
-
-- If additional configuration is required, you can modify settings by adding separate property files to the mounted folder.
-For example, add an application.yml file to `${your-config-dir}` and write the necessary configuration changes in this file.
-The `application.yml` file located in `${your-config-dir}` will take precedence over the default configuration files.
-- For detailed configuration instructions, please refer to [5. Configuration Guide.](#5-configuration-guide)
 
 <br/>
 
