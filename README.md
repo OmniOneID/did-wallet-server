@@ -4,6 +4,17 @@ Wallet Server
 Welcome to the Wallet Server Repository. <br>
 This repository contains the source code, documentation, and related resources for the Wallet Server.
 
+## S/W Specifications
+| Category           | Details                                         |
+|--------------------|-------------------------------------------------|
+| OS                 | macOS / Linux / Windows 10 or higher            |
+| Language           | Java 21 or higher                               |
+| IDE                | IntelliJ IDEA                                   |
+| Build System       | Gradle 7.0 or higher                            |
+| Compatibility      | Requires JDK 21 or higher                       |
+| Docker             | Docker and Docker Compose must be installed     |
+| Other Requirements | Minimum 2GB RAM and 10GB of disk space required |
+
 ## Folder Structure
 Overview of the major folders and documents in the project directory:
 
@@ -20,14 +31,21 @@ did-wallet-server
 ├── RELEASE-PROCESS.md
 ├── SECURITY.md
 ├── docs
+│   └── admin
+│       ├── OpenDID_WalletAdmin_Operation_Guide.md
+│       └── OpenDID_WalletAdmin_Operation_Guide_ko.md
 │   └── api
-│       └── Wallet_API.md
-│   └── db
-│       └── OpenDID_TableDefinition_Wallet.md
+│       ├── Wallet_API.md
+│       └── Wallet_API_ko.md
 │   └── errorCode
-│       └── Wallet_ErrorCode.md
+│       ├── Wallet_ErrorCode.md
+│       └── Wallet_ErrorCode_ko.md
 │   └── installation
-│       └── OpenDID_WalletServer_InstallationAndOperation_Guide.md
+│       ├── OpenDID_WalletServer_InstallationAndOperation_Guide.md
+│       └── OpenDID_WalletServer_InstallationAndOperation_Guide_ko.md
+│   └── db
+│       ├── OpenDID_TableDefinition_Wallet.md
+│       └── OpenDID_TableDefinition_Wallet_ko.md
 └── source
     └── did-wallet-admin
         ├── frontend

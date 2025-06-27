@@ -18,13 +18,22 @@ puppeteer:
 OpenDID IssuerAdmin Operation Guide
 ==
 
-- Date: 2025-03-31
-- Version: v1.0.0
+- Date: 2025-05-29
+- Version: v2.0.0
+
+개정 이력
+==
+| 버전   | 일자       | 변경 내용 |
+| ------ | ---------- | --------- |
+| v1.0.0 | 2025-03-31 | 최초 작성 |
+| v2.0.0 | 2025-05-29 | 버전 업   |
+
 
 목차
 ==
 
 - [OpenDID IssuerAdmin Operation Guide](#opendid-issueradmin-operation-guide)
+- [개정 이력](#개정-이력)
 - [목차](#목차)
 - [1. 소개](#1-소개)
   - [1.1. 개요](#11-개요)
@@ -367,4 +376,4 @@ ROOT 계정은 `Admin Management` 메뉴에서 모든 기능을 수행할 수 �
 > `CANCEL 버튼` 클릭시 등록을 취소하고 이전 화면으로 돌아갑니다.
 
 
-[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/develop/unrelease-V1.0.1.0/OepnDID_Installation_Guide-V1.0.1.0_ko.md
+[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/develop/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md

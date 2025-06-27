@@ -70,7 +70,14 @@ After QA approval, manage the complete version control of all modules in a separ
 
    | Repository         | Version         | Changelog                   | Release                    |
    | ------------------ | --------------- | --------------------------- | --------------------------- |
-   | did-ca-aos         | V1.0.1          | [Changelog](https://github.com/OmniOneID/did-wallet-server/blob/main/CHANGELOG.md) |
+   | did-wallet-server       | V1.0.1          | [Changelog](https://github.com/OmniOneID/did-wallet-server/blob/main/CHANGELOG.md) |
+   | ..                 | ..              | ..                           |
+
+   ## Release Note V2.0.0.0
+
+   | Repository         | Version         | Changelog                   | Release                    |
+   | ------------------ | --------------- | --------------------------- | --------------------------- |
+   | did-wallet-server       | V2.0.0          | [Changelog](https://github.com/OmniOneID/did-wallet-server/blob/main/CHANGELOG.md) |
    | ..                 | ..              | ..                           |
 
 <br>

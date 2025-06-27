@@ -50,8 +50,7 @@ import org.omnione.did.wallet.v1.admin.service.query.DidDocumentQueryService;
 import org.omnione.did.wallet.v1.admin.service.query.WalletServiceQueryService;
 import org.omnione.did.wallet.v1.agent.service.EnrollEntityService;
 import org.omnione.did.wallet.v1.agent.service.FileWalletService;
-import org.omnione.did.wallet.v1.admin.service.JsonParseService;
-import org.omnione.did.wallet.v1.agent.service.StorageService;
+import org.omnione.did.wallet.v1.common.service.StorageService;
 import org.omnione.did.wallet.v1.agent.service.query.CertificateVcQueryService;
 import org.omnione.did.wallet.v1.common.dto.EmptyResDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -131,7 +130,7 @@ public class WalletEntityManagementService {
      * @return an empty response DTO upon success
      */
     public EmptyResDto updateEntityInfo(SendEntityInfoReqDto sendEntityInfoReqDto) {
-        WalletServiceInfo existingWalletService = walletServiceQueryService.findWalletService();
+        WalletServiceInfo existingWalletService = walletServiceQueryService.findWalletServiceOrNull();
 
         if (existingWalletService == null) {
             walletServiceRepository.save(WalletServiceInfo.builder()
@@ -330,7 +329,7 @@ public class WalletEntityManagementService {
                 .name(walletServiceInfo.getName())
                 .serverUrl(walletServiceInfo.getServerUrl())
                 .certificateUrl(walletServiceInfo.getCertificateUrl())
-                .role(RoleType.APP_PROVIDER)
+                .role(RoleType.WALLET_PROVIDER)
                 .build();
         try {
             String request = JsonUtil.serializeToJson(registerDidToTaReqDto);
