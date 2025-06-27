@@ -7,5 +7,10 @@
 
   <include file="set.0/project-init_wallet.xml" relativeToChangelogFile="true" />
   <include file="set.0/project-init_certificate_vc.xml" relativeToChangelogFile="true" />
+  <include file="set.1/admin-dev_wallet_service.xml" relativeToChangelogFile="true" />
+  <include file="set.1/admin-dev_admin.xml" relativeToChangelogFile="true" />
+  <include file="set.2/admin-2phase-did_document.xml" relativeToChangelogFile="true"/>
+  <include file="set.2/admin-2phase-wallet_service.xml" relativeToChangelogFile="true"/>
+  <include file="set.2/admin-2phase_admin.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

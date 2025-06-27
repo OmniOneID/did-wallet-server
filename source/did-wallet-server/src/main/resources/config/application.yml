@@ -10,13 +10,15 @@ spring:
         - spring-docs
         - database
         - tas
+        - blockchain
       sample:
         - logging
         - spring-docs
         - database-sample
         - wallet
         - tas
-
+      lss:
+        - lss
   jackson:
     default-property-inclusion: non_null
     serialization:
@@ -24,3 +26,16 @@ spring:
 
 server:
   port: 8095
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "health"
+          - "shutdown"
+  endpoint:
+    health:
+      show-details: "never"
+    shutdown:
+      enabled: true

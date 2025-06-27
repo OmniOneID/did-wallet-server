@@ -18,9 +18,10 @@ package org.omnione.did.base.db.repository;
 
 import org.omnione.did.base.db.domain.Wallet;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 /**
  * Repository interface for Wallet entity operations.
  */
-public interface WalletRepository extends JpaRepository<Wallet, Long> {
+public interface WalletRepository extends JpaRepository<Wallet, Long>, QuerydslPredicateExecutor<Wallet>, WalletRepositoryAdmin {
 }

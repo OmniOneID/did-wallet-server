@@ -17,13 +17,17 @@
 package org.omnione.did;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.omnione.did.base.constants.UrlConstant;
+import org.omnione.did.base.utils.BaseCoreDidUtil;
+import org.omnione.did.core.manager.DidManager;
 import org.omnione.did.data.model.did.DidDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,6 +44,9 @@ class SignWalletTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private ContractApi contractApi;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -50,13 +57,15 @@ class SignWalletTest {
         String didDocJson = """
                 {"@context":["https://www.w3.org/ns/did/v1"],"assertionMethod":["assert"],"authentication":["auth"],"controller":"did:omn:tas","created":"2024-09-05T08:16:57Z","deactivated":false,"id":"did:omn:2K8iHSTyZECsQx3FWUE53gBc6Xr5","keyAgreement":["keyagree"],"proofs":[{"created":"2024-09-05T08:16:57Z","proofPurpose":"assertionMethod","proofValue":"mIIRwTyGNmoyyX85YKNXuPDJD2Fa9ftKdIDF1WH98iJzQSK9NPCoWxCUc8hvKNOnfWUmOvoJRa+Hu+1UXhQK/TDg=","type":"Secp256r1Signature2018","verificationMethod":"did:omn:2K8iHSTyZECsQx3FWUE53gBc6Xr5?versionId=1#assert"},{"created":"2024-09-05T08:16:57Z","proofPurpose":"authentication","proofValue":"mIK1IgIhez27Onuei4512ho2oY+Z2TLV9JoRexqknR2ToUIIgEdHJa2gIfElaaBUSEJKTqXETcHFMLzn8gjqM2q8=","type":"Secp256r1Signature2018","verificationMethod":"did:omn:2K8iHSTyZECsQx3FWUE53gBc6Xr5?versionId=1#auth"}],"updated":"2024-09-05T08:16:57Z","verificationMethod":[{"authType":1,"controller":"did:omn:tas","id":"keyagree","publicKeyMultibase":"mA7RK+/86wDvopTd4hyd08lQuLrxOXZUASNAdA+JUg+eT","type":"Secp256r1VerificationKey2018"},{"authType":1,"controller":"did:omn:tas","id":"auth","publicKeyMultibase":"mAqmLQlpWKJSHXbRwPNl2vHVXlLVedF43qZv9FK49epZR","type":"Secp256r1VerificationKey2018"},{"authType":1,"controller":"did:omn:tas","id":"assert","publicKeyMultibase":"mAzVzjaLzpaMfP3UG2Y4ngxufk2ODRl3N3Gmwg4JqBZ9U","type":"Secp256r1VerificationKey2018"}],"versionId":"1"}
                 """;
-        DidDocument didDocument = objectMapper.readValue(didDocJson, DidDocument.class);
+        DidDocument didDocument = new DidDocument();
+        didDocument.fromJson(didDocJson);
 
+        String rawJson = new Gson().toJson(didDocument);
 
         // 2. 요청
-        MvcResult result = mockMvc.perform(post(UrlConstant.Wallet.V1 + UrlConstant.Wallet.REQUEST_SIGN_WALLET)
+        MvcResult result = mockMvc.perform(post(UrlConstant.Wallet.AGENT_V1 + UrlConstant.Wallet.REQUEST_SIGN_WALLET)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(didDocument)))
+                        .content(rawJson))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
