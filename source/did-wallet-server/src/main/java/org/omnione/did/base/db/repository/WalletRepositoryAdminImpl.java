@@ -69,7 +69,7 @@ public class WalletRepositoryAdminImpl implements WalletRepositoryAdmin {
                 case "walletDid":
                     predicate = predicate.and(qWallet.walletDid.eq(searchValue));
                     break;
-                case "id":
+                case "walletId":
                     predicate = predicate.and(qWallet.walletId.eq(searchValue));
                     break;
                 default:

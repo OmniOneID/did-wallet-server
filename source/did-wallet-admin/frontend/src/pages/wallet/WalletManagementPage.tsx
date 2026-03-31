@@ -1,12 +1,10 @@
-
 import { Box, Link, styled, Typography } from '@mui/material';
 import { GridPaginationModel } from '@mui/x-data-grid';
 import { useDialogs } from '@toolpad/core';
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router';
 import FullscreenLoader from '../../components/loading/FullscreenLoader';
 import CustomDataGrid from '../../components/data-grid/CustomDataGrid';
-import CustomConfirmDialog from '../../components/dialog/CustomConfirmDialog';
 import CustomDialog from '../../components/dialog/CustomDialog';
 import { useSession } from '../../context/SessionContext';
 import { formatErrorMessage } from '../../utils/error-handler';
@@ -29,6 +27,8 @@ const WalletManagementPage = (props: Props) => {
     const [totalRows, setTotalRows] = useState<number>(0);
     const [selectedRow, setSelectedRow] = useState<string | number | null>(null);
     const [rows, setRows] = useState<WalletRow[]>([]);
+    const [searchText, setSearchText] = useState<string>('');
+    const [selectedSearch, setSelectedSearch] = useState<string>('walletId');
 
     const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
         page: 0,
@@ -38,21 +38,61 @@ const WalletManagementPage = (props: Props) => {
     const selectedRowData = useMemo(() => {
         return rows.find(row => row.id === selectedRow) || null;
     }, [rows, selectedRow]);
-    
-    useEffect(() => {
+
+    const fetchData = useCallback(async () => {
         setLoading(true);
-        fetchWalletList(paginationModel.page, paginationModel.pageSize, null, null)
-            .then((response) => {
+        try {
+            const response = await fetchWalletList(
+                paginationModel.page,
+                paginationModel.pageSize,
+                selectedSearch && searchText.trim() ? selectedSearch : null,
+                selectedSearch && searchText.trim() ? searchText.trim() : null
+            );
             setRows(response.data.content);
             setTotalRows(response.data.totalElements);
-            })
-            .catch((err) => {
-            console.error("Failed to retrieve Wallet List. ", err);
-            navigate('/error', { state: { message: formatErrorMessage(err, "Failed to fetch Wallet List") } });
-            })
-            .finally(() => setLoading(false));
-    }, [paginationModel]);
-    
+        } catch (err) {
+            console.error("Failed to fetch Wallet List ", err);
+            navigate('/error', { state: { message: formatErrorMessage(err, "Failed to retrieve Wallet List") } });
+        } finally {
+            setLoading(false);
+        }
+    }, [paginationModel.page, paginationModel.pageSize, selectedSearch, searchText, navigate]);
+
+    const getData = useCallback(async () => {
+        setLoading(true);
+        try {
+            const response = await fetchWalletList(
+                0,
+                paginationModel.pageSize,
+                selectedSearch && searchText.trim() ? selectedSearch : null,
+                selectedSearch && searchText.trim() ? searchText.trim() : null
+            );
+            setRows(response.data.content);
+            setTotalRows(response.data.totalElements);
+            setPaginationModel((prev) => ({ ...prev, page: 0 }));
+        } catch (err) {
+            await dialogs.open(CustomDialog, {
+                title: 'Notification',
+                message: formatErrorMessage(err, 'Failed to retrieve Wallet List'),
+                isModal: true,
+            });
+        } finally {
+            setLoading(false);
+        }
+    }, [paginationModel.pageSize, selectedSearch, searchText, dialogs]);
+
+    const handleSearch = useCallback(async (field: string, text: string) => {
+        const trimmed = text.trim();
+        if (!trimmed) return;
+        setSelectedSearch(field);
+        setSearchText(trimmed);
+        setPaginationModel((prev) => ({ ...prev, page: 0 }));
+    }, []);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
     const StyledContainer = useMemo(() => styled(Box)(({ theme }) => ({
         margin: 'auto',
         marginTop: theme.spacing(1),
@@ -74,15 +114,15 @@ const WalletManagementPage = (props: Props) => {
         <FullscreenLoader open={loading} />
         <StyledContainer>
             <StyledSubTitle>User Wallet Management</StyledSubTitle>
-            <CustomDataGrid 
-                rows={rows} 
+            <CustomDataGrid
+                rows={rows}
                 columns={[
-                    { 
-                    field: 'walletId', 
-                    headerName: "ID", 
+                    {
+                    field: 'walletId',
+                    headerName: "ID",
                     width: 250,
                     renderCell: (params) => (
-                        <Link 
+                        <Link
                         component="button"
                         variant='body2'
                         onClick={() => navigate(`/wallet-management/${params.row.id}`)}
@@ -94,13 +134,24 @@ const WalletManagementPage = (props: Props) => {
                     { field: 'walletDid', headerName: "DID", width: 150},
                     { field: 'createdAt', headerName: "Registered At", width: 150},
                     { field: 'updatedAt', headerName: "Updated At", width: 150},
-                ]} 
-                selectedRow={selectedRow} 
+                ]}
+                selectedRow={selectedRow}
                 setSelectedRow={setSelectedRow}
-                paginationMode="server" 
-                totalRows={totalRows} 
-                paginationModel={paginationModel} 
-                setPaginationModel={setPaginationModel} 
+                enableSearch={true}
+                searchText={searchText}
+                setSearchText={setSearchText}
+                selectedSearch={selectedSearch}
+                setSelectedSearch={setSelectedSearch}
+                searchOptions={[
+                    { value: 'walletId', label: 'ID' },
+                    { value: 'walletDid', label: 'DID' },
+                ]}
+                onSearch={handleSearch}
+                onRefresh={getData}
+                paginationMode="server"
+                totalRows={totalRows}
+                paginationModel={paginationModel}
+                setPaginationModel={setPaginationModel}
             />
 
         </StyledContainer>
