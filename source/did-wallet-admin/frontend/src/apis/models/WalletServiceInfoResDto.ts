@@ -10,4 +10,5 @@ export interface WalletServiceInfoResDto {
   didDocument?: any;
   createdAt: string;
   updatedAt: string;
+  certificateVc?: string;
 }

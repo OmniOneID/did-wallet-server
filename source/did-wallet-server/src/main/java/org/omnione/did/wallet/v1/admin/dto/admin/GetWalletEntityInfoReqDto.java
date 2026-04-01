@@ -53,6 +53,7 @@ public class GetWalletEntityInfoReqDto {
     private DidDocument didDocument;
     private String createdAt;
     private String updatedAt;
+    private String certificateVc;
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
     private static String formatInstant(Instant instant) {
@@ -88,6 +89,23 @@ public class GetWalletEntityInfoReqDto {
                         .didDocument(didDocument)
                         .createdAt(formatInstant(t.getCreatedAt()))
                         .updatedAt(formatInstant(t.getUpdatedAt()))
+                        .build())
+                .orElse(null);
+    }
+
+    public static GetWalletEntityInfoReqDto fromEntity(WalletServiceInfo walletService, DidDocument didDocument, String certificateVc) {
+        return Optional.ofNullable(walletService)
+                .map(t -> GetWalletEntityInfoReqDto.builder()
+                        .id(t.getId())
+                        .did(t.getDid())
+                        .name(t.getName())
+                        .status(t.getStatus())
+                        .serverUrl(t.getServerUrl())
+                        .certificateUrl(t.getCertificateUrl())
+                        .didDocument(didDocument)
+                        .createdAt(formatInstant(t.getCreatedAt()))
+                        .updatedAt(formatInstant(t.getUpdatedAt()))
+                        .certificateVc(certificateVc)
                         .build())
                 .orElse(null);
     }

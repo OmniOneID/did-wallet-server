@@ -98,6 +98,12 @@ public class WalletEntityManagementService {
         }
 
         DidDocument didDocument = storageService.findDidDoc(existingWalletService.getDid());
+
+        if (existingWalletService.getStatus() == WalletServiceStatus.ACTIVATE) {
+            String certificateVc = certificateVcQueryService.findCertificateVc().getVc();
+            return GetWalletEntityInfoReqDto.fromEntity(existingWalletService, didDocument, certificateVc);
+        }
+
         return GetWalletEntityInfoReqDto.fromEntity(existingWalletService, didDocument);
     }
 
