@@ -12,5 +12,6 @@
   <include file="set.2/admin-2phase-did_document.xml" relativeToChangelogFile="true"/>
   <include file="set.2/admin-2phase-wallet_service.xml" relativeToChangelogFile="true"/>
   <include file="set.2/admin-2phase_admin.xml" relativeToChangelogFile="true"/>
+  <include file="set.3/create-table_server_config.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

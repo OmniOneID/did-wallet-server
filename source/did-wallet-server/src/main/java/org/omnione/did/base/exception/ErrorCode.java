@@ -106,6 +106,8 @@ public enum ErrorCode {
     WALLET_INFO_NOT_FOUND("00901", "Failed to find wallet: wallet is not registered.", 400),
     INVALID_DID_DOCUMENT("00102", "Invalid DID Document", 400),
 
+    // Server config errors (011xx)
+    SERVER_CONFIG_KEY_NOT_FOUND("01101", "Server configuration key not found.", 400),
 
 ;
 

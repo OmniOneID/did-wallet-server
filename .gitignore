@@ -251,3 +251,6 @@ sketch
 .ionide
 
 CLAUDE.md
+
+### Frontend build output ###
+**/src/main/resources/static/
