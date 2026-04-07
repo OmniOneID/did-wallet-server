@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.constants.UrlConstant;
 import org.omnione.did.wallet.v1.admin.dto.admin.AdminDto;
+import org.omnione.did.wallet.v1.admin.dto.admin.ChangeAdminIdAndPasswordReqDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.RegisterAdminReqDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.ResetPasswordByRootReqDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.ResetPasswordReqDto;
@@ -130,5 +131,17 @@ public class AdminManagementController {
     @ResponseBody
     public EmptyResDto resetPasswordByRoot(@RequestBody ResetPasswordByRootReqDto resetPasswordByRootReqDto) {
         return adminManagementService.resetPasswordByRoot(resetPasswordByRootReqDto);
+    }
+
+    /**
+     * Changes an admin's login ID and password simultaneously (used in first-login flow).
+     *
+     * @param changeAdminIdAndPasswordReqDto the request containing old/new login ID and passwords
+     * @return updated admin information
+     */
+    @PostMapping(value = "/admins/change-id-and-password")
+    @ResponseBody
+    public AdminDto changeAdminIdAndPassword(@Valid @RequestBody ChangeAdminIdAndPasswordReqDto changeAdminIdAndPasswordReqDto) {
+        return adminManagementService.changeAdminIdAndPassword(changeAdminIdAndPasswordReqDto);
     }
 }

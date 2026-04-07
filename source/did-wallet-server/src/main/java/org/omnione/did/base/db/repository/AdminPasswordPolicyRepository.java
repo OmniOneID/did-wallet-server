@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.omnione.did.wallet.v1.admin.dto.admin;
+package org.omnione.did.base.db.repository;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.omnione.did.base.db.domain.AdminPasswordPolicy;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 /**
- * Data Transfer Object for checking admin ID duplication in the Admin Console.
- * <p>
- * Indicates whether the provided login ID is unique.
+ * Repository for admin password policy settings.
  */
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class VerifyAdminIdUniqueResDto {
-    private boolean unique;
+public interface AdminPasswordPolicyRepository extends JpaRepository<AdminPasswordPolicy, Long> {
+
+    /**
+     * Finds the first (and typically only) password policy record by lowest ID.
+     *
+     * @return optional AdminPasswordPolicy
+     */
+    Optional<AdminPasswordPolicy> findTop1ByOrderByIdAsc();
 }

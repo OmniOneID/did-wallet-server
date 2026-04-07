@@ -15,22 +15,33 @@
  */
 package org.omnione.did.wallet.v1.admin.dto.admin;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
- * Data Transfer Object for checking admin ID duplication in the Admin Console.
- * <p>
- * Indicates whether the provided login ID is unique.
+ * Request DTO for registering or updating admin password policy settings.
  */
 @Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class VerifyAdminIdUniqueResDto {
-    private boolean unique;
+public class RegisterAdminPasswordPolicyReqDto {
+
+    @NotNull
+    private Short minLength;
+
+    @NotNull
+    private Boolean requireUppercase;
+
+    @NotNull
+    private Boolean requireNumber;
+
+    @NotNull
+    private Boolean requireSpecial;
+
+    @NotNull
+    private Short passwordExpiryDays;
 }

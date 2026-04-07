@@ -15,22 +15,30 @@
  */
 package org.omnione.did.wallet.v1.admin.dto.admin;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
- * Data Transfer Object for checking admin ID duplication in the Admin Console.
- * <p>
- * Indicates whether the provided login ID is unique.
+ * Request DTO for changing admin login ID and password simultaneously (first-login flow).
  */
 @Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class VerifyAdminIdUniqueResDto {
-    private boolean unique;
+public class ChangeAdminIdAndPasswordReqDto {
+
+    @NotNull
+    private String oldLoginId;
+
+    @NotNull
+    private String newLoginId;
+
+    @NotNull
+    private String oldPassword;
+
+    @NotNull
+    private String newPassword;
 }

@@ -13,6 +13,8 @@ import AdminRegisterPage from './pages/admins/AdminRegisterPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import WalletManagementPage from './pages/wallet/WalletManagementPage';
 import WalletDetailPage from './pages/wallet/WalletDetailPage';
+import ServerConfigurationPage from './pages/server-configuration/ServerConfigurationPage';
+import PasswordPolicyManagementPage from './pages/admins/password-policy/PasswordPolicyManagementPage';
 
 const router = createBrowserRouter([
   {
@@ -43,15 +45,27 @@ const router = createBrowserRouter([
             Component: WalletManagementPage,
           },
           {
-            path: 'admin-management/admin-registration',
+            path: 'server-configuration',
+            Component: ServerConfigurationPage,
+          },
+          {
+            path: 'admins/admin-management/admin-registration',
             Component: AdminRegisterPage,
           },
           {
-            path: 'admin-management/:id',
+            path: 'admins/admin-management/:id',
             Component: AdminDetailPage,
           },
           {
-            path: 'admin-management',
+            path: 'admins/admin-management',
+            Component: AdminManagementPage,
+          },
+          {
+            path: 'admins/password-policy',
+            Component: PasswordPolicyManagementPage,
+          },
+          {
+            path: 'admins',
             Component: AdminManagementPage,
           },
         ],

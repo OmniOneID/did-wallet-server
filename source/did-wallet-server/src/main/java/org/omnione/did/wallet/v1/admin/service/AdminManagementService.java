@@ -18,11 +18,13 @@ package org.omnione.did.wallet.v1.admin.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.omnione.did.base.db.constant.PasswordResetReason;
 import org.omnione.did.base.db.domain.Admin;
 import org.omnione.did.base.db.repository.AdminRepository;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import org.omnione.did.wallet.v1.admin.dto.admin.AdminDto;
+import org.omnione.did.wallet.v1.admin.dto.admin.ChangeAdminIdAndPasswordReqDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.RegisterAdminReqDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.ResetPasswordByRootReqDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.ResetPasswordReqDto;
@@ -32,6 +34,8 @@ import org.omnione.did.wallet.v1.common.dto.EmptyResDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
 
 /**
  * Service for managing administrator accounts in the Admin Console.
@@ -60,6 +64,8 @@ public class AdminManagementService {
         );
         admin.setLoginPassword(resetPasswordReqDto.getNewPassword());
         admin.setRequirePasswordReset(false);
+        admin.setPasswordResetReason(null);
+        admin.setLastPasswordChangedAt(Instant.now());
 
         return AdminDto.fromAdmin(adminRepository.save(admin));
     }
@@ -106,6 +112,7 @@ public class AdminManagementService {
                 .role(registerAdminReqDto.getRole())
                 .loginPassword(registerAdminReqDto.getLoginPassword())
                 .requirePasswordReset(true)
+                .passwordResetReason(PasswordResetReason.FIRST_LOGIN)
                 .emailVerified(false)
                 .createdBy("SYSTEM")
                 .build();
@@ -124,7 +131,7 @@ public class AdminManagementService {
     public VerifyAdminIdUniqueResDto verifyAdminIdUnique(String loginId) {
         long count = adminQueryService.countByLoginId(loginId);
         return VerifyAdminIdUniqueResDto.builder()
-                .isUnique(count == 0)
+                .unique(count == 0)
                 .build();
     }
 
@@ -150,8 +157,43 @@ public class AdminManagementService {
         Admin admin = adminQueryService.findByLoginId(resetPasswordByRootReqDto.getLoginId());
         admin.setLoginPassword(resetPasswordByRootReqDto.getNewPassword());
         admin.setRequirePasswordReset(true);
+        admin.setPasswordResetReason(PasswordResetReason.ADMIN_FORCED);
 
         adminRepository.save(admin);
         return new EmptyResDto();
+    }
+
+    /**
+     * Changes an admin's login ID and password simultaneously (used in first-login flow).
+     * Validates old credentials, ensures new login ID uniqueness, and clears password reset flags.
+     *
+     * @param reqDto request containing old/new login ID and passwords
+     * @return updated admin information
+     * @throws OpenDidException if credentials are invalid or new login ID is already taken
+     */
+    public AdminDto changeAdminIdAndPassword(ChangeAdminIdAndPasswordReqDto reqDto) {
+        // Verify old credentials
+        Admin admin = adminQueryService.findByLoginIdAndLoginPassword(
+                reqDto.getOldLoginId(),
+                reqDto.getOldPassword()
+        );
+
+        // Validate new login ID uniqueness (cannot be same as old or already taken)
+        if (!reqDto.getNewLoginId().equals(reqDto.getOldLoginId())) {
+            Admin existing = adminQueryService.findByLoginIdOrNull(reqDto.getNewLoginId());
+            if (existing != null) {
+                throw new OpenDidException(ErrorCode.ADMIN_ALREADY_EXISTS);
+            }
+        } else {
+            throw new OpenDidException(ErrorCode.ADMIN_ALREADY_EXISTS);
+        }
+
+        admin.setLoginId(reqDto.getNewLoginId());
+        admin.setLoginPassword(reqDto.getNewPassword());
+        admin.setRequirePasswordReset(false);
+        admin.setPasswordResetReason(null);
+        admin.setLastPasswordChangedAt(Instant.now());
+
+        return AdminDto.fromAdmin(adminRepository.save(admin));
     }
 }

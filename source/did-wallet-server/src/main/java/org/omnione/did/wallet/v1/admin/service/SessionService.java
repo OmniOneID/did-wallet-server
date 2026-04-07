@@ -18,11 +18,19 @@ package org.omnione.did.wallet.v1.admin.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.omnione.did.base.db.constant.PasswordResetReason;
 import org.omnione.did.base.db.domain.Admin;
+import org.omnione.did.base.db.domain.AdminPasswordPolicy;
+import org.omnione.did.base.db.repository.AdminPasswordPolicyRepository;
+import org.omnione.did.base.db.repository.AdminRepository;
 import org.omnione.did.wallet.v1.admin.dto.admin.AdminDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.RequestAdminLoginReqDto;
 import org.omnione.did.wallet.v1.admin.service.query.AdminQueryService;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 /**
  * Service for handling admin session logic in the Admin Console.
@@ -36,18 +44,58 @@ import org.springframework.stereotype.Service;
 public class SessionService {
 
     private final AdminQueryService adminQueryService;
+    private final AdminPasswordPolicyRepository adminPasswordPolicyRepository;
+    private final AdminRepository adminRepository;
 
     /**
      * Authenticates an admin using provided login credentials.
+     * Also checks if the password has expired according to the current password policy.
      *
      * @param requestAdminLoginReqDto login request containing login ID and password
-     * @return authenticated admin information
+     * @return authenticated admin information (with isPasswordExpired flag if applicable)
      */
     public AdminDto requestAdminLogin(RequestAdminLoginReqDto requestAdminLoginReqDto) {
         Admin admin = adminQueryService.findByLoginIdAndLoginPassword(
                 requestAdminLoginReqDto.getLoginId(),
                 requestAdminLoginReqDto.getLoginPassword()
         );
-        return AdminDto.fromAdmin(admin);
+
+        boolean isPasswordExpired = checkPasswordExpiry(admin);
+
+        if (isPasswordExpired) {
+            admin.setRequirePasswordReset(true);
+            admin.setPasswordResetReason(PasswordResetReason.EXPIRED);
+            adminRepository.save(admin);
+        }
+
+        return AdminDto.fromAdmin(admin, isPasswordExpired);
+    }
+
+    /**
+     * Checks whether the admin's password has exceeded the policy expiry period.
+     *
+     * @param admin the admin to check
+     * @return true if the password is expired, false otherwise
+     */
+    private boolean checkPasswordExpiry(Admin admin) {
+        // If already flagged for reset, no need to check further
+        if (Boolean.TRUE.equals(admin.getRequirePasswordReset())) {
+            return false;
+        }
+
+        Optional<AdminPasswordPolicy> policyOpt = adminPasswordPolicyRepository.findTop1ByOrderByIdAsc();
+        if (policyOpt.isEmpty()) {
+            return false;
+        }
+
+        AdminPasswordPolicy policy = policyOpt.get();
+        Instant lastChanged = admin.getLastPasswordChangedAt();
+
+        if (lastChanged == null) {
+            return false;
+        }
+
+        long daysSinceChange = ChronoUnit.DAYS.between(lastChanged, Instant.now());
+        return daysSinceChange >= policy.getPasswordExpiryDays();
     }
 }

@@ -42,7 +42,7 @@ export default function WalletServiceManagementPage() {
   };
 
   if (serverStatus !== 'ACTIVATE') {
-    return <Navigate to="/ta-registration" replace />;
+    return <Navigate to="/wallet-service-registration" replace />;
   }
 
   const StyledContainer = useMemo(() => styled(Box)(({ theme }) => ({
