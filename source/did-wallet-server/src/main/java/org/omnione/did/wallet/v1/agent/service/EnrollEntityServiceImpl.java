@@ -129,6 +129,9 @@ public class EnrollEntityServiceImpl implements EnrollEntityService {
 
             log.debug("\t\t--> Update Wallet Service Status");
             existedWalletService.setStatus(WalletServiceStatus.ACTIVATE);
+            if (enrollEntityResponse.getVcUrl() != null) {
+                existedWalletService.setPublishedCertificateUrl(enrollEntityResponse.getVcUrl());
+            }
             walletServiceQueryService.save(existedWalletService);
             log.debug("*** Finished enrollEntity ***");
 

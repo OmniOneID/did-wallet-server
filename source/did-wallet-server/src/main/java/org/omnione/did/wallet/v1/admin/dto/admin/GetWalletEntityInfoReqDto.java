@@ -25,6 +25,7 @@ import lombok.ToString;
 import org.omnione.did.base.db.constant.WalletServiceStatus;
 import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.data.model.did.DidDocument;
+import org.omnione.did.wallet.v1.agent.helper.PublishCertificateHelper;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -70,7 +71,7 @@ public class GetWalletEntityInfoReqDto {
                         .name(t.getName())
                         .status(t.getStatus())
                         .serverUrl(t.getServerUrl())
-                        .certificateUrl(t.getCertificateUrl())
+                        .certificateUrl(PublishCertificateHelper.getCertificateVcURL(t))
                         .createdAt(formatInstant(t.getCreatedAt()))
                         .updatedAt(formatInstant(t.getUpdatedAt()))
                         .build())
@@ -85,7 +86,7 @@ public class GetWalletEntityInfoReqDto {
                         .name(t.getName())
                         .status(t.getStatus())
                         .serverUrl(t.getServerUrl())
-                        .certificateUrl(t.getCertificateUrl())
+                        .certificateUrl(PublishCertificateHelper.getCertificateVcURL(t))
                         .didDocument(didDocument)
                         .createdAt(formatInstant(t.getCreatedAt()))
                         .updatedAt(formatInstant(t.getUpdatedAt()))
@@ -101,7 +102,7 @@ public class GetWalletEntityInfoReqDto {
                         .name(t.getName())
                         .status(t.getStatus())
                         .serverUrl(t.getServerUrl())
-                        .certificateUrl(t.getCertificateUrl())
+                        .certificateUrl(PublishCertificateHelper.getCertificateVcURL(t))
                         .didDocument(didDocument)
                         .createdAt(formatInstant(t.getCreatedAt()))
                         .updatedAt(formatInstant(t.getUpdatedAt()))

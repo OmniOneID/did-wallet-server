@@ -36,6 +36,7 @@ import org.omnione.did.data.model.did.Proof;
 import org.omnione.did.data.model.enums.did.ProofType;
 import org.omnione.did.data.model.provider.Provider;
 import org.omnione.did.wallet.v1.admin.service.query.WalletServiceQueryService;
+import org.omnione.did.wallet.v1.agent.helper.PublishCertificateHelper;
 import org.omnione.did.wallet.v1.agent.service.query.WalletQueryService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -148,7 +149,7 @@ public class WalletServiceImpl implements WalletService {
             // Generate Provider object.
             Provider provider = new Provider();
             provider.setDid(walletServiceInfo.getDid());
-            provider.setCertVcRef(walletServiceInfo.getCertificateUrl());
+            provider.setCertVcRef(PublishCertificateHelper.getCertificateVcURL(walletServiceInfo));
 
             // Encode DID Document.
             String encodedDidDocument = BaseMultibaseUtil.encode(holderDidDocument.toJson().getBytes(StandardCharsets.UTF_8), MultiBaseType.base64url);
