@@ -373,4 +373,4 @@ Click the **REGISTER** button on the `Admin Management` screen to navigate to th
 > Click the `CANCEL` button to cancel registration and return to the previous screen.
 
 
-[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/develop/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md
+[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0.md
