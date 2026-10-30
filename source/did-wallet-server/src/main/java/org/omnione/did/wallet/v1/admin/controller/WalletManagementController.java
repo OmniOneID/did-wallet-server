@@ -15,6 +15,8 @@
  */
 package org.omnione.did.wallet.v1.admin.controller;
 
+import org.omnione.did.base.annotation.ArticleLog;
+import org.omnione.did.base.constants.ActionType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.constants.UrlConstant;
@@ -80,6 +82,8 @@ public class WalletManagementController {
      * @return empty response DTO
      */
     @RequestMapping(value = "/certificate-vc", method = RequestMethod.POST)
+    @ArticleLog(name = "[Wallet Manage] Create Certificate VC By TA", description = "Create Cretificate for Wallet Entity By TA",
+            targetType = "WALLET_ENTITY", actionType = ActionType.CREATE)
     public EmptyResDto createCertificateVc(@RequestBody SendCertificateVcReqDto sendCertificateVcReqDto) {
         return walletEntityManagementService.createCertificateVc(sendCertificateVcReqDto);
     }
@@ -91,6 +95,8 @@ public class WalletManagementController {
      * @return empty response DTO
      */
     @RequestMapping(value = "/entity-info", method = RequestMethod.POST)
+    @ArticleLog(name = "[Wallet Manage] Update Wallet Entity Info", description = "Update wallet entity info",
+            targetType = "WALLET_ENTITY", actionType = ActionType.CREATE)
     public EmptyResDto updateEntityInfo(@RequestBody SendEntityInfoReqDto sendEntityInfoReqDto) {
         return walletEntityManagementService.updateEntityInfo(sendEntityInfoReqDto);
     }

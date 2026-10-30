@@ -18,8 +18,8 @@ puppeteer:
 OpenDID Wallet Admin Operation Guide
 ==
 
-- Date: 2025-05-29
-- Version: v2.0.0
+- Date: 2026-10-30
+- Version: v3.0.0
 
 Revision History
 ==
@@ -27,6 +27,7 @@ Revision History
 | ------- | ---------- | ------- |
 | v1.0.0  | 2025-03-31 | Initial release |
 | v2.0.0  | 2025-05-29 | Version update |
+| v3.0.0  | 2026-10-30 | Added API Log and Audit API Log guidance |
 
 
 Table of Contents
@@ -59,6 +60,9 @@ Table of Contents
   - [3.4. Admin Management](#34-admin-management)
     - [▸ Admin List View](#-admin-list-view)
     - [▸ Admin Registration](#-admin-registration)
+  - [3.5. Log Management](#35-log-management)
+    - [3.5.1. API Log](#351-api-log)
+    - [3.5.2. Audit API Log](#352-audit-api-log)
 ---
 
 # 1. Introduction
@@ -80,6 +84,8 @@ The main items that can be configured in the Wallet Admin Console are as follows
 
 - **User Wallet Management**
   - View user-registered Wallets
+- **Log Management**
+  - View Wallet Agent API calls and administrator activity
 
 # 2. Basic Manual
 
@@ -110,7 +116,9 @@ To access the Wallet Admin Console, follow these steps:
 
 The main screen displayed after login consists of the following elements:
 
-<img src="./images/2-1.main-screen.png" width="600"/>
+<img src="./images/api-log-api-example.png" width="800"/>
+
+> Screen rendered with example data.
 
 | No. | Area | Description |
 | --- | ---- | ----------- |
@@ -144,13 +152,15 @@ only the Wallet Service Registration item is displayed alone in the menu.
 
 Once Wallet registration is completed, all management functions are activated, and the sidebar menu is configured as follows:
 
-<img src="./images/2-3-2.wallet-menu-after-registration.png" width="260"/>
-
 | No. | Menu Name | Depth | Description |
 |-----|-----------|-------|-------------|
 | 1 | **Wallet Service Management** | 1 | Menu for viewing and managing basic information (DID, status, etc.) of the Wallet server. |
 | 2 | **User Wallet Management** | 1 | Menu for viewing and managing user-registered Wallets. |
-| 3 | **Admin Manager** | 1 | Account management menu for using the Admin Console. |
+| 3 | **Log Management** | 1 | Parent menu for API Log and Audit API Log. |
+| 4 | └ API Log | 2 | View Wallet Agent API calls. |
+| 5 | └ Audit API Log | 2 | View administrator API activity. |
+| 6 | **Server Configuration** | 1 | Manage external server integration settings. |
+| 7 | **Admin Management** | 1 | Manage administrator accounts and password policy. |
 
 > **Note**:  
 > Detailed usage instructions for each function in the above menu configuration are explained in numerical order in [Chapter 3. Feature-Specific Detailed Manual](#3-feature-specific-detailed-manual).
@@ -173,6 +183,8 @@ User password change can be performed through the following steps:
 <br/>
 
 # 3. Feature-Specific Detailed Manual
+
+> Management screens after registration show the current sidebar with example data. Actual data varies by environment.
 
 This chapter provides detailed usage instructions for the main functions of the Wallet Admin Console.
 
@@ -372,5 +384,35 @@ Click the **REGISTER** button on the `Admin Management` screen to navigate to th
 > Click the `RESET` button to reset all input values.<br>
 > Click the `CANCEL` button to cancel registration and return to the previous screen.
 
+
+## 3.5. Log Management
+
+After Wallet registration, open `Log Management` in the sidebar to inspect API calls. Both screens show paginated records, with the newest first. Select a search field, enter a value, and search; use refresh to reload the list. Click `Called At` to open a record's detail dialog. Logs are read only.
+
+### 3.5.1. API Log
+
+<img src="./images/api-log-api-example.png" width="800"/>
+
+> List screen rendered with example data. Actual logs and accounts depend on the environment.
+
+`Log Management > API Log` shows Wallet Agent API calls. The list displays call time (`Called At`), HTTP method, URI, status code, result (`SUCCESS` or `FAIL`), and requester ID. Search by `URI` or `Result`. The detail dialog also shows duration, client IP, user agent, and error message when recorded. The page path is `/logs/api`.
+
+<img src="./images/api-log-api-detail-example.png" width="800"/>
+
+> Example detail dialog opened by selecting the call time.
+
+### 3.5.2. Audit API Log
+
+<img src="./images/api-log-audit-example.png" width="800"/>
+
+> List screen rendered with example data. Actual logs and accounts depend on the environment.
+
+`Log Management > Audit API Log` shows administrator actions through Admin APIs. The list displays call time, requester ID, action type, target type and ID, and result. Search by `Action Type`, `Target Type`, `Result`, or `Requester ID`. Action types include `CREATE`, `UPDATE`, `DELETE`, `LOGIN`, and `LOGOUT`. The detail dialog also shows the action description, client IP, user agent, and error message when recorded. The page path is `/logs/audit`.
+
+<img src="./images/api-log-audit-detail-example.png" width="800"/>
+
+> Example detail dialog opened by selecting the call time.
+
+> Records are created for API calls annotated with `@ArticleLog` on the server. For a `FAIL` result, inspect the API Log status code and the available detail message.
 
 [Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0.md

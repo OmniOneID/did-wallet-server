@@ -18,6 +18,8 @@ package org.omnione.did.wallet.v1.admin.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.omnione.did.base.annotation.ArticleLog;
+import org.omnione.did.base.constants.ActionType;
 import org.omnione.did.base.constants.UrlConstant;
 import org.omnione.did.wallet.v1.admin.dto.admin.AdminDto;
 import org.omnione.did.wallet.v1.admin.dto.admin.RequestAdminLoginReqDto;
@@ -49,6 +51,7 @@ public class SessionController {
      */
     @PostMapping(value = "/login")
     @ResponseBody
+    @ArticleLog(name = "[Admin] Login", actionType = ActionType.LOGIN)
     public AdminDto requestAdminLogin(@Valid @RequestBody RequestAdminLoginReqDto requestAdminLoginReqDto) {
         return sessionService.requestAdminLogin(requestAdminLoginReqDto);
     }

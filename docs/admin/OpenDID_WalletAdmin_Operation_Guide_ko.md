@@ -15,11 +15,11 @@ puppeteer:
         fullPage: false
 ---
 
-OpenDID IssuerAdmin Operation Guide
+OpenDID Wallet Admin Operation Guide
 ==
 
-- Date: 2025-05-29
-- Version: v2.0.0
+- Date: 2026-10-30
+- Version: v3.0.0
 
 개정 이력
 ==
@@ -27,6 +27,7 @@ OpenDID IssuerAdmin Operation Guide
 | ------ | ---------- | --------- |
 | v1.0.0 | 2025-03-31 | 최초 작성 |
 | v2.0.0 | 2025-05-29 | 버전 업   |
+| v3.0.0 | 2026-10-30 | API Log 및 Audit API Log 메뉴와 조회 방법 추가 |
 
 
 목차
@@ -58,8 +59,10 @@ OpenDID IssuerAdmin Operation Guide
     - [▸ User Wallet 상세 정보](#-user-wallet-상세-정보)
   - [3.4. Admin Management](#34-admin-management)
     - [▸ Admin 목록 조회](#-admin-목록-조회)
-  - [| **Updated At**          | 마지막으로 수정된 일시입니다.](#-updated-at-----------마지막으로-수정된-일시입니다)
     - [▸ Admin 등록](#-admin-등록)
+  - [3.5. Log Management](#35-log-management)
+    - [3.5.1. API Log](#351-api-log)
+    - [3.5.2. Audit API Log](#352-audit-api-log)
 ---
 
 # 1. 소개
@@ -81,6 +84,8 @@ Wallet Admin Console에서 설정할 수 있는 주요 항목은 다음과 같�
 
 - **User Wallet 관리**
   - User가 등록한 Wallet 확인
+- **Log Management**
+  - Wallet Agent API 호출 및 관리자 작업 기록 조회
 
 # 2. 기본 메뉴얼
 
@@ -111,7 +116,9 @@ Wallet Admin Console에 접속하려면 다음 단계를 따르세요:
 
 로그인 후 표시되는 메인 화면은 다음과 같은 요소들로 구성되어 있습니다:
 
-<img src="./images/2-1.main-screen.png" width="600"/>
+<img src="./images/api-log-api-example.png" width="800"/>
+
+> 예시 데이터로 렌더링한 화면입니다.
 
 | 번호 | 영역             | 설명                                                                                                                                |
 | ---- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -145,13 +152,15 @@ Wallet 서버가 아직 등록되지 않은 초기 상태에서는
 
 Wallet 등록이 완료되면 전체 관리 기능이 활성화되며, 사이드바 메뉴는 다음과 같이 구성됩니다:
 
-<img src="./images/2-3-2.wallet-menu-after-registration.png" width="260"/>
-
 | 번호 | 메뉴 명칭 | Depth | 설명 |
 |------|-----------|--------|------|
 | 1 | **Wallet Service Management** | 1 | Wallet 서버의 기본 정보(DID, 상태 등)를 확인하고 관리하는 메뉴입니다. |
 | 2 | **User Wallet Management** | 1 | User가 등록한 Wallet을 확인하고 관리하는 메뉴입니다. |
-| 3 | **Admin Manager** | 1 | Admin Console을 사용하기 위한 계정 관리 메뉴입니다. |
+| 3 | **Log Management** | 1 | API Log와 Audit API Log를 조회하는 메뉴입니다. |
+| 4 | └ API Log | 2 | Wallet Agent API 호출 기록을 조회합니다. |
+| 5 | └ Audit API Log | 2 | 관리자 API 작업 기록을 조회합니다. |
+| 6 | **Server Configuration** | 1 | 외부 서버 연동 설정을 관리합니다. |
+| 7 | **Admin Management** | 1 | 관리자 계정과 비밀번호 정책을 관리합니다. |
 
 > **참고**:  
 > 위 메뉴 구성에 대한 각 기능의 상세 사용법은  
@@ -175,6 +184,8 @@ Wallet 등록이 완료되면 전체 관리 기능이 활성화되며, 사이드
 <br/>
 
 # 3. 기능별 상세 메뉴얼
+
+> 등록 완료 후 관리 화면은 현재 사이드 메뉴와 예시 데이터로 캡처했습니다. 실제 데이터는 환경에 따라 달라집니다.
 
 이 장에서는 Wallet Admin Console의 주요 기능에 대한 상세 사용 방법을 안내합니다.
 
@@ -375,5 +386,35 @@ ROOT 계정은 `Admin Management` 메뉴에서 모든 기능을 수행할 수 �
 > `RESET 버튼` 클릭시 모든 입력값을 초기화합니다.<br>
 > `CANCEL 버튼` 클릭시 등록을 취소하고 이전 화면으로 돌아갑니다.
 
+
+## 3.5. Log Management
+
+Wallet 등록이 완료되면 사이드바의 `Log Management`에서 API 호출 기록을 조회할 수 있습니다. 두 화면 모두 최신 기록부터 페이지별로 표시되며, 검색 조건을 선택하고 값을 입력한 뒤 검색할 수 있습니다. 새로고침으로 목록을 다시 불러오고, `Called At`을 클릭하면 상세 창이 열립니다. 로그는 조회 전용입니다.
+
+### 3.5.1. API Log
+
+<img src="./images/api-log-api-example.png" width="800"/>
+
+> 예시 데이터로 렌더링한 목록 화면입니다. 실제 로그와 계정 정보는 환경에 따라 다릅니다.
+
+`Log Management > API Log`는 Wallet Agent API 호출 기록을 보여줍니다. 목록에는 호출 시각(`Called At`), HTTP 메서드, URI, 상태 코드, 결과(`SUCCESS` 또는 `FAIL`), 요청자 ID가 표시됩니다. `URI` 또는 `Result`로 검색할 수 있습니다. 상세 창에서는 처리 시간, 클라이언트 IP, User Agent, 오류 메시지가 기록된 경우 함께 확인할 수 있습니다. 화면 경로는 `/logs/api`입니다.
+
+<img src="./images/api-log-api-detail-example.png" width="800"/>
+
+> 호출 시각을 선택했을 때 표시되는 상세 창의 예시입니다.
+
+### 3.5.2. Audit API Log
+
+<img src="./images/api-log-audit-example.png" width="800"/>
+
+> 예시 데이터로 렌더링한 목록 화면입니다. 실제 로그와 계정 정보는 환경에 따라 다릅니다.
+
+`Log Management > Audit API Log`는 Admin API의 관리자 작업 기록을 보여줍니다. 목록에는 호출 시각, 요청자 ID, 작업 유형(`Action Type`), 대상 유형과 ID, 결과가 표시됩니다. `Action Type`, `Target Type`, `Result`, `Requester ID`로 검색할 수 있습니다. `Action Type`에는 `CREATE`, `UPDATE`, `DELETE`, `LOGIN`, `LOGOUT` 등의 값이 사용됩니다. 상세 창에서는 작업 설명, 클라이언트 IP, User Agent, 오류 메시지가 기록된 경우 함께 확인할 수 있습니다. 화면 경로는 `/logs/audit`입니다.
+
+<img src="./images/api-log-audit-detail-example.png" width="800"/>
+
+> 호출 시각을 선택했을 때 표시되는 상세 창의 예시입니다.
+
+> 로그는 서버의 `@ArticleLog`가 적용된 API 호출에서 생성됩니다. 결과가 `FAIL`이면 API Log의 상태 코드와 해당 로그의 상세 메시지를 확인하세요.
 
 [Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md

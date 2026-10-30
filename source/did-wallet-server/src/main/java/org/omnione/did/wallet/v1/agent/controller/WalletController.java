@@ -16,6 +16,9 @@
 
 package org.omnione.did.wallet.v1.agent.controller;
 
+import org.omnione.did.base.annotation.ArticleLog;
+import org.omnione.did.base.constants.ActionType;
+import org.omnione.did.base.constants.ApiType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +50,8 @@ public class WalletController {
      * @return the signed wallet
      */
     @PostMapping(value = UrlConstant.Wallet.REQUEST_SIGN_WALLET)
+    @ArticleLog(name = "[Enroll Entity] Sign Wallet Attested DID Document", description = " Sign Wallet Attested DID Document",
+            targetType = "ENROLL", actionType = ActionType.CREATE, apiType = ApiType.AGENT)
     public AttestedDidDoc signWallet(@RequestBody String didDocuemntJson) {
         DidDocument didDocument = new DidDocument();
         didDocument.fromJson(didDocuemntJson);

@@ -15,6 +15,8 @@
  */
 package org.omnione.did.wallet.v1.admin.controller;
 
+import org.omnione.did.base.annotation.ArticleLog;
+import org.omnione.did.base.constants.ActionType;
 import lombok.RequiredArgsConstructor;
 import org.omnione.did.base.constants.UrlConstant;
 import org.omnione.did.wallet.v1.admin.dto.admin.GetWalletEntityInfoReqDto;
@@ -55,6 +57,8 @@ public class WalletAdminController {
      * @return wallet service registration result
      */
     @RequestMapping(value = "/register-wallet-service-info", method = RequestMethod.POST)
+    @ArticleLog(name = "[Wallet Manage] Register Wallet Info", description = "Register Wallet Info",
+            targetType = "WALLET_ENTITY", targetId = "#registerCaInfoReqDto.name", actionType = ActionType.CREATE)
     public WalletServiceInfoResDto registerWalletInfo(@RequestBody RegisterWallerServiceInfoReqDto registerCaInfoReqDto) {
         return walletEntityManagementService.registerWalletInfo(registerCaInfoReqDto);
     }
@@ -65,6 +69,8 @@ public class WalletAdminController {
      * @return map containing generated DID Document
      */
     @RequestMapping(value = "/generate-did-auto", method = RequestMethod.POST)
+    @ArticleLog(name = "[Wallet Manage] Generate DID Auto", description = "Generate DID Auto",
+            targetType = "WALLET_ENTITY", actionType = ActionType.CREATE)
     public Map<String, Object> generateWalletDidDocumentAuto() {
         return walletEntityManagementService.registerWalletDidDocumentAuto();
     }
@@ -76,6 +82,8 @@ public class WalletAdminController {
      * @return empty response DTO
      */
     @RequestMapping(value = "/register-did", method = RequestMethod.POST)
+    @ArticleLog(name = "[Wallet Manage] Register DID", description = "Register DID",
+            targetType = "WALLET_ENTITY", actionType = ActionType.CREATE)
     public EmptyResDto requestRegisterDid(@RequestBody RequestRegisterDidReqDto requestRegisterDidReqDto) {
         return walletEntityManagementService.requestRegisterDid(requestRegisterDidReqDto);
     }
@@ -96,6 +104,8 @@ public class WalletAdminController {
      * @return map containing enrollment result
      */
     @PostMapping(value = "/request-enroll-entity")
+    @ArticleLog(name = "[Wallet Manage] Request Enroll Entity", description = "Requests the enrollment of the Wallet entity.",
+            targetType = "WALLET_ENTITY", actionType = ActionType.CREATE)
     public Map<String, Object> requestEnrollEntity() {
         return walletEntityManagementService.enrollEntity();
     }
