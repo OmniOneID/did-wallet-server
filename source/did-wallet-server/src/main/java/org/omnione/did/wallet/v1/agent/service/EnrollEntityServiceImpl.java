@@ -31,8 +31,10 @@ import org.omnione.did.base.db.domain.CertificateVc;
 import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.utils.*;
+import org.omnione.did.base.utils.RandomUtil;
 import org.omnione.did.common.exception.CommonSdkException;
+import org.omnione.did.common.util.crypto.BaseCryptoUtil;
+import org.omnione.did.common.util.multibase.BaseMultibaseUtil;
 import org.omnione.did.common.util.DateTimeUtil;
 import org.omnione.did.common.util.JsonUtil;
 import org.omnione.did.crypto.exception.CryptoException;
@@ -100,9 +102,9 @@ public class EnrollEntityServiceImpl implements EnrollEntityService {
             log.debug("\t--> Send request-ecdh");
             EccCurveType eccCurveType = EccCurveType.SECP_256_R1;
             log.debug("\t\t--> generate Tmp Keypair");
-            EcKeyPair ecKeyPair = (EcKeyPair) BaseCryptoUtil.generateKeyPair(eccCurveType);
+            EcKeyPair ecKeyPair = generateKeyPair(eccCurveType);
             log.debug("\t\t--> generate ReqEcdh");
-            String clientNonce = BaseMultibaseUtil.encode(BaseCryptoUtil.generateNonce(16));
+            String clientNonce = generateNonce(16);
             EcdhReqData reqData = generateReqData(ecKeyPair, eccCurveType, clientNonce, walletDidDocument);
             log.debug("\t\t--> request ECDH");
             RequestEcdhApiResDto ecdhResponse = requestEcdh(txId, reqData);
@@ -270,20 +272,50 @@ public class EnrollEntityServiceImpl implements EnrollEntityService {
      * @return The decrypted verifiable credential.
      */
     private VerifiableCredential decryptVc(ECPrivateKey privateKey, AccEcdh accEcdh, RequestEnrollEntityApiResDto enrollEntityResponse, String clientNonce) {
-        byte[] compressedPublicKey = BaseMultibaseUtil.decode(accEcdh.getPublicKey());
-        byte[] sharedSecret = BaseCryptoUtil.generateSharedSecret(compressedPublicKey, privateKey.getEncoded(), EccCurveType.SECP_256_R1);
-        byte[] mergeNonce = BaseCryptoUtil.mergeNonce(clientNonce, accEcdh.getServerNonce());
-        byte[] mergeSharedSecretAndNonce = BaseCryptoUtil.mergeSharedSecretAndNonce(sharedSecret, mergeNonce, accEcdh.getCipher());
+        // Keep the wallet error codes the removed local utils returned for each step
+        byte[] compressedPublicKey = decodeMultibase(accEcdh.getPublicKey());
+        final byte[] sharedSecret;
+        try {
+            sharedSecret = BaseCryptoUtil.generateSharedSecret(
+                    compressedPublicKey,
+                    privateKey.getEncoded(),
+                    EccCurveType.SECP_256_R1.toCommonSdkEccCurveType());
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.SESSION_KEY_GENERATION_FAILED);
+        }
 
-        byte[] iv = BaseMultibaseUtil.decode(enrollEntityResponse.getIv());
+        byte[] clientNonceBytes = decodeMultibase(clientNonce);
+        byte[] serverNonceBytes = decodeMultibase(accEcdh.getServerNonce());
+        final byte[] mergeNonce;
+        try {
+            mergeNonce = BaseCryptoUtil.mergeNonce(clientNonceBytes, serverNonceBytes);
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.NONCE_MERGE_FAILED);
+        }
 
-        byte[] decrypt = BaseCryptoUtil.decrypt(
-                enrollEntityResponse.getEncVc(),
-                mergeSharedSecretAndNonce,
-                iv,
-                accEcdh.getCipher(),
-                accEcdh.getPadding()
-        );
+        final byte[] mergeSharedSecretAndNonce;
+        try {
+            mergeSharedSecretAndNonce = BaseCryptoUtil.mergeSharedSecretAndNonce(
+                    sharedSecret, mergeNonce, accEcdh.getCipher().toCommonSdkSymmetricCipherType());
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.NONCE_AND_SHARED_SECRET_MERGE_FAILED);
+        }
+
+        byte[] iv = decodeMultibase(enrollEntityResponse.getIv());
+        byte[] encVc = decodeMultibase(enrollEntityResponse.getEncVc());
+
+        final byte[] decrypt;
+        try {
+            decrypt = BaseCryptoUtil.decrypt(
+                    encVc,
+                    mergeSharedSecretAndNonce,
+                    iv,
+                    accEcdh.getCipher().toCommonSdkSymmetricCipherType(),
+                    accEcdh.getPadding().toCommonSdkSymmetricPaddingType()
+            );
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.DECRYPTION_FAILED);
+        }
 
         String jsonVc = new String(decrypt);
 
@@ -309,5 +341,36 @@ public class EnrollEntityServiceImpl implements EnrollEntityService {
                 .build();
 
         return enrollFeign.confirmEnrollEntityApi(request);
+    }
+
+    private EcKeyPair generateKeyPair(EccCurveType curveType) {
+        try {
+            return (EcKeyPair) BaseCryptoUtil.generateKeyPair(curveType.toCommonSdkEccCurveType());
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.KEY_PAIR_GENERATION_FAILED);
+        }
+    }
+
+    private String generateNonce(int length) {
+        final byte[] nonce;
+        try {
+            nonce = BaseCryptoUtil.generateNonce(length);
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.NONCE_GENERATION_FAILED);
+        }
+
+        try {
+            return BaseMultibaseUtil.encode(nonce);
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.ENCODING_FAILED);
+        }
+    }
+
+    private byte[] decodeMultibase(String encoded) {
+        try {
+            return BaseMultibaseUtil.decode(encoded);
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.DECODING_FAILED);
+        }
     }
 }

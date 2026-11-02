@@ -25,8 +25,8 @@ import org.omnione.did.base.datamodel.data.EcdhReqData;
 import org.omnione.did.base.datamodel.enums.ProofPurpose;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.utils.BaseCoreDidUtil;
-import org.omnione.did.base.utils.BaseMultibaseUtil;
+import org.omnione.did.common.util.did.BaseCoreDidUtil;
+import org.omnione.did.common.util.multibase.BaseMultibaseUtil;
 import org.omnione.did.common.exception.CommonSdkException;
 import org.omnione.did.common.util.JsonUtil;
 import org.omnione.did.data.model.did.DidDocument;
@@ -100,14 +100,24 @@ public class SignatureService {
      * @throws OpenDidException if the signature generation fails
      */
     private String signData(DidDocument casDidDocument, String signatureMessage, ProofPurpose proofPurpose) {
+        // Callers catch CommonSdkException as a JSON error, so report key lookup and encoding failures
+        // as SIGNATURE_GENERATION_FAILED, as they were before the Common SDK switch
         // Get the key ID
-        VerificationMethod verificationMethod = BaseCoreDidUtil.getVerificationMethod(casDidDocument, proofPurpose.toKeyId());
-        String keyId = verificationMethod.getId();
+        final String keyId;
+        try {
+            keyId = BaseCoreDidUtil.getVerificationMethod(casDidDocument, proofPurpose.toKeyId()).getId();
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.SIGNATURE_GENERATION_FAILED);
+        }
 
         //  Sign the message.
         byte[] signature = fileWalletService.generateCompactSignature(keyId, signatureMessage);
 
-        return BaseMultibaseUtil.encode(signature);
+        try {
+            return BaseMultibaseUtil.encode(signature);
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.SIGNATURE_GENERATION_FAILED);
+        }
     }
 
     /**

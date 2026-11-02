@@ -64,4 +64,11 @@ public enum SymmetricPaddingType implements OpenDidEnum {
     public String getValue() {
         return displayName;
     }
+
+    public org.omnione.did.common.datamodel.enums.crypto.SymmetricPaddingType toCommonSdkSymmetricPaddingType() {
+        return switch (this) {
+            case NOPAD -> org.omnione.did.common.datamodel.enums.crypto.SymmetricPaddingType.NOPAD;
+            case PKCS5 -> org.omnione.did.common.datamodel.enums.crypto.SymmetricPaddingType.PKCS5;
+        };
+    }
 }

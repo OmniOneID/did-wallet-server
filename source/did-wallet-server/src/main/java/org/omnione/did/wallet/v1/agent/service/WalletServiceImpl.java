@@ -24,8 +24,9 @@ import org.omnione.did.base.db.domain.Wallet;
 import org.omnione.did.base.db.domain.WalletServiceInfo;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.utils.BaseMultibaseUtil;
 import org.omnione.did.base.utils.RandomUtil;
+import org.omnione.did.common.exception.CommonSdkException;
+import org.omnione.did.common.util.multibase.BaseMultibaseUtil;
 import org.omnione.did.common.util.DateTimeUtil;
 import org.omnione.did.common.util.JsonUtil;
 import org.omnione.did.core.exception.CoreException;
@@ -152,7 +153,12 @@ public class WalletServiceImpl implements WalletService {
             provider.setCertVcRef(PublishCertificateHelper.getCertificateVcURL(walletServiceInfo));
 
             // Encode DID Document.
-            String encodedDidDocument = BaseMultibaseUtil.encode(holderDidDocument.toJson().getBytes(StandardCharsets.UTF_8), MultiBaseType.base64url);
+            final String encodedDidDocument;
+            try {
+                encodedDidDocument = BaseMultibaseUtil.encode(holderDidDocument.toJson().getBytes(StandardCharsets.UTF_8), MultiBaseType.base64url);
+            } catch (CommonSdkException e) {
+                throw new OpenDidException(ErrorCode.ENCODING_FAILED);
+            }
 
             // Generate Proof object.
             Proof proof = new Proof();

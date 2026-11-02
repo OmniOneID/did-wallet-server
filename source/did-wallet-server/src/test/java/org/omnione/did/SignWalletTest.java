@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.omnione.did.base.constants.UrlConstant;
-import org.omnione.did.base.utils.BaseCoreDidUtil;
 import org.omnione.did.core.manager.DidManager;
 import org.omnione.did.data.model.did.DidDocument;
 import org.springframework.beans.factory.annotation.Autowired;
