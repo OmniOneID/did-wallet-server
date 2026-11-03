@@ -18,8 +18,8 @@ puppeteer:
 Open DID Wallet Server Installation And Operation Guide
 ==
 
-- Date: 2025-05-29
-- Version: v2.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
 
 Table of Contents
 ==
@@ -49,7 +49,7 @@ Table of Contents
     - [4.2.3. Database Installation](#423-database-installation)
     - [4.2.4. Server Configuration](#424-server-configuration)
   - [4.3. Running with Docker](#43-running-with-docker)
-- [5. Configuration Guide.](#5-configuration-guide)
+- [5. Configuration Guide](#5-configuration-guide)
   - [5.1. application.yml](#51-applicationyml)
     - [5.1.1. Spring Basic Settings](#511-spring-basic-settings)
     - [5.1.2. Jackson Basic Settings](#512-jackson-basic-settings)
@@ -61,16 +61,21 @@ Table of Contents
     - [5.3.1. Spring Liquibase Settings](#531-spring-liquibase-settings)
     - [5.3.2. DataSource Settings](#532-datasource-settings)
     - [5.3.3. JPA Settings](#533-jpa-settings)
-  - [5.4. wallet.yml](#54-walletyml)
+  - [5.4. application-wallet.yml](#54-application-walletyml)
     - [5.4.1. Wallet Access Information Configuration](#541-wallet-access-information-configuration)
-  - [5.5. blockchain.properties](#55-blockchainproperties)
-    - [5.5.1. Blockchain Integration Configuration](#551-blockchain-integration-configuration)
+  - [5.5. application-blockchain.yml](#55-application-blockchainyml)
+    - [5.5.1. Blockchain Configuration](#551-blockchain-configuration)
+  - [5.6. blockchain.properties](#56-blockchainproperties)
+    - [5.6.1. Blockchain Integration Configuration](#561-blockchain-integration-configuration)
+  - [5.7. application-lss.yml](#57-application-lssyml)
+  - [5.8. application-spring-docs.yml](#58-application-spring-docsyml)
       - [EVM Network Configuration](#evm-network-configuration)
       - [EVM Contract Configuration](#evm-contract-configuration)
 - [6. Profile Configuration and Usage](#6-profile-configuration-and-usage)
-  - [6.1. Profile Overview (`sample`, `dev`)](#61-profile-overview-sample-dev)
+  - [6.1. Profile Overview (`sample`, `dev`, `lss`)](#61-profile-overview-sample-dev-lss)
     - [6.1.1. `sample` Profile](#611-sample-profile)
     - [6.1.2. `dev` Profile](#612-dev-profile)
+    - [6.1.3. `lss` Profile](#613-lss-profile)
   - [6.2. How to Configure Profiles](#62-how-to-configure-profiles)
     - [6.2.1. Running the Server Using an IDE](#621-running-the-server-using-an-ide)
     - [6.2.2. Running the Server Using Console Commands](#622-running-the-server-using-console-commands)
@@ -173,34 +178,44 @@ did-wallet-server
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── dependencies-license.md
+├── LICENSE
 ├── MAINTAINERS.md
 ├── README.md
+├── README_ko.md
 ├── RELEASE-PROCESS.md
 ├── SECURITY.md
 ├── docs
-│   ├── api
-│       └── Wallet_API.md
-│   ├── errorCode
-│       └── Wallet_ErrorCode.md
-│   ├── installation
-│       └── OpenDID_WalletServer_InstallationAndOperation_Guide.md
-│   └── db
-│       └── OpenDID_TableDefinition_Wallet.md
+│   ├── admin
+│   │   ├── OpenDID_WalletAdmin_Operation_Guide.md
+│   │   └── OpenDID_WalletAdmin_Operation_Guide_ko.md
+│   ├── api
+│   │   ├── Wallet_API.md
+│   │   └── Wallet_API_ko.md
+│   ├── db
+│   │   ├── OpenDID_TableDefinition_Wallet.md
+│   │   └── OpenDID_TableDefinition_Wallet_ko.md
+│   ├── errorCode
+│   │   ├── Wallet_ErrorCode.md
+│   │   └── Wallet_ErrorCode_ko.md
+│   └── installation
+│       ├── OpenDID_WalletServer_Installation_Guide.md
+│       └── OpenDID_WalletServer_Installation_Guide_ko.md
 └── source
-    └── wallet
+    ├── Dockerfile
+    ├── did-wallet-admin
+    └── did-wallet-server
+        ├── README.md
+        ├── build.gradle
         ├── gradle
         ├── libs
-            └── did-sdk-common-2.0.0.jar
-            └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0..jar
-            └── did-crypto-sdk-server-2.0.0.jar
-            └── did-datamodel-server-2.0.0.jar
-            └── did-wallet-sdk-server-2.0.0.jar
-            └── did-zkp-sdk-server-2.0.0.jar
-        ├── sample
+        │   ├── did-blockchain-sdk-server-2.0.0.jar
+        │   ├── did-common-sdk-server-3.0.0.jar
+        │   ├── did-core-sdk-server-2.0.0.jar
+        │   ├── did-crypto-sdk-server-2.0.0.jar
+        │   ├── did-datamodel-sdk-server-2.0.0.jar
+        │   ├── did-wallet-sdk-server-2.0.0.jar
+        │   └── did-zkp-sdk-server-2.0.0.jar
         └── src
-        └── build.gradle
-        └── README.md
 ```
 
 | Name                    | Description                                  |
@@ -308,7 +323,7 @@ This section provides instructions on how to run the Open DID server using conso
       cd build/libs
       ls
     ```
-- This command generates the file `did-wallet-server-2.0.0.jar`.
+- This command generates the file `did-wallet-server-3.0.0.jar`.
 
 <br/>
 
@@ -316,7 +331,7 @@ This section provides instructions on how to run the Open DID server using conso
 Run the server using the built JAR file:
 
 ```bash
-java -jar did-wallet-server-2.0.0.jar
+java -jar did-wallet-server-3.0.0.jar
 ```
 
 > **Note**
@@ -342,7 +357,7 @@ The Wallet server stores the necessary data for operation in a database, so a da
 
 <br/>
 
-# 5. Configuration Guide.
+# 5. Configuration Guide
 
 This chapter provides guidance on each configuration value included in all of the server's configuration files. Each setting is a crucial element that controls the server's behavior and environment, so proper configuration is necessary for stable server operation. Refer to the descriptions and examples for each item to apply the appropriate settings for your environment.
 
@@ -406,7 +421,8 @@ The server settings define the port number on which the application will listen 
 The Wallet service communicates with the TAS server. You can configure the address of the TAS server you have set up.
 * `tas.url`:  
     - The URL of the TAS (Trust Anchor Service). It can be used for authentication or trust verification.
-    - Example: `http://localhost:8090/contextpath/tas`
+    - It is set in `application-tas.yml`. The server adds `/tas` to this address.
+    - Example: `http://localhost:8090`
 
 <br/>
 
@@ -490,7 +506,7 @@ JPA settings control how the application interacts with the database, significan
 
 <br/>
 
-## 5.4. wallet.yml
+## 5.4. application-wallet.yml
 - Role: Configures the wallet file information used by the server.
 
 - Location: `src/main/resources/config`
@@ -507,12 +523,18 @@ JPA settings control how the application interacts with the database, significan
 
 <br/>
 
-## 5.5. blockchain.properties
+## 5.5. application-blockchain.yml
+### 5.5.1. Blockchain Configuration
+ * `blockchain.file-path`:
+    - Sets the location of the [5.6. blockchain.properties](#56-blockchainproperties) file.
+    - Example: `/path/to/your/blockchain.properties`
+
+## 5.6. blockchain.properties
 - Role: Configures blockchain server information to be integrated with the CA server. When you install the Hyperledger Besu network according to '5.3. Step 3: Blockchain Installation' in the [Open DID Installation Guide], private keys, certificates, and server connection information configuration files are automatically generated. In blockchain.properties, you configure the paths where these files are located and the network name entered during Hyperledger Besu installation.
 
 - Location: `src/main/resources/properties`
 
-### 5.5.1. Blockchain Integration Configuration 
+### 5.6.1. Blockchain Integration Configuration 
 
 #### EVM Network Configuration
 
@@ -548,9 +570,67 @@ JPA settings control how the application interacts with the database, significan
 
 <br/>
 
+## 5.7. application-lss.yml
+- Role: Configures integration with the LSS (Ledger Service Server). When the `lss` profile is active, the Wallet server reads DID Documents from LSS instead of the blockchain.
+
+- Location: `src/main/resources/config`
+
+* `lss.url`:
+    - LSS server address.
+    - Example: `http://127.0.0.1:8098`
+
+* LSS API Key:
+    - The Wallet server sends the LSS API key in the `X-API-Key` header. Register the key issued by LSS as `API_KEY_LSS` in Server Configuration of the Admin Console. If it is not registered, LSS calls fail with `SSRVWLT01101`.
+
+<br/>
+
+## 5.8. application-spring-docs.yml
+
+- Role: Manages SpringDoc and Swagger UI settings in the application.
+
+- Location: `src/main/resources/`
+
+* `springdoc.swagger-ui.path`: 🔒
+  - Defines the URL path to access Swagger UI.
+  - Example: `/swagger-ui.html`
+
+* `springdoc.swagger-ui.groups-order`: 🔒
+  - Specifies the order for displaying API groups in Swagger UI.
+  - Example: `ASC`
+
+* `springdoc.swagger-ui.operations-sorter`: 🔒
+  - Sorts API endpoints in Swagger UI by HTTP method.
+  - Example: `method`
+
+* `springdoc.swagger-ui.disable-swagger-default-url`: 🔒
+  - Disables the default Swagger URL.
+  - Example: `true`
+
+* `springdoc.swagger-ui.display-request-duration`: 🔒
+  - Sets whether to display request duration in Swagger UI.
+  - Example: `true`
+
+* `springdoc.api-docs.path`: 🔒
+  - Defines the path where API documentation is served.
+  - Example: `/api-docs`
+
+* `springdoc.show-actuator`: 🔒
+  - Sets whether to display Actuator endpoints in API documentation.
+  - Example: `true`
+
+* `springdoc.default-consumes-media-type`: 🔒
+  - Sets the default media type for request bodies in API documentation.
+  - Example: `application/json`
+
+* `springdoc.default-produces-media-type`: 🔒
+  - Sets the default media type for response bodies in API documentation.
+  - Example: `application/json`
+
+<br/>
+
 # 6. Profile Configuration and Usage
 
-## 6.1. Profile Overview (`sample`, `dev`)
+## 6.1. Profile Overview (`sample`, `dev`, `lss`)
 The Wallet server supports two profiles, `dev` and `sample`, to allow operation in various environments.
 
 Each profile is designed to apply the appropriate settings for its environment. By default, the Wallet server is configured to use the `sample` profile, which is designed to run the server independently without connecting to external services such as a database or blockchain. The `sample` profile is ideal for testing API calls, allowing developers to quickly verify the basic functionality of the application. This profile returns fixed response data for all API calls, making it useful in early development environments.
@@ -567,6 +647,9 @@ The `dev` profile includes settings suited for the development environment and i
 
 <br/>
 
+### 6.1.3. `lss` Profile
+The `lss` profile is used together with `dev` (for example, `dev,lss`). The Wallet server reads DID Documents from LSS instead of the blockchain, so blockchain configuration is not required. Set `lss.url` (5.7) and register `API_KEY_LSS` in the Admin Console.
+
 ## 6.2. How to Configure Profiles
 This section explains how to switch profiles for each server operation method.
 
@@ -580,7 +663,7 @@ This section explains how to switch profiles for each server operation method.
 - **Specify Profile:** Add the option `--spring.profiles.active={profile}` to the server startup command to activate the desired profile.
   
   ```bash
-  java -jar build/libs/did-wallet-server-2.0.0.jar --spring.profiles.active={profile}
+  java -jar build/libs/did-wallet-server-3.0.0.jar --spring.profiles.active={profile}
   ```
 
 - **Apply Configuration:** The configuration file corresponding to the activated profile will be applied.

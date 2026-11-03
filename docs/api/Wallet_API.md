@@ -18,8 +18,13 @@ puppeteer:
 Wallet API
 ==
 
-- Date: 2024-08-19
-- Version: v1.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
+
+| Version | Date       | Changes |
+| ------- | ---------- | ------- |
+| v1.0.0  | 2024-08-19 | Initial version |
+| v3.0.0  | 2026-11-03 | Corrected error codes to match the server |
   
 Table of Contents
 ---
@@ -157,7 +162,7 @@ N/A
 | Code         | Description                                          |
 | ------------ | ---------------------------------------------------- |
 | SSRVTRAXXXXX | Please refer to TAS_API                             |
-| SSRVWLT00001 | Failed to process 'issue-certificate-vc' API request. |
+| SSRVWLT00101 | Failed to Enroll Entity. |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
@@ -238,15 +243,14 @@ def object _GetCertificateVc: "Get Certificate VC response"
 **■ Status 400 - Client error**
 
 
-| Code         | Description                         |
-| ------------ | ----------------------------------- |
-| SSRVWLT00200 | Certificate VC does not exist. |
+N/A
 
 **■ Status 500 - Server error**
 
 | Code         | Description                                        |
 | ------------ | -------------------------------------------------- |
-| SSRVWLT00002 | Failed to process 'get-certificate-vc' API request. |
+| SSRVWLT00301 | Certificate VC data not found. |
+| SSRVWLT00102 | Failed to Get Certificate VC. |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
@@ -339,7 +343,7 @@ def object _RequestSignWallet: "Request Sign Wallet response"
 
 | Code         | Description                                         |
 | ------------ | --------------------------------------------------- |
-| SSRVWLT00003 | Failed to process 'request-sign-wallet' API request. |
+| SSRVWLT00103 | Failed to request sign wallet. |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 

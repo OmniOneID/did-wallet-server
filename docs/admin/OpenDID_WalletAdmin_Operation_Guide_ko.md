@@ -63,6 +63,8 @@ OpenDID Wallet Admin Operation Guide
   - [3.5. Log Management](#35-log-management)
     - [3.5.1. API Log](#351-api-log)
     - [3.5.2. Audit API Log](#352-audit-api-log)
+  - [3.6. Server Configuration](#36-server-configuration)
+  - [3.7. Password Policy Settings](#37-password-policy-settings)
 ---
 
 # 1. 소개
@@ -294,6 +296,7 @@ Wallet Service Manegement 화면은 다음 항목들로 구성되어 있습니�
 | **Registered At** | Wallet의 최초 등록 일시입니다.                                 |
 
 - DID Document는 화면의 `VIEW DID DOCUMENT` 버튼을 통해 확인할 수 있습니다.
+- TA가 발급한 가입증명서 VC는 Certificate URL 옆의 `VIEW` 버튼으로 확인할 수 있습니다.
 - 등록된 Wallet 정보는 삭제가 불가능하며, 일부 항목에 대해 제한된 범위 내에서만 수정이 가능합니다.
 
 
@@ -416,5 +419,29 @@ Wallet 등록이 완료되면 사이드바의 `Log Management`에서 API 호출 
 > 호출 시각을 선택했을 때 표시되는 상세 창의 예시입니다.
 
 > 로그는 서버의 `@ArticleLog`가 적용된 API 호출에서 생성됩니다. 결과가 `FAIL`이면 API Log의 상태 코드와 해당 로그의 상세 메시지를 확인하세요.
+
+## 3.6. Server Configuration
+
+`Server Configuration`에서 외부 서버와의 연동 설정을 관리합니다.
+
+<img src="./images/server-configuration.png" width="800"/>
+
+- **API Key Settings > Ledger Service Server**: LSS(Ledger Service Server)에서 발급한 API Key를 입력하고 저장합니다. 값은 `API_KEY_LSS`로 저장되며, Wallet 서버가 LSS를 호출할 때(`lss` 프로파일) `X-API-Key` 헤더로 보냅니다.
+- 키를 등록하지 않으면 LSS 호출이 `SSRVWLT01101`로 실패합니다.
+
+## 3.7. Password Policy Settings
+
+`Admin Management > Password Policy Settings`에서 관리자 비밀번호 규칙을 설정합니다. 규칙은 계정을 등록할 때와 비밀번호를 변경할 때 적용됩니다.
+
+<img src="./images/password-policy.png" width="800"/>
+
+| 항목 | 설명 | 범위 |
+| ---- | ---- | ---- |
+| Minimum Length | 최소 글자 수 | 6~20 |
+| Uppercase Letters (A-Z) | 대문자 1자 이상 포함 | - |
+| Numbers (0-9) | 숫자 1자 이상 포함 | - |
+| Special Characters (!@#$%^&*) | 특수문자 1자 이상 포함 | - |
+| Password Expiration Period | 비밀번호 유효 기간(일) | 30~365일(기본 90일) |
+
 
 [Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md

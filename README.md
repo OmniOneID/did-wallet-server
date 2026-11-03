@@ -41,8 +41,8 @@ did-wallet-server
 │       ├── Wallet_ErrorCode.md
 │       └── Wallet_ErrorCode_ko.md
 │   └── installation
-│       ├── OpenDID_WalletServer_InstallationAndOperation_Guide.md
-│       └── OpenDID_WalletServer_InstallationAndOperation_Guide_ko.md
+│       ├── OpenDID_WalletServer_Installation_Guide.md
+│       └── OpenDID_WalletServer_Installation_Guide_ko.md
 │   └── db
 │       ├── OpenDID_TableDefinition_Wallet.md
 │       └── OpenDID_TableDefinition_Wallet_ko.md
@@ -84,14 +84,14 @@ For detailed instructions on installing the Wallet Server, please refer to the g
 - [OpenDID Wallet Server Installation and Operation Guide](docs/installation/OpenDID_WalletServer_Installation_Guide.md)  
 
 For detailed instructions on operating the Wallet Admin Console, please refer to the guide below:  
-- [OpenDID Wallet Admin Console Operation Guide](docs/admin/OpenDID_WalletAdmin_Operation_Guide_ko.md)
+- [OpenDID Wallet Admin Console Operation Guide](docs/admin/OpenDID_WalletAdmin_Operation_Guide.md)
 
 ## API Reference
 
 API documentation is available in two main types:
 
 - **Wallet API**: Detailed reference for the Wallet Server's API endpoints and usage..
-  - [Wallet API](docs/api/Wallet_API_ko.md)
+  - [Wallet API](docs/api/Wallet_API.md)
 
 ## Change Log
 

@@ -18,8 +18,13 @@ puppeteer:
 Wallet API
 ==
 
-- 일자: 2024-08-19
-- 버전: v1.0.0
+- 일자: 2026-11-03
+- 버전: v3.0.0
+
+| 버전   | 일자       | 변경 내용 |
+| ------ | ---------- | --------- |
+| v1.0.0 | 2024-08-19 | 최초 작성 |
+| v3.0.0 | 2026-11-03 | 에러코드를 서버 코드에 맞춤 |
   
 목차
 ---
@@ -157,7 +162,7 @@ N/A
 | Code         | Description                                          |
 | ------------ | ---------------------------------------------------- |
 | SSRVTRAXXXXX | TAS_API를 참고해주세요                               |
-| SSRVWLT00001 | 'issue-certificate-vc' API 요청 처리를 실패했습니다. |
+| SSRVWLT00101 | Entity 등록에 실패했습니다. |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
@@ -238,15 +243,14 @@ def object _GetCertificateVc: "Get Certificate VC 응답문"
 **■ Status 400 - Client error**
 
 
-| Code         | Description                         |
-| ------------ | ----------------------------------- |
-| SSRVWLT00200 | Certifiacte VC가 존재하지 않습니다. |
+N/A
 
 **■ Status 500 - Server error**
 
 | Code         | Description                                        |
 | ------------ | -------------------------------------------------- |
-| SSRVWLT00002 | 'get-certificate-vc' API 요청 처리를 실패했습니다. |
+| SSRVWLT00301 | 가입증명서 VC 데이터가 없습니다. |
+| SSRVWLT00102 | 가입증명서 VC 조회에 실패했습니다. |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
@@ -339,7 +343,7 @@ def object _RequestSignWallet: "Request Sign Wallet 응답문"
 
 | Code         | Description                                         |
 | ------------ | --------------------------------------------------- |
-| SSRVWLT00003 | 'request-sign-wallet' API 요청 처리를 실패했습니다. |
+| SSRVWLT00103 | 지갑 서명 요청에 실패했습니다. |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 

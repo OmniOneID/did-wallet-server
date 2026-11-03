@@ -18,8 +18,8 @@ puppeteer:
 Open DID Wallet Server Installation Guide
 ==
 
-- Date: 2025-05-29
-- Version: v2.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
 
 목차
 ==
@@ -68,19 +68,22 @@ Open DID Wallet Server Installation Guide
     - [5.3.1. Spring Liquibase 설정](#531-spring-liquibase-설정)
     - [5.3.2. 데이터소스 설정](#532-데이터소스-설정)
     - [5.3.3. JPA 설정](#533-jpa-설정)
-  - [5.4. wallet.yml](#54-walletyml)
+  - [5.4. application-wallet.yml](#54-application-walletyml)
     - [5.4.1. 월렛 설정](#541-월렛-설정)
-  - [5.5. blockchain.yml](#55-blockchainyml)
-  - [5.5.1. Blockchain 설정](#551-blockchain-설정)
+  - [5.5. application-blockchain.yml](#55-application-blockchainyml)
+    - [5.5.1. Blockchain 설정](#551-blockchain-설정)
   - [5.6. blockchain.properties](#56-blockchainproperties)
     - [5.6.1. 블록체인 연동 설정](#561-블록체인-연동-설정)
+  - [5.7. application-lss.yml](#57-application-lssyml)
+  - [5.8. application-spring-docs.yml](#58-application-spring-docsyml)
       - [EVM Network Configuration](#evm-network-configuration)
       - [EVM Contract Configuration](#evm-contract-configuration)
       - [Fabric Network Configuration](#fabric-network-configuration)
 - [6. 프로파일 설정 및 사용](#6-프로파일-설정-및-사용)
-  - [6.1. 프로파일 개요 (`sample`, `dev`)](#61-프로파일-개요-sample-dev)
+  - [6.1. 프로파일 개요 (`sample`, `dev`, `lss`)](#61-프로파일-개요-sample-dev-lss)
     - [6.1.1. `sample` 프로파일](#611-sample-프로파일)
     - [6.1.2. `dev` 프로파일](#612-dev-프로파일)
+    - [6.1.3. `lss` 프로파일](#613-lss-프로파일)
   - [6.2. 프로파일 설정 방법](#62-프로파일-설정-방법)
     - [6.2.1. IDE를 사용한 서버 구동 시](#621-ide를-사용한-서버-구동-시)
     - [6.2.2. 콘솔 명령어를 사용한 서버 구동 시](#622-콘솔-명령어를-사용한-서버-구동-시)
@@ -200,35 +203,44 @@ did-wallet-server
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── dependencies-license.md
+├── LICENSE
 ├── MAINTAINERS.md
 ├── README.md
+├── README_ko.md
 ├── RELEASE-PROCESS.md
 ├── SECURITY.md
 ├── docs
-│   ├── api
-│       └── Wallet_API.md
-│   ├── errorCode
-│       └── Wallet_ErrorCode.md
-│   ├── installation
-│       └── OpenDID_WalletServer_InstallationAndOperation_Guide.md
-│   └── db
-│       └── OpenDID_TableDefinition_Wallet.md
+│   ├── admin
+│   │   ├── OpenDID_WalletAdmin_Operation_Guide.md
+│   │   └── OpenDID_WalletAdmin_Operation_Guide_ko.md
+│   ├── api
+│   │   ├── Wallet_API.md
+│   │   └── Wallet_API_ko.md
+│   ├── db
+│   │   ├── OpenDID_TableDefinition_Wallet.md
+│   │   └── OpenDID_TableDefinition_Wallet_ko.md
+│   ├── errorCode
+│   │   ├── Wallet_ErrorCode.md
+│   │   └── Wallet_ErrorCode_ko.md
+│   └── installation
+│       ├── OpenDID_WalletServer_Installation_Guide.md
+│       └── OpenDID_WalletServer_Installation_Guide_ko.md
 └── source
+    ├── Dockerfile
+    ├── did-wallet-admin
     └── did-wallet-server
+        ├── README.md
+        ├── build.gradle
         ├── gradle
         ├── libs
-            └── did-sdk-common-2.0.0.jar
-            └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0.jar
-            └── did-crypto-sdk-server-2.0.0.jar
-            └── did-datamodel-server-2.0.0.jar
-            └── did-wallet-sdk-server-2.0.0.jar
-            └── did-zkp-sdk-server-2.0.0.jar
-        ├── sample
+        │   ├── did-blockchain-sdk-server-2.0.0.jar
+        │   ├── did-common-sdk-server-3.0.0.jar
+        │   ├── did-core-sdk-server-2.0.0.jar
+        │   ├── did-crypto-sdk-server-2.0.0.jar
+        │   ├── did-datamodel-sdk-server-2.0.0.jar
+        │   ├── did-wallet-sdk-server-2.0.0.jar
+        │   └── did-zkp-sdk-server-2.0.0.jar
         └── src
-        └── build.gradle
-        └── README.md
-    └── did-wallet-admin
 ```
 
 | Name                    | Description                              |
@@ -372,7 +384,7 @@ npm run dev
       cd build/libs
       ls
     ```
-- 이 명령어는 `did-wallet-server-2.0.0.jar` 파일을 생성합니다.
+- 이 명령어는 `did-wallet-server-3.0.0.jar` 파일을 생성합니다.
 
 <br/>
 
@@ -380,7 +392,7 @@ npm run dev
 빌드된 JAR 파일을 사용하여 서버를 구동합니다:
 
 ```bash
-java -jar did-wallet-server-2.0.0.jar
+java -jar did-wallet-server-3.0.0.jar
 ```
 
 > **주의**
@@ -468,7 +480,8 @@ Jackson은 Spring Boot에서 기본적으로 사용되는 JSON 직렬화/역직�
 Wallet 서비스는 TAS 서버와 통신을 합니다. 직접 구축한 TAS서버의 주소값을 설정하면 됩니다.
 * `tas.url`:  
     - TAS(Trust Anchor Service) 서비스의 URL입니다. 인증이나 신뢰 검증에 사용될 수 있습니다.
-    - 예시: `http://localhost:8090/contextpath/tas`
+    - `application-tas.yml`에 설정합니다. 서버가 이 주소 뒤에 `/tas`를 붙입니다.
+    - 예시: `http://localhost:8090`
 
 <br/>
 
@@ -552,7 +565,7 @@ JPA 설정은 애플리케이션의 데이터베이스와 상호작용하는 방
 
 <br/>
 
-## 5.4. wallet.yml
+## 5.4. application-wallet.yml
 ### 5.4.1. 월렛 설정
 * `wallet.file-path`:  
     - 월렛 파일의 경로를 지정합니다. 파일 월렛을 저장하는 파일의 위치를 지정합니다. 이 파일은 개인키 등 중요한 정보를 포함할 수 있습니다. *반드시 절대경로로 입력해야합니다*
@@ -562,8 +575,8 @@ JPA 설정은 애플리케이션의 데이터베이스와 상호작용하는 방
     - 예시: `your_secure_wallet_password`
 
 
-## 5.5. blockchain.yml
-## 5.5.1. Blockchain 설정
+## 5.5. application-blockchain.yml
+### 5.5.1. Blockchain 설정
  * `blockchain.file-path`:
     - [5.6. blockchain.properties](#56-blockchainproperties) 파일의 위치를 설정합니다.
     - 예시: `/path/to/your/blockchain.properties`
@@ -578,23 +591,23 @@ JPA 설정은 애플리케이션의 데이터베이스와 상호작용하는 방
 #### EVM Network Configuration
 
 - `evm.network.url:`:
-  - EVM Network 주소, 클라이언트와 동일한 로컬에 Besu를 구동하는 경우 해당 값은 고정 사용합니다. (Defalt Port : 8545)
+  - EVM Network 주소, 클라이언트와 동일한 로컬에 Besu를 구동하는 경우 해당 값은 고정 사용합니다. (Default Port : 8545)
   - 예시: http://localhost:8545
 
 - `evm.chainId:`:
-  - Chain ID 식별자입니다. 현재는 1337의 고정값을 사용중입니다.(Defalt Value : 1337)
+  - Chain ID 식별자입니다. 현재는 1337의 고정값을 사용중입니다.(Default Value : 1337)
   - 예시: 1337
 
 - `evm.gas.limit:`:
-  - Hyperledger Besu EVM 트랜잭션에서 최대로 허용되는 가스 한도, 현재는 Free Gas로서 고정으로 사용합니다. (Defalt Value : 100000000)
+  - Hyperledger Besu EVM 트랜잭션에서 최대로 허용되는 가스 한도, 현재는 Free Gas로서 고정으로 사용합니다. (Default Value : 100000000)
   - 예시: 100000000
 
 - `evm.gas.price :`:
-  - 유닛 단위 가스 가격, 현재는 Free Gas로서 0으로  고정으로 사용합니다.(Defalt Value : 0)
+  - 유닛 단위 가스 가격, 현재는 Free Gas로서 0으로  고정으로 사용합니다.(Default Value : 0)
   - 예시: 0
 
 - `evm.connection.timeout:`: 
-  - 네트워크 커넥션 타임아웃 값(milliseconds), 현재는 권장 값인 10000으로 고정 사용합니다. (Defalt Value : 10000)
+  - 네트워크 커넥션 타임아웃 값(milliseconds), 현재는 권장 값인 10000으로 고정 사용합니다. (Default Value : 10000)
   - 예시: 10000
 
 #### EVM Contract Configuration
@@ -631,9 +644,67 @@ JPA 설정은 애플리케이션의 데이터베이스와 상호작용하는 방
 
 <br/>
 
+## 5.7. application-lss.yml
+- 역할: LSS(Ledger Service Server) 연동을 설정합니다. `lss` 프로파일을 켜면 Wallet 서버는 블록체인 대신 LSS에서 DID Document를 조회합니다.
+
+- 위치: `src/main/resources/config`
+
+* `lss.url`:
+    - LSS 서버 주소입니다.
+    - 예시: `http://127.0.0.1:8098`
+
+* LSS API Key:
+    - Wallet 서버는 LSS API Key를 `X-API-Key` 헤더로 보냅니다. LSS에서 발급한 키를 관리자 콘솔의 Server Configuration에 `API_KEY_LSS`로 등록하세요. 등록하지 않으면 LSS 호출이 `SSRVWLT01101`로 실패합니다.
+
+<br/>
+
+## 5.8. application-spring-docs.yml
+
+- 역할: 애플리케이션에서 SpringDoc 및 Swagger UI 설정을 관리합니다.
+
+- 위치: `src/main/resources/`
+
+* `springdoc.swagger-ui.path`: 🔒
+  - Swagger UI에 접근할 수 있는 URL 경로를 정의합니다.
+  - 예시: `/swagger-ui.html`
+
+* `springdoc.swagger-ui.groups-order`: 🔒
+  - Swagger UI에서 API 그룹을 표시하는 순서를 지정합니다.
+  - 예시: `ASC`
+
+* `springdoc.swagger-ui.operations-sorter`: 🔒
+  - Swagger UI에서 HTTP 메서드 기준으로 API 엔드포인트를 정렬합니다.
+  - 예시: `method`
+
+* `springdoc.swagger-ui.disable-swagger-default-url`: 🔒
+  - 기본 Swagger URL을 비활성화합니다.
+  - 예시: `true`
+
+* `springdoc.swagger-ui.display-request-duration`: 🔒
+  - Swagger UI에 요청 시간을 표시할지 여부를 설정합니다.
+  - 예시: `true`
+
+* `springdoc.api-docs.path`: 🔒
+  - API 문서가 제공되는 경로를 정의합니다.
+  - 예시: `/api-docs`
+
+* `springdoc.show-actuator`: 🔒
+  - API 문서에서 Actuator 엔드포인트를 표시할지 여부를 설정합니다.
+  - 예시: `true`
+
+* `springdoc.default-consumes-media-type`: 🔒
+  - API 문서에서 요청 본문의 기본 미디어 타입을 설정합니다.
+  - 예시: `application/json`
+
+* `springdoc.default-produces-media-type`: 🔒
+  - API 문서에서 응답 본문의 기본 미디어 타입을 설정합니다.
+  - 예시: `application/json`
+
+<br/>
+
 # 6. 프로파일 설정 및 사용
 
-## 6.1. 프로파일 개요 (`sample`, `dev`)
+## 6.1. 프로파일 개요 (`sample`, `dev`, `lss`)
 Wallet 서버는 다양한 환경에서 실행될 수 있도록 `sample`, `dev` 두 가지 프로파일을 지원합니다.
 
 각 프로파일은 해당 환경에 맞는 설정을 적용하도록 설계되었습니다. 기본적으로 Wallet 서버는 `sample` 프로파일로 설정되어 있으며, 이 프로파일은 데이터베이스나 블록체인과 같은 외부 서비스와의 연동 없이 서버를 독립적으로 구동할 수 있도록 설계되었습니다. `sample` 프로파일은 API 호출 테스트에 적합하여, 개발자가 애플리케이션의 기본 동작을 빠르게 확인할 수 있도록 지원합니다. 이 프로파일은 모든 API 호출에 대해 고정된 응답 데이터를 반환하므로, 초기 개발환경에서 유용합니다.
@@ -649,6 +720,9 @@ Wallet 서버는 다양한 환경에서 실행될 수 있도록 `sample`, `dev` 
 ### 6.1.2. `dev` 프로파일
 `dev` 프로파일은 개발 환경에 적합한 설정을 포함하며, 개발 서버에서 사용됩니다. 이 프로파일을 사용하려면 개발 환경의 데이터베이스와 블록체인 노드에 대한 설정이 필요합니다.
 
+
+### 6.1.3. `lss` 프로파일
+`lss` 프로파일은 `dev`와 함께 사용합니다(예: `dev,lss`). Wallet 서버가 블록체인 대신 LSS에서 DID Document를 조회하므로 블록체인 설정이 필요 없습니다. `lss.url`(5.7)을 설정하고 관리자 콘솔에 `API_KEY_LSS`를 등록하세요.
 
 ## 6.2. 프로파일 설정 방법
 각 구동 방법별로 프로파일을 변경하는 방법을 설명합니다.

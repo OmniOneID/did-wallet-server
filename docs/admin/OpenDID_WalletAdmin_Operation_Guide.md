@@ -63,6 +63,8 @@ Table of Contents
   - [3.5. Log Management](#35-log-management)
     - [3.5.1. API Log](#351-api-log)
     - [3.5.2. Audit API Log](#352-audit-api-log)
+  - [3.6. Server Configuration](#36-server-configuration)
+  - [3.7. Password Policy Settings](#37-password-policy-settings)
 ---
 
 # 1. Introduction
@@ -293,6 +295,7 @@ The Wallet Service Management screen consists of the following items.
 | **Registered At** | The initial registration date and time of the Wallet. |
 
 - The DID Document can be viewed through the `VIEW DID DOCUMENT` button on the screen.
+- The membership certificate VC issued by the TA can be viewed through the `VIEW` button next to Certificate URL.
 - Registered Wallet information cannot be deleted, and only limited modifications are possible for some items.
 
 
@@ -414,5 +417,29 @@ After Wallet registration, open `Log Management` in the sidebar to inspect API c
 > Example detail dialog opened by selecting the call time.
 
 > Records are created for API calls annotated with `@ArticleLog` on the server. For a `FAIL` result, inspect the API Log status code and the available detail message.
+
+## 3.6. Server Configuration
+
+`Server Configuration` manages settings for integration with external servers.
+
+<img src="./images/server-configuration.png" width="800"/>
+
+- **API Key Settings > Ledger Service Server**: Enter the API key issued by the LSS (Ledger Service Server) and save it. The value is stored as `API_KEY_LSS`, and the Wallet server sends it in the `X-API-Key` header when it calls LSS (`lss` profile).
+- If the key is not registered, LSS calls fail with `SSRVWLT01101`.
+
+## 3.7. Password Policy Settings
+
+`Admin Management > Password Policy Settings` sets the rules for administrator passwords. The rules apply when an account is registered and when a password is changed.
+
+<img src="./images/password-policy.png" width="800"/>
+
+| Item | Description | Range |
+| ---- | ----------- | ----- |
+| Minimum Length | Minimum number of characters | 6–20 |
+| Uppercase Letters (A-Z) | Require at least one uppercase letter | - |
+| Numbers (0-9) | Require at least one number | - |
+| Special Characters (!@#$%^&*) | Require at least one special character | - |
+| Password Expiration Period | Number of days a password is valid | 30–365 days (default 90) |
+
 
 [Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0.md

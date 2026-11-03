@@ -92,7 +92,7 @@ public enum ErrorCode {
     WALLET_SERVICE_DID_DOCUMENT_ALREADY_REGISTERED("00808", "Failed to register Wallet Service DID Document: document is already registered.", 400),
     FAILED_TO_GENERATE_DID_DOCUMENT("00809", "Failed to generate DID document.", 500),
     FAILED_TO_REGISTER_WALLET_SERVICE_DID_DOCUMENT("00810","Failed to register Wallet Service DID Document.", 500),
-    WALLET_SERVICE_DID_DOCUMENT_NOT_FOUND("00811","Failed to find Wallet Service DID Document: o registration request has been made.", 400),
+    WALLET_SERVICE_DID_DOCUMENT_NOT_FOUND("00811","Failed to find Wallet Service DID Document: no registration request has been made.", 400),
     INVALID_CERTIFICATE_VC_JSON_FORMAT("00812", "Failed to process certificate VC: invalid JSON format.", 500),
     FAILED_TO_REQUEST_CERTIFICATE_VC("00813","Failed to process the 'request-certificate-vc' API request.", 500),
     FAILED_TO_LOAD_KEY_ELEMENT("00814", "Failed to load key element.", 500),
@@ -104,7 +104,7 @@ public enum ErrorCode {
 
     // Wallet Management Errors (009xx)
     WALLET_INFO_NOT_FOUND("00901", "Failed to find wallet: wallet is not registered.", 400),
-    INVALID_DID_DOCUMENT("00102", "Invalid DID Document", 400),
+    INVALID_DID_DOCUMENT("00902", "Invalid DID Document", 400),
 
     // Server config errors (011xx)
     SERVER_CONFIG_KEY_NOT_FOUND("01101", "Server configuration key not found.", 400),

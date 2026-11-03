@@ -18,12 +18,13 @@ puppeteer:
 Wallet Server Error
 ==
 
-- Date: 2024-09-03
-- Version: v1.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
 
 | Version          | Date       | Changes                  |
 | ---------------- | ---------- | ------------------------ |
 | v1.0.0  | 2024-09-03 | 최초 버전          |
+| v3.0.0  | 2026-11-03 | Wallet Service·지갑 관리·서버 설정 에러 추가 |
 
 <div style="page-break-after: always;"></div>
 
@@ -38,6 +39,9 @@ Wallet Server Error
   - [5. General and Server Errors (005xx)](#5-general-and-server-errors-005xx)
   - [6. Blockchain Errors (006xx)](#6-blockchain-errors-006xx)
   - [7. Admin Errors (007xx)](#7-admin-errors-007xx)
+  - [8. Wallet Service Errors (008xx)](#8-wallet-service-errors-008xx)
+  - [9. Wallet Management Errors (009xx)](#9-wallet-management-errors-009xx)
+  - [10. Server Configuration Errors (011xx)](#10-server-configuration-errors-011xx)
 
 # Model
 ## Error Response
@@ -142,3 +146,43 @@ public class ErrorResponse {
 |--------------|-----------------------------------------------|-------------|------------------------------------------|
 | SSRVWLT00701 | Failed to find admin: admin is not registered. | -          | 관리자가 제대로 등록되었는지 확인하세요. |
 | SSRVWLT00702 | Failed to register admin: admin is already registered. | -     | 진행하기 전에 중복 등록을 확인하세요. |
+
+<br>
+
+## 8. Wallet Service Errors (008xx)
+
+| Error Code   | Error Message | Description | Action Required |
+|--------------|---------------|-------------|-----------------|
+| SSRVWLT00801 | Failed to find wallet service: wallet service is not registered. | - | 관리자 콘솔에서 Wallet Service를 등록하세요. |
+| SSRVWLT00802 | Application config not found. | - | 애플리케이션 설정을 확인하세요. |
+| SSRVWLT00803 | Cannot delete namespace: it is referenced by a VC schema. | - | 네임스페이스를 쓰는 VC 스키마를 먼저 삭제하세요. |
+| SSRVWLT00804 | Cannot delete vc schema: it is referenced by a Issue Profile. | - | VC 스키마를 쓰는 Issue Profile을 먼저 삭제하세요. |
+| SSRVWLT00805 | Namespace not found for the given ID. | - | 네임스페이스 아이디를 확인하세요. |
+| SSRVWLT00807 | Failed to register Wallet Service DID Document: document is already requested. | - | TA가 등록 요청을 승인할 때까지 기다리세요. |
+| SSRVWLT00808 | Failed to register Wallet Service DID Document: document is already registered. | - | 이미 등록된 DID Document입니다. 상태를 확인하세요. |
+| SSRVWLT00809 | Failed to generate DID document. | - | DID Document 생성에 쓰는 지갑 키를 확인하세요. |
+| SSRVWLT00810 | Failed to register Wallet Service DID Document. | - | TA 연결과 DID Document를 확인하세요. |
+| SSRVWLT00811 | Failed to find Wallet Service DID Document: no registration request has been made. | - | 먼저 DID Document 등록을 요청하세요. |
+| SSRVWLT00812 | Failed to process certificate VC: invalid JSON format. | - | TA가 보낸 가입증명서 VC를 확인하세요. |
+| SSRVWLT00813 | Failed to process the 'request-certificate-vc' API request. | - | 가입증명서 VC 요청과 서버 로그를 확인하세요. |
+| SSRVWLT00814 | Failed to load key element. | - | 지갑 파일과 키 아이디를 확인하세요. |
+| SSRVWLT00815 | Failed to communicate with tas: unknown error occurred. | - | TA 연결과 설정을 확인하세요. |
+| SSRVWLT00816 | Failed to ping the URL. | - | URL에 접근할 수 있는지 확인하세요. |
+| SSRVWLT00817 | Wallet Service is already registered | - | 등록된 Wallet Service 정보를 쓰세요. |
+
+<br>
+
+## 9. Wallet Management Errors (009xx)
+
+| Error Code   | Error Message | Description | Action Required |
+|--------------|---------------|-------------|-----------------|
+| SSRVWLT00901 | Failed to find wallet: wallet is not registered. | - | 지갑이 등록되어 있는지 확인하세요. |
+| SSRVWLT00902 | Invalid DID Document | - | DID Document의 형식과 내용을 확인하세요. |
+
+<br>
+
+## 10. Server Configuration Errors (011xx)
+
+| Error Code   | Error Message | Description | Action Required |
+|--------------|---------------|-------------|-----------------|
+| SSRVWLT01101 | Server configuration key not found. | - | 관리자 콘솔의 Server Configuration에 해당 키(예: API_KEY_LSS)를 등록하세요. |

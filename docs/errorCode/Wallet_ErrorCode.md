@@ -18,12 +18,13 @@ puppeteer:
 Wallet Server Error
 ==
 
-- Date: 2024-09-03
-- Version: v1.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
 
 | Version          | Date       | Changes                  |
 | ---------------- | ---------- | ------------------------ |
 | v1.0.0  | 2024-09-03 | Initial version          |
+| v3.0.0  | 2026-11-03 | Added wallet service, wallet management, and server configuration errors |
 
 <div style="page-break-after: always;"></div>
 
@@ -43,6 +44,9 @@ Wallet Server Error
   - [5. General and Server Errors (005xx)](#5-general-and-server-errors-005xx)
   - [6. Blockchain Errors (006xx)](#6-blockchain-errors-006xx)
   - [7. Admin Errors (007xx)](#7-admin-errors-007xx)
+  - [8. Wallet Service Errors (008xx)](#8-wallet-service-errors-008xx)
+  - [9. Wallet Management Errors (009xx)](#9-wallet-management-errors-009xx)
+  - [10. Server Configuration Errors (011xx)](#10-server-configuration-errors-011xx)
 
 # Model
 ## Error Response
@@ -146,3 +150,43 @@ public class ErrorResponse {
 |--------------|-----------------------------------------------|-------------|------------------------------------------|
 | SSRVWLT00701 | Failed to find admin: admin is not registered. | -          | Ensure the admin is properly registered. |
 | SSRVWLT00702 | Failed to register admin: admin is already registered. | -     | Check for duplicate registration before proceeding. |
+
+<br>
+
+## 8. Wallet Service Errors (008xx)
+
+| Error Code   | Error Message | Description | Action Required |
+|--------------|---------------|-------------|-----------------|
+| SSRVWLT00801 | Failed to find wallet service: wallet service is not registered. | - | Register the wallet service in the Admin Console. |
+| SSRVWLT00802 | Application config not found. | - | Check the application configuration. |
+| SSRVWLT00803 | Cannot delete namespace: it is referenced by a VC schema. | - | Delete the VC schemas that use the namespace first. |
+| SSRVWLT00804 | Cannot delete vc schema: it is referenced by a Issue Profile. | - | Delete the issue profiles that use the VC schema first. |
+| SSRVWLT00805 | Namespace not found for the given ID. | - | Check the namespace ID. |
+| SSRVWLT00807 | Failed to register Wallet Service DID Document: document is already requested. | - | Wait until the TA approves the registration request. |
+| SSRVWLT00808 | Failed to register Wallet Service DID Document: document is already registered. | - | The DID Document is already registered. Check its status. |
+| SSRVWLT00809 | Failed to generate DID document. | - | Check the wallet keys used to generate the DID Document. |
+| SSRVWLT00810 | Failed to register Wallet Service DID Document. | - | Check the TA connection and the DID Document. |
+| SSRVWLT00811 | Failed to find Wallet Service DID Document: no registration request has been made. | - | Request DID Document registration first. |
+| SSRVWLT00812 | Failed to process certificate VC: invalid JSON format. | - | Check the certificate VC sent by the TA. |
+| SSRVWLT00813 | Failed to process the 'request-certificate-vc' API request. | - | Check the certificate VC request and the server logs. |
+| SSRVWLT00814 | Failed to load key element. | - | Check the wallet file and the key ID. |
+| SSRVWLT00815 | Failed to communicate with tas: unknown error occurred. | - | Check the TA connection and configuration. |
+| SSRVWLT00816 | Failed to ping the URL. | - | Check that the URL is reachable. |
+| SSRVWLT00817 | Wallet Service is already registered | - | Use the registered wallet service information. |
+
+<br>
+
+## 9. Wallet Management Errors (009xx)
+
+| Error Code   | Error Message | Description | Action Required |
+|--------------|---------------|-------------|-----------------|
+| SSRVWLT00901 | Failed to find wallet: wallet is not registered. | - | Check that the wallet is registered. |
+| SSRVWLT00902 | Invalid DID Document | - | Check the format and contents of the DID Document. |
+
+<br>
+
+## 10. Server Configuration Errors (011xx)
+
+| Error Code   | Error Message | Description | Action Required |
+|--------------|---------------|-------------|-----------------|
+| SSRVWLT01101 | Server configuration key not found. | - | Register the key (for example, API_KEY_LSS) in Server Configuration of the Admin Console. |

@@ -42,8 +42,8 @@ did-wallet-server
 │       ├── Wallet_ErrorCode.md
 │       └── Wallet_ErrorCode_ko.md
 │   └── installation
-│       ├── OpenDID_WalletServer_InstallationAndOperation_Guide.md
-│       └── OpenDID_WalletServer_InstallationAndOperation_Guide_ko.md
+│       ├── OpenDID_WalletServer_Installation_Guide.md
+│       └── OpenDID_WalletServer_Installation_Guide_ko.md
 │   └── db
 │       ├── OpenDID_TableDefinition_Wallet.md
 │       └── OpenDID_TableDefinition_Wallet_ko.md
@@ -82,7 +82,7 @@ did-wallet-server
 ## 설치 및 운영 가이드
 
 Wallet 서버의 설치에 대한 자세한 지침은 아래 가이드를 참조하십시오:
-- [OpenDID Wallet 서버 설치 가이드](docs/installation/OpenDID_WalletServer_Installation_Guide.md)  
+- [OpenDID Wallet 서버 설치 가이드](docs/installation/OpenDID_WalletServer_Installation_Guide_ko.md)  
 
 Wallet Admin Console의 운영에 대한 자세한 지침은 아래 가이드를 참조하십시오:
 - [OpenDID Wallet Admin Console 운영 가이드](docs/admin/OpenDID_WalletAdmin_Operation_Guide_ko.md)  

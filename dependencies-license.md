@@ -39,67 +39,73 @@ This document provides an overview of the third-party libraries used in this rep
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 > - **Embedded license files**: [springdoc-openapi-starter-webmvc-ui-2.2.0.jar/META-INF/LICENSE](springdoc-openapi-starter-webmvc-ui-2.2.0.jar/META-INF/LICENSE)
 
-**8** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-web` **Version:** `3.2.4` 
+**8** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-aop` **Version:** `3.2.4` 
+> - **POM Project URL**: [https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
+> - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
+> - **Embedded license files**: [spring-boot-starter-aop-3.2.4.jar/META-INF/LICENSE.txt](spring-boot-starter-aop-3.2.4.jar/META-INF/LICENSE.txt) 
+    - [spring-boot-starter-aop-3.2.4.jar/META-INF/NOTICE.txt](spring-boot-starter-aop-3.2.4.jar/META-INF/NOTICE.txt)
+
+**9** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-web` **Version:** `3.2.4` 
 > - **POM Project URL**: [https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 > - **Embedded license files**: [spring-boot-starter-web-3.2.4.jar/META-INF/LICENSE.txt](spring-boot-starter-web-3.2.4.jar/META-INF/LICENSE.txt) 
     - [spring-boot-starter-web-3.2.4.jar/META-INF/NOTICE.txt](spring-boot-starter-web-3.2.4.jar/META-INF/NOTICE.txt)
 
-**9** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-validation` **Version:** `3.2.4` 
+**10** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-validation` **Version:** `3.2.4` 
 > - **POM Project URL**: [https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 > - **Embedded license files**: [spring-boot-starter-validation-3.2.4.jar/META-INF/LICENSE.txt](spring-boot-starter-validation-3.2.4.jar/META-INF/LICENSE.txt) 
     - [spring-boot-starter-validation-3.2.4.jar/META-INF/NOTICE.txt](spring-boot-starter-validation-3.2.4.jar/META-INF/NOTICE.txt)
 
-**10** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-actuator` **Version:** `3.2.4` 
+**11** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-actuator` **Version:** `3.2.4` 
 > - **POM Project URL**: [https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 > - **Embedded license files**: [spring-boot-starter-actuator-3.2.4.jar/META-INF/LICENSE.txt](spring-boot-starter-actuator-3.2.4.jar/META-INF/LICENSE.txt) 
     - [spring-boot-starter-actuator-3.2.4.jar/META-INF/NOTICE.txt](spring-boot-starter-actuator-3.2.4.jar/META-INF/NOTICE.txt)
 
-**11** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-data-jpa` **Version:** `3.2.4` 
+**12** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-data-jpa` **Version:** `3.2.4` 
 > - **POM Project URL**: [https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 > - **Embedded license files**: [spring-boot-starter-data-jpa-3.2.4.jar/META-INF/LICENSE.txt](spring-boot-starter-data-jpa-3.2.4.jar/META-INF/LICENSE.txt) 
     - [spring-boot-starter-data-jpa-3.2.4.jar/META-INF/NOTICE.txt](spring-boot-starter-data-jpa-3.2.4.jar/META-INF/NOTICE.txt)
 
-**12** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-security` **Version:** `3.2.4` 
+**13** **Group:** `org.springframework.boot` **Name:** `spring-boot-starter-security` **Version:** `3.2.4` 
 > - **POM Project URL**: [https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 > - **Embedded license files**: [spring-boot-starter-security-3.2.4.jar/META-INF/LICENSE.txt](spring-boot-starter-security-3.2.4.jar/META-INF/LICENSE.txt) 
     - [spring-boot-starter-security-3.2.4.jar/META-INF/NOTICE.txt](spring-boot-starter-security-3.2.4.jar/META-INF/NOTICE.txt)
 
-**13** **Group:** `org.springframework.cloud` **Name:** `spring-cloud-starter-openfeign` **Version:** `4.1.1` 
+**14** **Group:** `org.springframework.cloud` **Name:** `spring-cloud-starter-openfeign` **Version:** `4.1.1` 
 > - **POM Project URL**: [https://projects.spring.io/spring-cloud](https://projects.spring.io/spring-cloud)
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-**14** **Group:** `org.web3j` **Name:** `core` **Version:** `4.14.0` 
+**15** **Group:** `org.web3j` **Name:** `core` **Version:** `4.14.0` 
 > - **POM Project URL**: [https://web3j.io](https://web3j.io)
 > - **POM License**: Apache License, Version 2.0 - [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
 > - **Embedded license files**: [core-4.14.0.jar/solidity/readme.txt](core-4.14.0.jar/solidity/readme.txt)
 
 ## Bouncy Castle Licence
 
-**15** **Group:** `org.bouncycastle` **Name:** `bcpkix-jdk18on` **Version:** `1.78.1` 
+**16** **Group:** `org.bouncycastle` **Name:** `bcpkix-jdk18on` **Version:** `1.78.1` 
 > - **POM Project URL**: [https://www.bouncycastle.org/java.html](https://www.bouncycastle.org/java.html)
 > - **POM License**: Bouncy Castle Licence - [https://www.bouncycastle.org/licence.html](https://www.bouncycastle.org/licence.html)
 
-**16** **Group:** `org.bouncycastle` **Name:** `bcutil-jdk18on` **Version:** `1.78.1` 
+**17** **Group:** `org.bouncycastle` **Name:** `bcutil-jdk18on` **Version:** `1.78.1` 
 > - **POM Project URL**: [https://www.bouncycastle.org/java.html](https://www.bouncycastle.org/java.html)
 > - **POM License**: Bouncy Castle Licence - [https://www.bouncycastle.org/licence.html](https://www.bouncycastle.org/licence.html)
 
-**17** **Group:** `org.bouncycastle` **Name:** `bcprov-jdk18on` **Version:** `1.78.1` 
+**18** **Group:** `org.bouncycastle` **Name:** `bcprov-jdk18on` **Version:** `1.78.1` 
 > - **POM Project URL**: [https://www.bouncycastle.org/java.html](https://www.bouncycastle.org/java.html)
 > - **POM License**: Bouncy Castle Licence - [https://www.bouncycastle.org/licence.html](https://www.bouncycastle.org/licence.html)
 
 ## MIT License
 
-**18** **Group:** `com.github.ulisesbocchio` **Name:** `jasypt-spring-boot-starter` **Version:** `3.0.5` 
+**19** **Group:** `com.github.ulisesbocchio` **Name:** `jasypt-spring-boot-starter` **Version:** `3.0.5` 
 > - **POM License**: MIT License - [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
 
 ## The 2-Clause BSD License
 
-**19** **Group:** `org.postgresql` **Name:** `postgresql` **Version:** `42.6.2` 
+**20** **Group:** `org.postgresql` **Name:** `postgresql` **Version:** `42.6.2` 
 > - **Manifest Project URL**: [https://jdbc.postgresql.org/](https://jdbc.postgresql.org/)
 > - **Manifest License**: The 2-Clause BSD License (Not Packaged)
 > - **POM Project URL**: [https://jdbc.postgresql.org](https://jdbc.postgresql.org)
@@ -116,26 +122,26 @@ This document provides an overview of the third-party libraries used in this rep
 
 | Package | Version | License | Repository |
 |--------|---------|---------|------------|
-| @ampproject/remapping@2.3.0 | undefined | Apache-2.0 | https://github.com/ampproject/remapping |
-| @babel/code-frame@7.26.2 | undefined | MIT | https://github.com/babel/babel |
-| @babel/compat-data@7.26.5 | undefined | MIT | https://github.com/babel/babel |
-| @babel/core@7.26.7 | undefined | MIT | https://github.com/babel/babel |
-| @babel/generator@7.26.5 | undefined | MIT | https://github.com/babel/babel |
-| @babel/helper-compilation-targets@7.26.5 | undefined | MIT | https://github.com/babel/babel |
-| @babel/helper-module-imports@7.25.9 | undefined | MIT | https://github.com/babel/babel |
-| @babel/helper-module-transforms@7.26.0 | undefined | MIT | https://github.com/babel/babel |
+| @babel/code-frame@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/compat-data@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/core@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/generator@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helper-compilation-targets@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helper-globals@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helper-module-imports@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helper-module-transforms@7.29.7 | undefined | MIT | https://github.com/babel/babel |
 | @babel/helper-plugin-utils@7.26.5 | undefined | MIT | https://github.com/babel/babel |
-| @babel/helper-string-parser@7.25.9 | undefined | MIT | https://github.com/babel/babel |
-| @babel/helper-validator-identifier@7.25.9 | undefined | MIT | https://github.com/babel/babel |
-| @babel/helper-validator-option@7.25.9 | undefined | MIT | https://github.com/babel/babel |
-| @babel/helpers@7.27.0 | undefined | MIT | https://github.com/babel/babel |
-| @babel/parser@7.27.0 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helper-string-parser@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helper-validator-identifier@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helper-validator-option@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/helpers@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/parser@7.29.7 | undefined | MIT | https://github.com/babel/babel |
 | @babel/plugin-transform-react-jsx-self@7.25.9 | undefined | MIT | https://github.com/babel/babel |
 | @babel/plugin-transform-react-jsx-source@7.25.9 | undefined | MIT | https://github.com/babel/babel |
 | @babel/runtime@7.27.0 | undefined | MIT | https://github.com/babel/babel |
-| @babel/template@7.27.0 | undefined | MIT | https://github.com/babel/babel |
-| @babel/traverse@7.26.7 | undefined | MIT | https://github.com/babel/babel |
-| @babel/types@7.27.0 | undefined | MIT | https://github.com/babel/babel |
+| @babel/template@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/traverse@7.29.7 | undefined | MIT | https://github.com/babel/babel |
+| @babel/types@7.29.7 | undefined | MIT | https://github.com/babel/babel |
 | @emotion/babel-plugin@11.13.5 | undefined | MIT | https://github.com/emotion-js/emotion/tree/main/packages/babel-plugin |
 | @emotion/cache@11.14.0 | undefined | MIT | https://github.com/emotion-js/emotion/tree/main/packages/cache |
 | @emotion/hash@0.9.2 | undefined | MIT | https://github.com/emotion-js/emotion/tree/main/packages/hash |
@@ -157,11 +163,11 @@ This document provides an overview of the third-party libraries used in this rep
 | @floating-ui/dom@1.6.13 | undefined | MIT | https://github.com/floating-ui/floating-ui |
 | @floating-ui/react-dom@2.1.2 | undefined | MIT | https://github.com/floating-ui/floating-ui |
 | @floating-ui/utils@0.2.9 | undefined | MIT | https://github.com/floating-ui/floating-ui |
-| @jridgewell/gen-mapping@0.3.8 | undefined | MIT | https://github.com/jridgewell/gen-mapping |
+| @jridgewell/gen-mapping@0.3.13 | undefined | MIT | https://github.com/jridgewell/sourcemaps |
+| @jridgewell/remapping@2.3.5 | undefined | MIT | https://github.com/jridgewell/sourcemaps |
 | @jridgewell/resolve-uri@3.1.2 | undefined | MIT | https://github.com/jridgewell/resolve-uri |
-| @jridgewell/set-array@1.2.1 | undefined | MIT | https://github.com/jridgewell/set-array |
-| @jridgewell/sourcemap-codec@1.5.0 | undefined | MIT | https://github.com/jridgewell/sourcemap-codec |
-| @jridgewell/trace-mapping@0.3.25 | undefined | MIT | https://github.com/jridgewell/trace-mapping |
+| @jridgewell/sourcemap-codec@1.5.5 | undefined | MIT | https://github.com/jridgewell/sourcemaps |
+| @jridgewell/trace-mapping@0.3.31 | undefined | MIT | https://github.com/jridgewell/sourcemaps |
 | @mui/base@5.0.0-beta.68 | undefined | MIT | https://github.com/mui/material-ui |
 | @mui/core-downloads-tracker@6.4.2 | undefined | MIT | https://github.com/mui/material-ui |
 | @mui/icons-material@6.4.2 | undefined | MIT | https://github.com/mui/material-ui |
@@ -184,7 +190,7 @@ This document provides an overview of the third-party libraries used in this rep
 | @react-spring/shared@9.7.5 | undefined | MIT | https://github.com/pmndrs/react-spring |
 | @react-spring/types@9.7.5 | undefined | MIT | https://github.com/pmndrs/react-spring |
 | @react-spring/web@9.7.5 | undefined | MIT | https://github.com/pmndrs/react-spring |
-| @rollup/rollup-darwin-arm64@4.40.2 | undefined | MIT | https://github.com/rollup/rollup |
+| @rollup/rollup-darwin-arm64@4.59.0 | undefined | MIT | https://github.com/rollup/rollup |
 | @toolpad/core@0.12.0 | undefined | MIT | https://github.com/mui/toolpad |
 | @toolpad/utils@0.12.0 | undefined | MIT | https://github.com/mui/toolpad |
 | @types/babel__core@7.20.5 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
@@ -199,7 +205,7 @@ This document provides an overview of the third-party libraries used in this rep
 | @types/d3-scale@4.0.9 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | @types/d3-shape@3.1.7 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | @types/d3-time@3.0.4 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
-| @types/estree@1.0.7 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
+| @types/estree@1.0.8 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | @types/hoist-non-react-statics@3.3.6 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | @types/parse-json@4.0.2 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
 | @types/prop-types@15.7.14 | undefined | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped |
@@ -212,10 +218,11 @@ This document provides an overview of the third-party libraries used in this rep
 | ansi-styles@4.3.0 | undefined | MIT | https://github.com/chalk/ansi-styles |
 | arg@5.0.2 | undefined | MIT | https://github.com/vercel/arg |
 | babel-plugin-macros@3.1.0 | undefined | MIT | https://github.com/kentcdodds/babel-plugin-macros |
-| browserslist@4.24.4 | undefined | MIT | https://github.com/browserslist/browserslist |
+| baseline-browser-mapping@2.11.22 | undefined | Apache-2.0 | https://github.com/web-platform-dx/baseline-browser-mapping |
+| browserslist@4.28.9 | undefined | MIT | https://github.com/browserslist/browserslist |
 | callsites@3.1.0 | undefined | MIT | https://github.com/sindresorhus/callsites |
 | camelize@1.0.1 | undefined | MIT | https://github.com/ljharb/camelize |
-| caniuse-lite@1.0.30001696 | undefined | CC-BY-4.0 | https://github.com/browserslist/caniuse-lite |
+| caniuse-lite@1.0.30001810 | undefined | CC-BY-4.0 | https://github.com/browserslist/caniuse-lite |
 | chalk@4.1.2 | undefined | MIT | https://github.com/chalk/chalk |
 | chalk@5.4.1 | undefined | MIT | https://github.com/chalk/chalk |
 | client-only@0.0.1 | undefined | MIT |  |
@@ -245,7 +252,7 @@ This document provides an overview of the third-party libraries used in this rep
 | debug@4.4.0 | undefined | MIT | https://github.com/debug-js/debug |
 | delaunator@5.0.1 | undefined | ISC | https://github.com/mapbox/delaunator |
 | dom-helpers@5.2.1 | undefined | MIT | https://github.com/react-bootstrap/dom-helpers |
-| electron-to-chromium@1.5.90 | undefined | ISC | https://github.com/kilian/electron-to-chromium |
+| electron-to-chromium@1.5.427 | undefined | ISC | https://github.com/Kilian/electron-to-chromium |
 | error-ex@1.3.2 | undefined | MIT | https://github.com/qix-/node-error-ex |
 | esbuild@0.25.2 | undefined | MIT | https://github.com/evanw/esbuild |
 | escalade@3.2.0 | undefined | MIT | https://github.com/lukeed/escalade |
@@ -260,7 +267,6 @@ This document provides an overview of the third-party libraries used in this rep
 | function-bind@1.1.2 | undefined | MIT | https://github.com/Raynos/function-bind |
 | gensync@1.0.0-beta.2 | undefined | MIT | https://github.com/loganfsmyth/gensync |
 | get-stream@8.0.1 | undefined | MIT | https://github.com/sindresorhus/get-stream |
-| globals@11.12.0 | undefined | MIT | https://github.com/sindresorhus/globals |
 | has-flag@4.0.0 | undefined | MIT | https://github.com/sindresorhus/has-flag |
 | hasown@2.0.2 | undefined | MIT | https://github.com/inspect-js/hasOwn |
 | hoist-non-react-statics@3.3.2 | undefined | BSD-3-Clause | https://github.com/mridgway/hoist-non-react-statics |
@@ -281,17 +287,17 @@ This document provides an overview of the third-party libraries used in this rep
 | json-parse-even-better-errors@2.3.1 | undefined | MIT | https://github.com/npm/json-parse-even-better-errors |
 | json5@2.2.3 | undefined | MIT | https://github.com/json5/json5 |
 | lines-and-columns@1.2.4 | undefined | MIT | https://github.com/eventualbuddha/lines-and-columns |
-| lodash-es@4.17.21 | undefined | MIT | https://github.com/lodash/lodash |
+| lodash-es@4.18.1 | undefined | MIT | https://github.com/lodash/lodash |
 | lodash.clonedeep@4.5.0 | undefined | MIT | https://github.com/lodash/lodash |
 | lodash.isequal@4.5.0 | undefined | MIT | https://github.com/lodash/lodash |
-| lodash@4.17.21 | undefined | MIT | https://github.com/lodash/lodash |
+| lodash@4.18.1 | undefined | MIT | https://github.com/lodash/lodash |
 | loose-envify@1.4.0 | undefined | MIT | https://github.com/zertosh/loose-envify |
 | lru-cache@5.1.1 | undefined | ISC | https://github.com/isaacs/node-lru-cache |
 | merge-stream@2.0.0 | undefined | MIT | https://github.com/grncdr/merge-stream |
 | mimic-fn@4.0.0 | undefined | MIT | https://github.com/sindresorhus/mimic-fn |
 | ms@2.1.3 | undefined | MIT | https://github.com/vercel/ms |
-| nanoid@3.3.8 | undefined | MIT | https://github.com/ai/nanoid |
-| node-releases@2.0.19 | undefined | MIT | https://github.com/chicoxyzzy/node-releases |
+| nanoid@3.3.18 | undefined | MIT | https://github.com/ai/nanoid |
+| node-releases@2.0.55 | undefined | MIT | https://github.com/chicoxyzzy/node-releases |
 | npm-run-path@5.3.0 | undefined | MIT | https://github.com/sindresorhus/npm-run-path |
 | object-assign@4.1.1 | undefined | MIT | https://github.com/sindresorhus/object-assign |
 | onetime@6.0.0 | undefined | MIT | https://github.com/sindresorhus/onetime |
@@ -306,10 +312,10 @@ This document provides an overview of the third-party libraries used in this rep
 | path-to-regexp@6.3.0 | undefined | MIT | https://github.com/pillarjs/path-to-regexp |
 | path-type@4.0.0 | undefined | MIT | https://github.com/sindresorhus/path-type |
 | picocolors@1.1.1 | undefined | ISC | https://github.com/alexeyraspopov/picocolors |
-| picomatch@4.0.2 | undefined | MIT | https://github.com/micromatch/picomatch |
+| picomatch@4.0.4 | undefined | MIT | https://github.com/micromatch/picomatch |
 | postcss-value-parser@4.2.0 | undefined | MIT | https://github.com/TrySound/postcss-value-parser |
 | postcss@8.4.49 | undefined | MIT | https://github.com/postcss/postcss |
-| postcss@8.5.3 | undefined | MIT | https://github.com/postcss/postcss |
+| postcss@8.5.26 | undefined | MIT | https://github.com/postcss/postcss |
 | prettier@3.3.3 | undefined | MIT | https://github.com/prettier/prettier |
 | prop-types@15.8.1 | undefined | MIT | https://github.com/facebook/prop-types |
 | quill-delta@5.1.0 | undefined | MIT | https://github.com/quilljs/delta |
@@ -319,7 +325,7 @@ This document provides an overview of the third-party libraries used in this rep
 | react-is@19.0.0 | undefined | MIT | https://github.com/facebook/react |
 | react-quill-new@3.3.3 | undefined | MIT | https://github.com/VaguelySerious/react-quill |
 | react-refresh@0.14.2 | undefined | MIT | https://github.com/facebook/react |
-| react-router@7.5.3 | undefined | MIT | https://github.com/remix-run/react-router |
+| react-router@7.18.2 | undefined | MIT | https://github.com/remix-run/react-router |
 | react-transition-group@4.4.5 | undefined | BSD-3-Clause | https://github.com/reactjs/react-transition-group |
 | react@19.0.0 | undefined | MIT | https://github.com/facebook/react |
 | regenerator-runtime@0.14.1 | undefined | MIT | https://github.com/facebook/regenerator/tree/main/packages/runtime |
@@ -327,7 +333,7 @@ This document provides an overview of the third-party libraries used in this rep
 | resolve-from@4.0.0 | undefined | MIT | https://github.com/sindresorhus/resolve-from |
 | resolve@1.22.10 | undefined | MIT | https://github.com/browserify/resolve |
 | robust-predicates@3.0.2 | undefined | Unlicense | https://github.com/mourner/robust-predicates |
-| rollup@4.40.2 | undefined | MIT | https://github.com/rollup/rollup |
+| rollup@4.59.0 | undefined | MIT | https://github.com/rollup/rollup |
 | scheduler@0.25.0 | undefined | MIT | https://github.com/facebook/react |
 | semver@6.3.1 | undefined | ISC | https://github.com/npm/node-semver |
 | set-cookie-parser@2.7.1 | undefined | MIT | https://github.com/nfriedly/set-cookie-parser |
@@ -347,17 +353,15 @@ This document provides an overview of the third-party libraries used in this rep
 | tinyglobby@0.2.13 | undefined | MIT | https://github.com/SuperchupuDev/tinyglobby |
 | title@4.0.1 | undefined | MIT | https://github.com/vercel/title |
 | tslib@2.6.2 | undefined | 0BSD | https://github.com/Microsoft/tslib |
-| turbo-stream@2.4.0 | undefined | ISC | https://github.com/jacob-ebey/turbo-stream |
 | typescript@5.7.3 | undefined | Apache-2.0 | https://github.com/microsoft/TypeScript |
-| update-browserslist-db@1.1.2 | undefined | MIT | https://github.com/browserslist/update-db |
+| update-browserslist-db@1.3.3 | undefined | MIT | https://github.com/browserslist/update-db |
 | use-sync-external-store@1.4.0 | undefined | MIT | https://github.com/facebook/react |
-| vite@6.3.5 | undefined | MIT | https://github.com/vitejs/vite |
+| vite@6.4.2 | undefined | MIT | https://github.com/vitejs/vite |
 | which@2.0.2 | undefined | ISC | https://github.com/isaacs/node-which |
 | yallist@3.1.1 | undefined | ISC | https://github.com/isaacs/yallist |
 | yaml-diff-patch@2.0.0 | undefined | MIT | https://github.com/grantila/yaml-diff-patch |
 | yaml@1.10.2 | undefined | ISC | https://github.com/eemeli/yaml |
 | yaml@2.5.1 | undefined | ISC | https://github.com/eemeli/yaml |
-
 
 ## The SIL Open Font License
 **SUIT**:(https://noonnu.cc/en/font_page/845)
