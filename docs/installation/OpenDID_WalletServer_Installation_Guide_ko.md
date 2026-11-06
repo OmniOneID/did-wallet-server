@@ -336,7 +336,7 @@ wallet 어드민 콘솔은 React 기반이며, VS Code에서 별도로 실행할
 
 #### 2. 프로젝트 열기
 
-- VS Code에서 `source/did-wallet-admin` 디렉토리 열기
+- VS Code에서 `source/did-wallet-admin/frontend` 디렉토리 열기
 
 #### 3. 의존성 설치
 
@@ -634,7 +634,7 @@ JPA 설정은 애플리케이션의 데이터베이스와 상호작용하는 방
   - Hyperledger Fabric의 클라이언트 인증서가 위치한 경로를 설정합니다. 해당 파일은 Hyperledger Fabric 테스트 네트워크 설치시 자동으로 생성되며, 기본 파일명은 'cert.pem' 입니다.
   - 예시: /etc/hyperledger/fabric/certs/cert.pem
 
-- `fabric.mychannel:`: 
+- `fabric.networkName:`: 
   - Hyperledger Fabric에서 사용하는 프파이빗 네트워크(채널) 이름입니다. Hyperledger Fabric 테스트 네트워크 설치시 입력한 채널명을 설정해야 합니다.
   - 예시: mychannel
 

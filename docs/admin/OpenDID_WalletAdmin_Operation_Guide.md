@@ -18,7 +18,7 @@ puppeteer:
 OpenDID Wallet Admin Operation Guide
 ==
 
-- Date: 2026-10-30
+- Date: 2026-11-06
 - Version: v3.0.0
 
 Revision History
@@ -27,7 +27,7 @@ Revision History
 | ------- | ---------- | ------- |
 | v1.0.0  | 2025-03-31 | Initial release |
 | v2.0.0  | 2025-05-29 | Version update |
-| v3.0.0  | 2026-10-30 | Added API Log and Audit API Log guidance |
+| v3.0.0  | 2026-11-06 | Added API Log and Audit API Log guidance, retook the screen examples, and expanded chapter 3 with item tables aligned with the screens |
 
 
 Table of Contents
@@ -48,18 +48,17 @@ Table of Contents
   - [2.4. Password Change Management](#24-password-change-management)
 - [3. Feature-Specific Detailed Manual](#3-feature-specific-detailed-manual)
   - [3.1. Wallet Service Registration](#31-wallet-service-registration)
-    - [▸ Step 1 – Enter Wallet Service Info](#-step-1--enter-wallet-service-info)
-    - [▸ Step 2 – Register DID Document](#-step-2--register-did-document)
-    - [▸ Step 3 – Register Entity and Issue Certificate VC](#-step-3--register-entity-and-issue-certificate-vc)
-    - [▸ Registration Completion Screen](#-registration-completion-screen)
+    - [3.1.1. Step 1 – Enter Wallet Service Info](#311-step-1--enter-wallet-service-info)
+    - [3.1.2. Step 2 – Register DID Document](#312-step-2--register-did-document)
+    - [3.1.3. Step 3 – Register Entity and Issue Certificate VC](#313-step-3--register-entity-and-issue-certificate-vc)
+    - [3.1.4. Registration Completion Screen](#314-registration-completion-screen)
   - [3.2. Wallet Service Management](#32-wallet-service-management)
-    - [▸ Wallet Service Management](#-wallet-service-management)
   - [3.3. User Wallet Management](#33-user-wallet-management)
-    - [▸ User Wallet List](#-user-wallet-list)
-    - [▸ User Wallet Details](#-user-wallet-details)
+    - [3.3.1. User Wallet List](#331-user-wallet-list)
+    - [3.3.2. User Wallet Details](#332-user-wallet-details)
   - [3.4. Admin Management](#34-admin-management)
-    - [▸ Admin List View](#-admin-list-view)
-    - [▸ Admin Registration](#-admin-registration)
+    - [3.4.1. Admin List](#341-admin-list)
+    - [3.4.2. Admin Registration](#342-admin-registration)
   - [3.5. Log Management](#35-log-management)
     - [3.5.1. API Log](#351-api-log)
     - [3.5.2. Audit API Log](#352-audit-api-log)
@@ -88,6 +87,10 @@ The main items that can be configured in the Wallet Admin Console are as follows
   - View user-registered Wallets
 - **Log Management**
   - View Wallet Agent API calls and administrator activity
+- **Server Configuration**
+  - Set API keys for external server integration
+- **Admin Management**
+  - Manage administrator accounts and the password policy
 
 # 2. Basic Manual
 
@@ -105,12 +108,14 @@ To access the Wallet Admin Console, follow these steps:
 
 2. Enter the administrator account email and password on the login screen.
    - Default administrator account: <admin@opendid.omnione.net>
-   - Initial password: password (password change required on first login)
+   - Initial password: password (ID and password change required on first login)
 
 3. Click the 'Login' button.
 
+<img src="./images/sign-in.png" width="600"/>
+
 > **Note**:  
-> For security reasons, a password change is required on first login.
+> For security reasons, the default administrator account must change its ID and password on first login.
 
 <br/>
 
@@ -145,7 +150,7 @@ The sidebar menu of the Wallet Admin Console **differs in screen configuration d
 In the initial state where the Wallet server has not yet been registered,
 only the Wallet Service Registration item is displayed alone in the menu.
 
-<img src="./images/2-3-1.wallet-menu-before-registration.png" width="250"/>
+<img src="./images/2-3-1.wallet-menu-before-registration.png" width="300"/>
 
 > Note: Once Wallet registration is completed, related functions are activated and the full menu expands.
 > Details about the menu configuration after registration are explained in subsequent sections.
@@ -162,7 +167,9 @@ Once Wallet registration is completed, all management functions are activated, a
 | 4 | └ API Log | 2 | View Wallet Agent API calls. |
 | 5 | └ Audit API Log | 2 | View administrator API activity. |
 | 6 | **Server Configuration** | 1 | Manage external server integration settings. |
-| 7 | **Admin Management** | 1 | Manage administrator accounts and password policy. |
+| 7 | **Admin Management** | 1 | Parent menu for administrator settings. |
+| 8 | └ Admin Management | 2 | Manage administrator accounts. |
+| 9 | └ Password Policy Settings | 2 | Set the administrator password policy. |
 
 > **Note**:  
 > Detailed usage instructions for each function in the above menu configuration are explained in numerical order in [Chapter 3. Feature-Specific Detailed Manual](#3-feature-specific-detailed-manual).
@@ -180,266 +187,290 @@ User password change can be performed through the following steps:
    - Enter new password confirmation
 4. Click the 'Save' button to apply changes.
 
-> **Note**: Password must be 8-64 characters long and include uppercase/lowercase letters, numbers, and special characters.
+> **Note**: See [Password Policy Settings](#37-password-policy-settings) for the minimum length, expiration period, and composition rules that apply.
 
 <br/>
 
 # 3. Feature-Specific Detailed Manual
 
-> Management screens after registration show the current sidebar with example data. Actual data varies by environment.
+> Screens were captured with example data. Actual data varies by environment.
 
 This chapter provides detailed usage instructions for the main functions of the Wallet Admin Console.
 
 ## 3.1. Wallet Service Registration
 
-Wallet Service Registration is the procedure for registering the **Wallet service** as an issuing entity in the Wallet Admin Console.  
-The entire registration consists of 3 steps, with input, request, and approval processes for each step to complete registration.
-Once all steps are completed, the Wallet service is officially registered in the OpenDID network.
+Wallet Service Registration registers the Wallet service in the OpenDID network. It has three steps.
 
 <br/>
 
-### ▸ Step 1 – Enter Wallet Service Info
+### 3.1.1. Step 1 – Enter Wallet Service Info
 
-<img src="./images/3-1-1.wallet-registration-step1.png" width="700"/>
+Enter the name and server URL of the Wallet service.
 
-This is the step to enter the name and server URL of the Wallet service.
+<img src="./images/3-1-1.wallet-registration-step1.png" width="800"/>
 
-- **Name**: Name of the Wallet to register  
-- **Wallet Service URL**: Server endpoint in the format `http://{IP}:8095/wallet`  
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **Name*** | Name of the Wallet service to register. Use 3 to 20 English characters. Example: `WalletService` |
+| 2 | **Wallet Service URL*** | Wallet server address (up to 200 characters). Format: `http://{{IP}}:8095/wallet`. Example on the screen: `https://wallet.example.org/wallet` |
+| 3 | **TEST CONNECTION Button** | Tests the connection to the entered URL. |
+| 4 | **NEXT Button** | Saves the information and moves to the next step. |
 
-> **Note**  
-> The Wallet service server and Admin Console use the same Base URL and are internally separated as packages.
-
-- Click the **NEXT** button after entering required items.
-
-<br/>
-
-### ▸ Step 2 – Register DID Document
-
-This is the step to generate the DID Document of the Wallet service and request registration and approval from TAS (Trust Agent Service). Follow the sequence below:
+> **Note**: The Wallet service server and the Admin Console use the same base URL and are separated by package internally.
 
 <br/>
 
-**1. Generate DID Document**  
-<img src="./images/3-1-1.wallet-registration-step2-1.png" width="700"/>  
-Click the `GENERATE` button to automatically generate the DID document, which is output in JSON format on the screen.  
-> Completion message: ✅ DID Document has been successfully created.
-> 
-<br/>
+### 3.1.2. Step 2 – Register DID Document
 
-**2. Submit Registration Request**  
-<img src="./images/3-1-1.wallet-registration-step2-2.png" width="700"/>  
-Click the `REQUEST` button to send a DID document registration request to TAS.  
-> Request completion message: ✅ Registration request has been submitted.
+Generate the DID Document of the Wallet service, request its registration from the TA, and check the TA administrator's approval.
 
+**1. Generate DID Document**
 
-<br/>
+<img src="./images/3-1-1.wallet-registration-step2-1.png" width="800"/>
 
-**3. Check Approval Status**  
-<img src="./images/3-1-1.wallet-registration-step2-3.png" width="700"/>  
-Click the `CHECK` button to confirm approval from the TAS administrator.  
-> Approval completion message: ✅ Approval confirmed. You can proceed.
+Click `GENERATE` to create the DID Document, which is shown as JSON on the screen. The completion message is `DID Document has been successfully created.`
 
-<br/>
+**2. Submit Registration Request**
 
-**4. Screen after completing all processes**  
-<img src="./images/3-1-1.wallet-registration-step2-4.png" width="700"/>
+<img src="./images/3-1-1.wallet-registration-step2-2.png" width="800"/>
 
-<br/>
+Click `REQUEST` to request DID Document registration from the TA. The completion message is `Registration request has been submitted.` The TA administrator approves the request on the Entity detail screen of the TA Admin Console.
 
-### ▸ Step 3 – Register Entity and Issue Certificate VC
+**3. Check Approval Status**
 
-<img src="./images/3-1-1.wallet-registration-step3.png" width="700"/>
+<img src="./images/3-1-1.wallet-registration-step2-3.png" width="800"/>
 
-This is the final step to register the Wallet service as an entity in the OpenDID network and issue a **Certificate VC (VC for trust verification)**.
+Click `CHECK` to check whether the request was approved.
 
-- Click the `REQUEST` button to register the Entity through TAS.
-- Once registration is completed, click the `FINISH` button to finalize the entire registration
-
-> **Note**  
-> Certificate VC is a credential that proves trust relationships between OpenDID components.
+| State | Message | Action |
+| --- | --- | --- |
+| Pending | `The DID Document registration request is still pending approval.` | Check again after approval. |
+| Approved | `Approval confirmed. You can proceed.` | Click `NEXT` to move to the next step. |
+| Rejected | `The DID Document registration request has been rejected.` | Returns to the first screen. |
 
 <br/>
 
-### ▸ Registration Completion Screen
+### 3.1.3. Step 3 – Register Entity and Issue Certificate VC
 
-Once registration is completed, the following completion screen is displayed.
+Register the Wallet service as an Entity and receive its certificate VC.
 
-<img src="./images/3-1-1.wallet-registration-completed.png" width="700"/>
+<img src="./images/3-1-1.wallet-registration-step3.png" width="800"/>
 
-- A "Completed" message appears, and you can click the `GO TO HOME` button to navigate to the Admin Console main screen.
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **REQUEST Button** | Requests Entity registration from the TA. The certificate VC is issued when it completes. |
+| 2 | **BACK Button** | Moves to the previous step. |
+| 3 | **FINISH Button** | Finishes registration and opens the completion screen. |
 
+> **Note**: The certificate VC is a credential that proves the trust relationship between OpenDID components.
+
+<br/>
+
+### 3.1.4. Registration Completion Screen
+
+<img src="./images/3-1-1.wallet-registration-completed.png" width="800"/>
+
+The `Completed` message is shown. Click `GO TO HOME` to open the Admin Console main screen.
+
+<br/>
 
 ## 3.2. Wallet Service Management
 
-Wallet Service Management is a menu for registering and managing basic information of the Wallet server. As the management entity for User Wallets, Wallet must be registered with a unique DID within the system, and registration is required only once initially.  
+This screen shows the information of the registered Wallet service. It has no function for editing or deleting the registration.
 
-Once Wallet is registered, it is displayed in the system as active status (`ACTIVATE`), and after registration, you can view registered information or make changes within a limited scope.
+<img src="./images/3-2-1.wallet-management-info.png" width="800"/>
 
-### ▸ Wallet Service Management
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **DID** | DID that identifies the Wallet service. |
+| 2 | **VIEW DID DOCUMENT Button** | Shows the DID Document in a popup. |
+| 3 | **Name** | Name of the Wallet service. |
+| 4 | **Status** | Registration status. <br/>- `DID_DOCUMENT_REQUIRED`: DID Document not registered yet<br/>- `DID_DOCUMENT_REQUESTED`: Requested and waiting for approval<br/>- `CERTIFICATE_VC_REQUIRED`: Approved, certificate VC not issued yet<br/>- `ACTIVATE`: Registration complete<br/>- `DEACTIVATE`: Inactive |
+| 5 | **URL** | Base URL of the Wallet server. |
+| 6 | **Certificate URL** | URL where the certificate VC can be checked. |
+| 7 | **VIEW Button** | Button next to Certificate URL. Shows the certificate VC issued by the TA in a popup. |
+| 8 | **Registered At** | Date and time of first registration. |
 
-> **Note**  
-> Currently, only Quick Register method for simple registration is supported. The formal registration procedure is scheduled to be updated in June 2025.
-
-The Wallet Service Management screen consists of the following items.
-
-<img src="./images/3-2-1.wallet-management-info.png" width="700"/>
-
-| Item | Description |
-|------|-------------|
-| **DID** | A unique DID that identifies the Wallet, automatically issued by the system. |
-| **Name** | The name of the Wallet. |
-| **Status** | Indicates the status of the Wallet. Displayed as `ACTIVATE` when registration is completed. |
-| **URL** | The basic URL of the Wallet server. |
-| **Certificate URL** | URL address where you can check the Wallet's certificate. |
-| **Registered At** | The initial registration date and time of the Wallet. |
-
-- The DID Document can be viewed through the `VIEW DID DOCUMENT` button on the screen.
-- The membership certificate VC issued by the TA can be viewed through the `VIEW` button next to Certificate URL.
-- Registered Wallet information cannot be deleted, and only limited modifications are possible for some items.
-
+<br/>
 
 ## 3.3. User Wallet Management
 
-User Wallet Management is a menu for viewing and managing user-registered Wallets. 
+This menu shows the Wallets registered by users.
 
+<br/>
 
-### ▸ User Wallet List
+### 3.3.1. User Wallet List
 
-The User Wallet list screen allows you to view registered Wallets.
+<img src="./images/3-3.wallet-management.png" width="800"/>
 
-<img src="./images/3-3.wallet-management.png" width="700"/>
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **Search** | Searches by ID or DID. |
+| 2 | **ID** | Wallet identifier. Click to open the detail screen. |
+| 3 | **DID** | DID of the Wallet. |
+| 4 | **Registered At** | Date and time the Wallet was registered. |
+| 5 | **Updated At** | Date and time the Wallet was updated. |
 
-| Item | Description |
-|------|-------------|
-| **ID** | A unique identifier for identifying the Wallet. Click to navigate to the detail screen. |
-| **DID** | The unique DID of the Wallet. |
-| **Registered At** | The date and time when the Wallet was registered. |
-| **Updated At** | The date and time when the Wallet was updated. |
+<br/>
 
+### 3.3.2. User Wallet Details
 
-### ▸ User Wallet Details
+<img src="./images/3-3.wallet-detail.png" width="800"/>
 
-Click on the ID in the User Wallet list to view detailed information.
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **ID** | Wallet identifier. |
+| 2 | **ID (second item)** | DID of the Wallet. The screen labels this item `ID`. |
+| 3 | **Registered At** | Date and time the Wallet was registered. |
+| 4 | **Updated At** | Date and time the Wallet was updated. |
+| 5 | **BACK Button** | Returns to the list. |
 
-<img src="./images/3-3.wallet-detail.png" width="700"/>
-
-| Item | Description |
-|------|-------------|
-| **ID** | A unique identifier for identifying the Wallet. Click to navigate to the detail screen. |
-| **DID** | The unique DID of the Wallet. |
-| **Registered At** | The date and time when the Wallet was registered. |
-| **Updated At** | The date and time when the Wallet was updated. |
-
+<br/>
 
 ## 3.4. Admin Management
 
-The `Admin Management` menu is a function for managing administrator accounts that can access the Wallet Admin Console.  
+The `Admin Management` menu manages the administrator accounts that can access the Wallet Admin Console.
 
-When the TA server is installed, the `admin@opendid.omnione.net` account is automatically created with ROOT privileges by default.  
-This account is the only ROOT account in the system and cannot be deleted.
+When the Wallet server is installed, the `admin@opendid.omnione.net` account is created automatically with ROOT permission. It is the only ROOT account in the system and cannot be deleted.
 
-Administrator accounts are divided into two privilege types: **ROOT** and **Normal Admin**.  
-ROOT accounts can perform all functions in the `Admin Management` menu, while Normal Admin accounts can only perform general viewing functions.
+Administrator accounts have two permission types: **ROOT** and **Normal Admin**.
 
----
-> **Note:** Currently, the privilege difference between ROOT and Normal Admin accounts is only in the buttons displayed in the `Admin Management` menu (only Root can REGISTER / DELETE / CHANGE PASSWORD).  
-> Access permissions or functional restrictions for other menus in the system are not yet implemented.
----
-
+> **Note**: Currently, the only difference between ROOT and Normal Admin is the buttons shown in the `Admin Management` menu (only ROOT can use `REGISTER`, `DELETE`, and `CHANGE PASSWORD`). Access to other menus is not restricted yet.
 
 <br/>
 
-### ▸ Admin List View
+### 3.4.1. Admin List
 
-
-When entering the `Admin Management` menu, a list of registered administrator accounts is displayed in table format.
+The `Admin Management` menu shows the list of registered administrator accounts.
 
 <img src="./images/3-4.admin-management.png" width="800"/>
 
-| Item | Description |
-|------|-------------|
-| **ID** | The email ID of the registered administrator account. |
-| **Role** | The role of the administrator account (e.g., ROOT, Normal Admin, etc.) |
-| **Registered At** | The date and time when the account was initially registered. |
-| **Updated At** | The date and time when it was last modified. |
----
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **Search** | Searches by ID or Role (Root, Normal). |
+| 2 | **REGISTER Button** | Opens the screen for registering a new administrator account. |
+| 3 | **DELETE Button** | Deletes the selected administrator account. Only ROOT can do this. |
+| 4 | **CHANGE PASSWORD Button** | Changes the password of the selected administrator account. |
+| 5 | **ID** | Email ID of the administrator account. |
+| 6 | **Role** | Permission of the administrator account. |
+| 7 | **Registered At** | Date and time the account was registered. |
+| 8 | **Updated At** | Date and time of the last modification. |
 
-> Click the `REGISTER` button to navigate to the registration page where you can register a new administrator account.<br/>
-> Click the `DELETE` button to delete the selected administrator account. (Only available to ROOT administrators)<br/>
-> Click the `CHANGE PASSWORD` button to change the password of the selected administrator account.
 <br/>
 
-### ▸ Admin Registration
+### 3.4.2. Admin Registration
 
-Click the **REGISTER** button on the `Admin Management` screen to navigate to the registration screen as shown below.
+Click `REGISTER` to open the registration screen.
 
-<img src="./images/3-4.admin-registration.png" width="600"/>
+<img src="./images/3-4.admin-registration.png" width="800"/>
 
-| Item | Description |
-|------|-------------|
-| **ID** | The ID of the administrator account to register. Must use email format. |
-| **Role** | Select the privileges of the administrator account to register. (e.g., Normal Admin) |
-| **Password** | Enter the password to use for login. |
-| **Re-enter Password** | Enter the password again to verify it matches. |
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **ID*** | ID of the administrator account. Use an email address of 3 to 30 characters. Example: `operator@example.org` |
+| 2 | **Check Availability Button** | Checks that the ID is not already in use. The check must pass before registering. |
+| 3 | **Role** | Select the permission of the account. Example: `Normal Admin` |
+| 4 | **Password*** | Password used to sign in (8 to 30 characters). If the password policy is on, its rules also apply. |
+| 5 | **Re-enter Password*** | Enter the password again. |
+| 6 | **REGISTER Button** | Registers the administrator account with the entered information. |
+| 7 | **RESET Button** | Resets the input. |
+| 8 | **CANCEL Button** | Cancels and returns to the previous screen. |
 
-> Click the `REGISTER` button to register the administrator account based on the entered information.<br>
-> Click the `RESET` button to reset all input values.<br>
-> Click the `CANCEL` button to cancel registration and return to the previous screen.
-
+<br/>
 
 ## 3.5. Log Management
 
-After Wallet registration, open `Log Management` in the sidebar to inspect API calls. Both screens show paginated records, with the newest first. Select a search field, enter a value, and search; use refresh to reload the list. Click `Called At` to open a record's detail dialog. Logs are read only.
+Once Wallet is registered, API call records are available under `Log Management` in the sidebar. Both screens show the newest records first, page by page, and the refresh button reloads the list. Click `Called At` to open the detail dialog. Logs are read-only.
+
+<br/>
 
 ### 3.5.1. API Log
 
+`Log Management > API Log` (`/logs/api`) shows Wallet Agent API calls.
+
 <img src="./images/api-log-api-example.png" width="800"/>
 
-> List screen rendered with example data. Actual logs and accounts depend on the environment.
-
-`Log Management > API Log` shows Wallet Agent API calls. The list displays call time (`Called At`), HTTP method, URI, status code, result (`SUCCESS` or `FAIL`), and requester ID. Search by `URI` or `Result`. The detail dialog also shows duration, client IP, user agent, and error message when recorded. The page path is `/logs/api`.
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **Search** | Searches by `URI` or `Result` (`SUCCESS`, `FAIL`). |
+| 2 | **Called At** | Date and time of the call. Click to open the detail dialog. |
+| 3 | **Method** | HTTP method. |
+| 4 | **URI** | Called URI. |
+| 5 | **Status** | HTTP status code. |
+| 6 | **Result** | `SUCCESS` or `FAIL`. |
+| 7 | **Requester ID** | Requester ID. |
 
 <img src="./images/api-log-api-detail-example.png" width="800"/>
 
-> Example detail dialog opened by selecting the call time.
+In addition to the list items, the detail dialog shows the following.
+
+| Item | Description |
+| --- | --- |
+| **Duration Ms** | Processing time in milliseconds. |
+| **Client IP** | Client IP address. |
+| **User Agent** | User Agent of the request. |
+| **Message** | Shown when an error message was recorded. |
+
+<br/>
 
 ### 3.5.2. Audit API Log
 
+`Log Management > Audit API Log` (`/logs/audit`) shows administrator operations performed through Admin APIs.
+
 <img src="./images/api-log-audit-example.png" width="800"/>
 
-> List screen rendered with example data. Actual logs and accounts depend on the environment.
-
-`Log Management > Audit API Log` shows administrator actions through Admin APIs. The list displays call time, requester ID, action type, target type and ID, and result. Search by `Action Type`, `Target Type`, `Result`, or `Requester ID`. Action types include `CREATE`, `UPDATE`, `DELETE`, `LOGIN`, and `LOGOUT`. The detail dialog also shows the action description, client IP, user agent, and error message when recorded. The page path is `/logs/audit`.
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **Search** | Searches by `Action Type`, `Target Type`, `Result`, or `Requester ID`. `Action Type` is selected from `NONE`, `CREATE`, `UPDATE`, `DELETE`, `LOGIN`, and `LOGOUT`. |
+| 2 | **Called At** | Date and time of the call. Click to open the detail dialog. |
+| 3 | **Requester ID** | ID of the administrator who performed the operation. |
+| 4 | **Action Type** | Operation type. |
+| 5 | **Target Type** | Type of the target. |
+| 6 | **Target ID** | ID of the target. |
+| 7 | **Result** | `SUCCESS` or `FAIL`. |
 
 <img src="./images/api-log-audit-detail-example.png" width="800"/>
 
-> Example detail dialog opened by selecting the call time.
+In addition to the list items, the detail dialog shows the following.
 
-> Records are created for API calls annotated with `@ArticleLog` on the server. For a `FAIL` result, inspect the API Log status code and the available detail message.
+| Item | Description |
+| --- | --- |
+| **Client IP** | Client IP address. |
+| **Description** | Description of the operation. |
+| **User Agent** | User Agent of the request. |
+| **Message** | Shown when an error message was recorded. |
+
+> Logs are created from API calls that use `@ArticleLog` on the server. If the result is `FAIL`, check the status code in API Log and the detail message of that log.
 
 ## 3.6. Server Configuration
 
-`Server Configuration` manages settings for integration with external servers.
+`Server Configuration` sets API keys for integrating with external servers.
 
 <img src="./images/server-configuration.png" width="800"/>
 
-- **API Key Settings > Ledger Service Server**: Enter the API key issued by the LSS (Ledger Service Server) and save it. The value is stored as `API_KEY_LSS`, and the Wallet server sends it in the `X-API-Key` header when it calls LSS (`lss` profile).
-- If the key is not registered, LSS calls fail with `SSRVWLT01101`.
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **Ledger Service Server** | Enter the API key issued by LSS. It is stored as `API_KEY_LSS`, and the Wallet server sends it in the `X-API-Key` header when calling LSS (`lss` profile). |
+| 2 | **UPDATE Button** | Saves the entered value. |
+| 3 | **RESET Button** | Resets the input before saving. |
+
+If no key is registered, LSS calls fail with `SSRVWLT01101`.
+
+> **Caution**: Do not include API key values in screen captures, documents, or sample settings.
 
 ## 3.7. Password Policy Settings
 
-`Admin Management > Password Policy Settings` sets the rules for administrator passwords. The rules apply when an account is registered and when a password is changed.
+`Admin Management > Password Policy Settings` sets the password rules for administrators. The rules apply when an account is registered and when a password is changed.
 
 <img src="./images/password-policy.png" width="800"/>
 
-| Item | Description | Range |
-| ---- | ----------- | ----- |
-| Minimum Length | Minimum number of characters | 6–20 |
-| Uppercase Letters (A-Z) | Require at least one uppercase letter | - |
-| Numbers (0-9) | Require at least one number | - |
-| Special Characters (!@#$%^&*) | Require at least one special character | - |
-| Password Expiration Period | Number of days a password is valid | 30–365 days (default 90) |
-
+| No. | Item | Description |
+| --- | --- | --- |
+| 1 | **Minimum Length** | Minimum password length, from 6 to 20 characters. The default is 8. |
+| 2 | **Password Expiration Period** | Password expiration period, from 30 to 365 days. The default is 90. |
+| 3 | **Uppercase Letters (A-Z)** | Requires at least one uppercase letter. Off by default. |
+| 4 | **Numbers (0-9)** | Requires at least one number. Off by default. |
+| 5 | **Special Characters (!@#$%^&*)** | Requires at least one special character. Off by default. |
+| 6 | **UPDATE Button** | Saves the policy. If no policy is registered yet, the button is named `REGISTER`. |
+| 7 | **RESET Button** | Reverts to the input before the change. |
 
 [Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0.md

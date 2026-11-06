@@ -32,17 +32,14 @@ Table of Contents
 - [2. Preparation](#2-preparation)
   - [2.1. Git Installation](#21-git-installation)
   - [2.2. PostgreSQL Installation](#22-postgresql-installation)
+  - [2.3. Installing Node.js](#23-installing-nodejs)
 - [3. Cloning the Source Code from GitHub](#3-cloning-the-source-code-from-github)
   - [3.1. Cloning the Source Code](#31-cloning-the-source-code)
   - [3.2. Directory Structure](#32-directory-structure)
 - [4. How to Run the Server](#4-how-to-run-the-server)
-  - [4.1. Running with IntelliJ IDEA (Gradle Support)](#41-running-with-intellij-idea-gradle-support)
-    - [4.1.1. Installing and Setting Up IntelliJ IDEA](#411-installing-and-setting-up-intellij-idea)
-    - [4.1.2. Opening the Project in IntelliJ](#412-opening-the-project-in-intellij)
-    - [4.1.3. Gradle Build](#413-gradle-build)
-    - [4.1.4. Running the Server](#414-running-the-server)
-    - [4.1.5. Database Installation](#415-database-installation)
-    - [4.1.6. Server Configuration](#416-server-configuration)
+  - [4.1. Running with an IDE (Gradle and React Projects)](#41-running-with-an-ide-gradle-and-react-projects)
+    - [4.1.1. Running the Backend (Spring Boot) in IntelliJ IDEA](#411-running-the-backend-spring-boot-in-intellij-idea)
+    - [4.1.2. Running the Frontend (React) in VS Code](#412-running-the-frontend-react-in-vs-code)
   - [4.2. Running the Server Using Console Commands](#42-running-the-server-using-console-commands)
     - [4.2.1. Gradle Build Command](#421-gradle-build-command)
     - [4.2.2. Running the Server](#422-running-the-server)
@@ -144,6 +141,29 @@ To run the Wallet server, a database installation is required, and Open DID uses
 > **Reference Links**
 - [PostgreSQL Installation Guide](https://www.postgresql.org/download/)
 - [8. Installing PostgreSQL with Docker](#8-installing-postgresql-with-docker)
+
+<br/>
+
+
+## 2.3. Installing Node.js
+
+To run the React-based Wallet Admin Console, you need to install both `Node.js` and `npm`.
+
+npm (Node Package Manager) is used to install and manage dependencies required for frontend development.
+
+After installation is complete, you can verify that it was installed correctly with the following commands:
+
+```bash
+node --version
+npm --version
+```
+
+> **Reference Links**  
+> - [Official Node.js Download Page](https://nodejs.org/)  
+> - It is recommended to install the LTS (Long Term Support) version.  
+
+> ✅ Installation Check Tip  
+> If running `node -v` and `npm -v` outputs version information, the installation was successful.
 
 <br/>
 
@@ -256,26 +276,30 @@ The project source is located under the `source` directory, and depending on the
 
 3. **Building with Docker**: You can build the server as a Docker image and run it as a Docker container. This method ensures consistency across environments and makes deployment and scaling easier.
    
-## 4.1. Running with IntelliJ IDEA (Gradle Support)
+## 4.1. Running with an IDE (Gradle and React Projects)
+
+The Open DID project consists of a backend (Spring Boot) and a frontend (React), which can be developed and run in IntelliJ IDEA and VS Code respectively.
+
+### 4.1.1. Running the Backend (Spring Boot) in IntelliJ IDEA
 
 IntelliJ IDEA is a widely used Integrated Development Environment (IDE) for Java development. It supports build tools like Gradle, making project setup and dependency management very convenient. Since the Open DID server is built using Gradle, you can easily configure and run the server within IntelliJ IDEA.
 
-### 4.1.1. Installing and Setting Up IntelliJ IDEA
+#### 1. Installing and Setting Up IntelliJ IDEA
 1. Install IntelliJ. (Refer to the link below for installation instructions)
 
 > **Reference Links**
 > - [Download IntelliJ IDEA](https://www.jetbrains.com/idea/download/)
 
-### 4.1.2. Opening the Project in IntelliJ
+#### 2. Opening the Project in IntelliJ
 - Launch IntelliJ and select `File -> New -> Project` from Existing Sources. When the file selection window appears, choose the 'source/did-wallet-server' folder from the repository cloned in [3.1. Cloning the Source Code](#31-cloning-the-source-code)
 - When the project opens, the `build.gradle` file will be automatically recognized.
 - Gradle will automatically download the necessary dependency files. Please wait until this process is completed.
 
-### 4.1.3. Gradle Build
+#### 3. Gradle Build
 - In the Gradle tab in IntelliJ IDEA, run `Tasks -> build -> build`.
 - Once the build is successfully completed, the project will be ready for execution.
 
-### 4.1.4. Running the Server
+#### 4. Running the Server
 - In the Gradle tab of IntelliJ IDEA, select `Tasks -> application -> bootRun` and run it.
 - Gradle will automatically build and run the server.
 - Check the console log for the message "Started [ApplicationName] in [time] seconds" to confirm that the server has started successfully.
@@ -286,15 +310,48 @@ IntelliJ IDEA is a widely used Integrated Development Environment (IDE) for Java
 > - When the sample profile is set, the server will run without required configurations (e.g., database). For more details, refer to [6. Profile Configuration and Usage](#6-profile-configuration-and-usage)
 
 
-### 4.1.5. Database Installation
+#### 5. Database Installation
 The Wallet server stores the necessary data for operation in a database, so a database must be installed to run the server. The Open DID server uses the PostgreSQL database. There are several ways to install the PostgreSQL server, but using Docker is the simplest and easiest method. For PostgreSQL installation instructions, please refer to [2.2. PostgreSQL Installation](#22-postgresql-installation)
 
 <br/>
 
-### 4.1.6. Server Configuration
+#### 6. Server Configuration
 - The server settings must be modified according to the deployment environment to ensure stable operation. For example, you need to adjust configuration elements such as database connection information, port numbers, email integration details, etc., based on the specific environment.
 - The server configuration files are located at `src/main/resource/config.`
 - For detailed configuration instructions, please refer to [5. Configuration Guide.](#5-configuration-guide)
+
+<br/>
+
+---
+
+### 4.1.2. Running the Frontend (React) in VS Code
+
+The Wallet Admin Console is based on React and can be run separately in VS Code. This is useful for frontend development or checking the UI.
+
+#### 1. Installing VS Code
+
+- [Download VS Code](https://code.visualstudio.com/)
+
+#### 2. Opening the Project
+
+- Open the `source/did-wallet-admin/frontend` directory in VS Code
+
+#### 3. Installing Dependencies
+
+```bash
+npm install
+```
+
+#### 4. Starting the Development Server
+
+```bash
+npm run dev
+```
+
+- Default URL: [http://localhost:5173](http://localhost:5173)
+
+> **Note:**  
+> The backend (Spring Boot server) must be running separately. The API server address for the frontend can be set in `vite.config.ts` or a configuration file.
 
 <br/>
 
@@ -567,6 +624,30 @@ JPA settings control how the application interacts with the database, significan
 - `evm.connection.privateKey:`: 
   - k1 key used for API access control. Enter the key string defined in accounts inside hardhat.config.js (remove the 0x prefix) to enable API calls with Owner permissions (Default setting). For detailed guide, refer to [DID Besu Contract].
   - Example: 0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63
+
+<br/>
+
+#### Fabric Network Configuration
+
+- `fabric.configFilePath:`: 
+  - Path of the Hyperledger Fabric connection information file. The file is created automatically when the Hyperledger Fabric test network is installed.
+  - Example: {yourpath}/connection-org1.json
+
+- `fabric.privateKeyFilePath:`: 
+  - Path of the private key file that the Hyperledger Fabric client uses to sign and authenticate transactions.
+  - Example: {yourpath}/{private key file name}
+
+- `fabric.certificateFilePath:`: 
+  - Path of the Hyperledger Fabric client certificate.
+  - Example: /etc/hyperledger/fabric/certs/cert.pem
+
+- `fabric.networkName:`: 
+  - Name of the private network (channel) used by Hyperledger Fabric. Set the channel name entered when the test network was installed.
+  - Example: mychannel
+
+- `fabric.chaincodeName:`: 🔒
+  - Name of the Open DID chaincode used by Hyperledger Fabric. This value is fixed to 'opendid'.
+  - Example: opendid
 
 <br/>
 

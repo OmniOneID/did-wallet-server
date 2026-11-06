@@ -18,7 +18,7 @@ puppeteer:
 OpenDID Wallet Admin Operation Guide
 ==
 
-- Date: 2026-10-30
+- Date: 2026-11-06
 - Version: v3.0.0
 
 개정 이력
@@ -27,13 +27,13 @@ OpenDID Wallet Admin Operation Guide
 | ------ | ---------- | --------- |
 | v1.0.0 | 2025-03-31 | 최초 작성 |
 | v2.0.0 | 2025-05-29 | 버전 업   |
-| v3.0.0 | 2026-10-30 | API Log 및 Audit API Log 메뉴와 조회 방법 추가 |
+| v3.0.0 | 2026-11-06 | API Log 및 Audit API Log 메뉴와 조회 방법 추가, 화면 예시 재촬영, 3장을 항목 표로 보강하고 화면과 일치시킴 |
 
 
 목차
 ==
 
-- [OpenDID IssuerAdmin Operation Guide](#opendid-issueradmin-operation-guide)
+- [OpenDID Wallet Admin Operation Guide](#opendid-wallet-admin-operation-guide)
 - [개정 이력](#개정-이력)
 - [목차](#목차)
 - [1. 소개](#1-소개)
@@ -48,18 +48,17 @@ OpenDID Wallet Admin Operation Guide
   - [2.4. 비밀번호 변경 관리](#24-비밀번호-변경-관리)
 - [3. 기능별 상세 메뉴얼](#3-기능별-상세-메뉴얼)
   - [3.1. Wallet Service Registration](#31-wallet-service-registration)
-    - [▸ Step 1 – Enter Wallet Service Info](#-step-1--enter-wallet-service-info)
-    - [▸ Step 2 – Register DID Document](#-step-2--register-did-document)
-    - [▸ Step 3 – Register Entity and Issue Certificate VC](#-step-3--register-entity-and-issue-certificate-vc)
-    - [▸ 등록 완료 화면](#-등록-완료-화면)
+    - [3.1.1. Step 1 – Enter Wallet Service Info](#311-step-1--enter-wallet-service-info)
+    - [3.1.2. Step 2 – Register DID Document](#312-step-2--register-did-document)
+    - [3.1.3. Step 3 – Register Entity and Issue Certificate VC](#313-step-3--register-entity-and-issue-certificate-vc)
+    - [3.1.4. 등록 완료 화면](#314-등록-완료-화면)
   - [3.2. Wallet Service Management](#32-wallet-service-management)
-    - [▸ Wallet Service Manegement](#-wallet-service-manegement)
   - [3.3. User Wallet Management](#33-user-wallet-management)
-    - [▸ User Wallet 목록](#-user-wallet-목록)
-    - [▸ User Wallet 상세 정보](#-user-wallet-상세-정보)
+    - [3.3.1. User Wallet 목록](#331-user-wallet-목록)
+    - [3.3.2. User Wallet 상세 정보](#332-user-wallet-상세-정보)
   - [3.4. Admin Management](#34-admin-management)
-    - [▸ Admin 목록 조회](#-admin-목록-조회)
-    - [▸ Admin 등록](#-admin-등록)
+    - [3.4.1. Admin 목록 조회](#341-admin-목록-조회)
+    - [3.4.2. Admin 등록](#342-admin-등록)
   - [3.5. Log Management](#35-log-management)
     - [3.5.1. API Log](#351-api-log)
     - [3.5.2. Audit API Log](#352-audit-api-log)
@@ -80,7 +79,7 @@ OpenDID의 전체 설치에 대한 가이드는 [Open DID Installation Guide]를
 
 **Wallet Admin Console**은 Open DID 시스템 내에서 **Wallet 서버**를 관리하기 위한 웹 기반의 관리자 도구입니다.
 
-Walle은 사용자가 등록한 Wallet 관리 기능을 제공합니다.
+Wallet 서버는 사용자가 등록한 Wallet을 관리하는 기능을 제공합니다.
 
 Wallet Admin Console에서 설정할 수 있는 주요 항목은 다음과 같습니다:
 
@@ -88,6 +87,10 @@ Wallet Admin Console에서 설정할 수 있는 주요 항목은 다음과 같�
   - User가 등록한 Wallet 확인
 - **Log Management**
   - Wallet Agent API 호출 및 관리자 작업 기록 조회
+- **Server Configuration**
+  - 외부 서버 연동용 API 키 설정
+- **Admin Management**
+  - 관리자 계정과 비밀번호 정책 관리
 
 # 2. 기본 메뉴얼
 
@@ -105,12 +108,14 @@ Wallet Admin Console에 접속하려면 다음 단계를 따르세요:
 
 2. 로그인 화면에서 관리자 계정의 이메일과 비밀번호를 입력합니다.
    - 기본 관리자 계정: <admin@opendid.omnione.net>
-   - 초기 비밀번호: password (최초 로그인 시 변경 필요)
+   - 초기 비밀번호: password (최초 로그인 시 ID와 비밀번호 변경 필요)
 
 3. '로그인' 버튼을 클릭합니다.
 
+<img src="./images/sign-in.png" width="600"/>
+
 > **참고**:  
-> 보안상의 이유로 최초 로그인 시에는 비밀번호 변경이 필요합니다.
+> 보안상의 이유로 기본 관리자 계정은 최초 로그인 시 ID와 비밀번호를 변경해야 합니다.
 
 <br/>
 
@@ -145,7 +150,7 @@ Wallet Admin Console의 사이드바 메뉴는 **Wallet 등록 상태에 따라 
 Wallet 서버가 아직 등록되지 않은 초기 상태에서는
 메뉴에 Wallet Service Registration 항목만 단독으로 표시됩니다.
 
-<img src="./images/2-3-1.wallet-menu-before-registration.png" width="250"/>
+<img src="./images/2-3-1.wallet-menu-before-registration.png" width="300"/>
 
 > 참고: Wallet 등록이 완료되면 관련 기능들이 활성화되며, 전체 메뉴가 확장됩니다.
 등록 이후 메뉴 구성에 대한 자세한 내용은 추후 항목에서 설명합니다.
@@ -162,7 +167,9 @@ Wallet 등록이 완료되면 전체 관리 기능이 활성화되며, 사이드
 | 4 | └ API Log | 2 | Wallet Agent API 호출 기록을 조회합니다. |
 | 5 | └ Audit API Log | 2 | 관리자 API 작업 기록을 조회합니다. |
 | 6 | **Server Configuration** | 1 | 외부 서버 연동 설정을 관리합니다. |
-| 7 | **Admin Management** | 1 | 관리자 계정과 비밀번호 정책을 관리합니다. |
+| 7 | **Admin Management** | 1 | 관리자 설정 상위 메뉴입니다. |
+| 8 | └ Admin Management | 2 | 관리자 계정을 관리합니다. |
+| 9 | └ Password Policy Settings | 2 | 관리자 비밀번호 정책을 설정합니다. |
 
 > **참고**:  
 > 위 메뉴 구성에 대한 각 기능의 상세 사용법은  
@@ -181,253 +188,275 @@ Wallet 등록이 완료되면 전체 관리 기능이 활성화되며, 사이드
    - 새 비밀번호 확인 입력
 4. '저장' 버튼을 클릭하여 변경 사항을 적용합니다.
 
-> **참고**: 비밀번호는 8자 이상, 64자 이하의 알파벳 대/소문자, 숫자, 특수문자를 포함해야 합니다.
+> **참고**: 적용되는 최소 길이, 만료 기간, 문자 구성 규칙은 [비밀번호 정책 설정](#37-password-policy-settings)에서 확인합니다.
 
 <br/>
 
 # 3. 기능별 상세 메뉴얼
 
-> 등록 완료 후 관리 화면은 현재 사이드 메뉴와 예시 데이터로 캡처했습니다. 실제 데이터는 환경에 따라 달라집니다.
+> 화면은 예시 데이터로 캡처했습니다. 실제 데이터는 환경에 따라 달라집니다.
 
 이 장에서는 Wallet Admin Console의 주요 기능에 대한 상세 사용 방법을 안내합니다.
 
 ## 3.1. Wallet Service Registration
 
-Wallet Service Registration은 Wallet Admin Console에서 발급 주체인 **Wallet 서비스**를 등록하는 절차입니다.  
-전체 등록은 총 3단계로 구성되며, 각 단계별로 입력, 요청, 승인 과정을 거쳐 등록이 완료됩니다.
-모든 단계가 완료되면 Wallet 서비스는 OpenDID 네트워크에 정식 등록됩니다.
+Wallet Service Registration은 Wallet 서비스를 OpenDID 네트워크에 등록하는 절차입니다. 모두 3단계로 진행합니다.
 
 <br/>
 
-### ▸ Step 1 – Enter Wallet Service Info
+### 3.1.1. Step 1 – Enter Wallet Service Info
 
-<img src="./images/3-1-1.wallet-registration-step1.png" width="700"/>
+Wallet 서비스의 이름과 서버 URL을 입력합니다.
 
-Wallet 서비스의 이름과 서버 URL을 입력하는 단계입니다.
+<img src="./images/3-1-1.wallet-registration-step1.png" width="800"/>
 
-- **Name**: 등록할 Wallet의 이름  
-- **Wallet Service URL**: `http://{IP}:8095/wallet` 형식의 서버 엔드포인트  
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **Name*** | 등록할 Wallet 서비스의 이름입니다. 영문 3~20자로 입력합니다. 예: `WalletService` |
+| 2 | **Wallet Service URL*** | Wallet 서버 주소입니다(200자 이내). 형식: `http://{{IP}}:8095/wallet`, 화면 예시: `https://wallet.example.org/wallet` |
+| 3 | **TEST CONNECTION 버튼** | 입력한 URL로 연결을 테스트합니다. |
+| 4 | **NEXT 버튼** | 입력한 정보를 저장하고 다음 단계로 이동합니다. |
 
-> **Note**  
-> Wallet 서비스 서버와 Admin Console은 동일한 Base URL을 사용하며, 내부적으로 패키지로 분리되어 있습니다.
-
-- 필수 항목 입력 후 **NEXT** 버튼을 클릭합니다.
-
-<br/>
-
-### ▸ Step 2 – Register DID Document
-
-Wallet 서비스의 DID Document를 생성하고, TAS(Trust Agent Service)에 등록 요청 및 승인을 받는 단계입니다. 아래 순서를 따릅니다:
+> **참고**: Wallet 서비스 서버와 Admin Console은 동일한 Base URL을 사용하며, 내부적으로 패키지로 분리되어 있습니다.
 
 <br/>
 
-**1. Generate DID Document**  
-<img src="./images/3-1-1.wallet-registration-step2-1.png" width="700"/>  
-`GENERATE` 버튼을 클릭하면 DID 문서가 자동 생성되며, 화면에 JSON 형식으로 출력됩니다.  
-> 생성 완료 메시지: ✅ DID Document has been successfully created.
-> 
-<br/>
+### 3.1.2. Step 2 – Register DID Document
 
-**2. Submit Registration Request**  
-<img src="./images/3-1-1.wallet-registration-step2-2.png" width="700"/>  
-`REQUEST` 버튼 클릭 시 TAS에 DID 문서 등록 요청이 전송됩니다.  
-> 요청 완료 메시지: ✅ Registration request has been submitted.
+Wallet 서비스의 DID Document를 생성해 TA에 등록을 요청하고, TA 관리자의 승인을 확인합니다.
 
+**1. Generate DID Document**
 
-<br/>
+<img src="./images/3-1-1.wallet-registration-step2-1.png" width="800"/>
 
-**3. Check Approval Status**  
-<img src="./images/3-1-1.wallet-registration-step2-3.png" width="700"/>  
-`CHECK` 버튼을 클릭하여 TAS 관리자의 승인을 확인합니다.  
-> 승인 완료 메시지: ✅ Approval confirmed. You can proceed.
+`GENERATE` 버튼을 누르면 DID Document가 생성되어 화면에 JSON으로 표시됩니다. 완료 메시지는 `DID Document has been successfully created.`입니다.
 
-<br/>
+**2. Submit Registration Request**
 
-**4. 모든 과정을 완료한 화면**  
-<img src="./images/3-1-1.wallet-registration-step2-4.png" width="700"/>
+<img src="./images/3-1-1.wallet-registration-step2-2.png" width="800"/>
 
-<br/>
+`REQUEST` 버튼을 누르면 TA에 DID Document 등록을 요청합니다. 완료 메시지는 `Registration request has been submitted.`입니다. TA 관리자는 TA Admin Console의 Entity 상세 화면에서 요청을 승인합니다.
 
-### ▸ Step 3 – Register Entity and Issue Certificate VC
+**3. Check Approval Status**
 
-<img src="./images/3-1-1.wallet-registration-step3.png" width="700"/>
+<img src="./images/3-1-1.wallet-registration-step2-3.png" width="800"/>
 
-Wallet 서비스를 OpenDID 네트워크의 엔터티로 등록하고, **Certificate VC(신뢰 증명용 VC)**를 발급받는 마지막 단계입니다.
+`CHECK` 버튼으로 승인 여부를 확인합니다.
 
-- `REQUEST` 버튼을 클릭하면 TAS를 통해 Entity가 등록됩니다.
-- 등록이 완료되면 `FINISH` 버튼을 클릭하여 전체 등록을 마무리합니다
-
-> **참고**  
-> Certificate VC는 OpenDID 구성 요소 간의 신뢰 관계를 증명하는 자격 증명입니다.
+| 상태 | 표시되는 메시지 | 동작 |
+| --- | --- | --- |
+| 승인 대기 | `The DID Document registration request is still pending approval.` | 승인 후 다시 확인합니다. |
+| 승인됨 | `Approval confirmed. You can proceed.` | `NEXT` 버튼으로 다음 단계로 이동합니다. |
+| 거절됨 | `The DID Document registration request has been rejected.` | 처음 화면으로 돌아갑니다. |
 
 <br/>
 
-### ▸ 등록 완료 화면
+### 3.1.3. Step 3 – Register Entity and Issue Certificate VC
 
-등록이 완료되면 아래와 같은 완료 화면이 표시됩니다.
+Wallet 서비스를 Entity로 등록하고 가입증명서(Certificate VC)를 발급받습니다.
 
-<img src="./images/3-1-1.wallet-registration-completed.png" width="700"/>
+<img src="./images/3-1-1.wallet-registration-step3.png" width="800"/>
 
-- "Completed" 메시지가 나타나며, `GO TO HOME` 버튼을 클릭하여 Admin Console 메인 화면으로 이동할 수 있습니다.
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **REQUEST 버튼** | TA에 Entity 등록을 요청합니다. 완료되면 가입증명서가 발급됩니다. |
+| 2 | **BACK 버튼** | 이전 단계로 이동합니다. |
+| 3 | **FINISH 버튼** | 등록을 마치고 완료 화면으로 이동합니다. |
 
+> **참고**: 가입증명서는 OpenDID 구성 요소 간의 신뢰 관계를 증명하는 자격 증명입니다.
+
+<br/>
+
+### 3.1.4. 등록 완료 화면
+
+<img src="./images/3-1-1.wallet-registration-completed.png" width="800"/>
+
+`Completed` 메시지가 표시되며, `GO TO HOME` 버튼으로 Admin Console 메인 화면으로 이동합니다.
+
+<br/>
 
 ## 3.2. Wallet Service Management
 
-Wallet Service Management는 Wallet 서버의 기본 정보를 등록하고 관리하는 메뉴입니다. Wallet은 User Wallet의 관리 주체로서 시스템 내에서 고유한 DID를 가지고 등록되어야 하며, 최초 1회만 등록이 필요합니다.  
+등록된 Wallet 서비스의 정보를 조회하는 화면입니다. 등록 정보를 수정하거나 삭제하는 기능은 없습니다.
 
-Wallet가 등록되면 시스템에 활성 상태(`ACTIVATE`)로 표시되며, 등록 이후에는 등록된 정보를 열람하거나 제한된 범위 내에서 변경할 수 있습니다.
+<img src="./images/3-2-1.wallet-management-info.png" width="800"/>
 
-### ▸ Wallet Service Manegement
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **DID** | Wallet 서비스를 식별하는 DID입니다. |
+| 2 | **VIEW DID DOCUMENT 버튼** | DID Document를 팝업으로 표시합니다. |
+| 3 | **Name** | Wallet 서비스의 이름입니다. |
+| 4 | **Status** | 등록 상태입니다. <br/>- `DID_DOCUMENT_REQUIRED`: DID Document 등록 전<br/>- `DID_DOCUMENT_REQUESTED`: 등록 요청 후 승인 대기<br/>- `CERTIFICATE_VC_REQUIRED`: 승인 후 가입증명서 발급 전<br/>- `ACTIVATE`: 등록 완료<br/>- `DEACTIVATE`: 비활성 |
+| 5 | **URL** | Wallet 서버의 기본 URL입니다. |
+| 6 | **Certificate URL** | 가입증명서를 확인할 수 있는 URL입니다. |
+| 7 | **VIEW 버튼** | Certificate URL 옆의 버튼입니다. TA가 발급한 가입증명서 VC를 팝업으로 표시합니다. |
+| 8 | **Registered At** | 최초 등록 일시입니다. |
 
-> **참고**  
-현재는 Quick Register 방식의 간편 등록만 지원하며, 정식 등록 절차는 2025년 6월에 업데이트될 예정입니다.
-
-Wallet Service Manegement 화면은 다음 항목들로 구성되어 있습니다.
-
-<img src="./images/3-2-1.wallet-management-info.png" width="700"/>
-
-| 항목              | 설명                                                           |
-|-------------------|----------------------------------------------------------------|
-| **DID**           | Wallet을 식별하는 고유한 DID로, 시스템에서 자동 발급됩니다.     |
-| **Name**          | Wallet의 이름입니다.                                    |
-| **Status**        | Wallet을 상태를 나타냅니다. 등록 완료 시 `ACTIVATE`로 표시됩니다. |
-| **URL**           | Wallet을 서버의 기본 URL입니다.                                  |
-| **Certificate URL** | Wallet의 가입증명서를 확인할 수 있는 URL 주소입니다.          |
-| **Registered At** | Wallet의 최초 등록 일시입니다.                                 |
-
-- DID Document는 화면의 `VIEW DID DOCUMENT` 버튼을 통해 확인할 수 있습니다.
-- TA가 발급한 가입증명서 VC는 Certificate URL 옆의 `VIEW` 버튼으로 확인할 수 있습니다.
-- 등록된 Wallet 정보는 삭제가 불가능하며, 일부 항목에 대해 제한된 범위 내에서만 수정이 가능합니다.
-
+<br/>
 
 ## 3.3. User Wallet Management
 
-User Wallet Management는 User가 등록한 Wallet을 확인하고 관리하는 메뉴입니다. 
+사용자가 등록한 Wallet을 조회하는 메뉴입니다.
 
+<br/>
 
-### ▸ User Wallet 목록
+### 3.3.1. User Wallet 목록
 
-User Wallet 목록 화면에서는 등록된 Wallet들을 확인할 수 있습니다.
+<img src="./images/3-3.wallet-management.png" width="800"/>
 
-<img src="./images/3-3.wallet-management.png" width="700"/>
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **검색** | ID 또는 DID로 검색합니다. |
+| 2 | **ID** | Wallet 식별자입니다. 클릭하면 상세 화면으로 이동합니다. |
+| 3 | **DID** | Wallet의 DID입니다. |
+| 4 | **Registered At** | Wallet이 등록된 일시입니다. |
+| 5 | **Updated At** | Wallet이 수정된 일시입니다. |
 
-| 항목              | 설명                             |
-|----------------- |----------------------------------|
-| **ID**           | Wallet을 식별하기 위한 고유 식별자입니다. 클릭 시 상세 화면으로 이동합니다. |
-| **DID**          | Wallet의 고유 DID입니다. |
-| **Registered At**| Wallet이 등록된 일시입니다. |
-| **Updated At**   | Wallet이 업데이트된 일시입니다. |
+<br/>
 
+### 3.3.2. User Wallet 상세 정보
 
-### ▸ User Wallet 상세 정보
+<img src="./images/3-3.wallet-detail.png" width="800"/>
 
-User Wallet 목록에서 ID를 클릭하면 상세 정보를 확인할 수 있습니다.
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **ID** | Wallet 식별자입니다. |
+| 2 | **ID (두 번째 항목)** | Wallet의 DID입니다. 화면에는 항목 이름이 `ID`로 표시됩니다. |
+| 3 | **Registered At** | Wallet이 등록된 일시입니다. |
+| 4 | **Updated At** | Wallet이 수정된 일시입니다. |
+| 5 | **BACK 버튼** | 목록 화면으로 돌아갑니다. |
 
-<img src="./images/3-3.wallet-detail.png" width="700"/>
-
-| 항목              | 설명                             |
-|----------------- |----------------------------------|
-| **ID**           | Wallet을 식별하기 위한 고유 식별자입니다. 클릭 시 상세 화면으로 이동합니다. |
-| **DID**          | Wallet의 고유 DID입니다. |
-| **Registered At**| Wallet이 등록된 일시입니다. |
-| **Updated At**   | Wallet이 업데이트된 일시입니다. |
-
+<br/>
 
 ## 3.4. Admin Management
 
-`Admin Management` 메뉴는 Wallet Admin Console에 접근할 수 있는 관리자 계정을 관리하는 기능입니다.  
+`Admin Management` 메뉴는 Wallet Admin Console에 접근할 수 있는 관리자 계정을 관리하는 기능입니다.
 
-TA 서버를 설치하면 기본적으로 `admin@opendid.omnione.net` 계정이 ROOT 권한으로 자동 생성됩니다.  
-이 계정은 시스템 내 유일한 ROOT 계정이며, 삭제할 수 없습니다.
+Wallet 서버를 설치하면 기본적으로 `admin@opendid.omnione.net` 계정이 ROOT 권한으로 자동 생성됩니다. 이 계정은 시스템 내 유일한 ROOT 계정이며, 삭제할 수 없습니다.
 
-관리자 계정은 **ROOT**와 **Normal Admin** 두 가지 권한 유형으로 구분됩니다.  
-ROOT 계정은 `Admin Management` 메뉴에서 모든 기능을 수행할 수 있으며, Normal Admin은 일반적인 조회 기능만 가능합니다.
+관리자 계정은 **ROOT**와 **Normal Admin** 두 가지 권한 유형으로 구분됩니다.
 
----
-> **참고:** 현재는 ROOT 계정과 Normal Admin 계정 간의 권한 차이는  
-> `Admin Management` 메뉴에서 표시되는 버튼의 차이(Root만 REGISTER / DELETE / CHANGE PASSWORD 가능) 외에는 없습니다.  
-> 그 외 시스템의 다른 메뉴에 대한 접근 권한이나 기능 제한은 아직 적용되어 있지 않습니다.
----
-
+> **참고**: 현재 ROOT와 Normal Admin의 차이는 `Admin Management` 메뉴에 표시되는 버튼뿐입니다(ROOT만 `REGISTER`, `DELETE`, `CHANGE PASSWORD` 가능). 다른 메뉴의 접근 권한이나 기능 제한은 아직 적용되어 있지 않습니다.
 
 <br/>
 
-### ▸ Admin 목록 조회
+### 3.4.1. Admin 목록 조회
 
-
-`Admin Management` 메뉴에 진입하면 등록된 관리자 계정들의 목록이 테이블 형태로 표시됩니다.
+`Admin Management` 메뉴에 진입하면 등록된 관리자 계정 목록이 표시됩니다.
 
 <img src="./images/3-4.admin-management.png" width="800"/>
 
-| 항목                    | 설명                                                             |
-| ----------------------- | ---------------------------------------------------------------- |
-| **ID**                  | 등록된 관리자 계정의 이메일 ID입니다.                              |
-| **Role**                | 해당 관리자 계정의 역할(Role)입니다. (예: ROOT, Normal Admin 등)   |
-| **Registered At**       | 해당 계정이 최초 등록된 일시입니다.                               |
-| **Updated At**          | 마지막으로 수정된 일시입니다.     
----
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **검색** | ID 또는 Role(Root, Normal)로 검색합니다. |
+| 2 | **REGISTER 버튼** | 새 관리자 계정을 등록하는 화면으로 이동합니다. |
+| 3 | **DELETE 버튼** | 선택한 관리자 계정을 삭제합니다. ROOT 관리자만 할 수 있습니다. |
+| 4 | **CHANGE PASSWORD 버튼** | 선택한 관리자 계정의 비밀번호를 변경합니다. |
+| 5 | **ID** | 관리자 계정의 이메일 ID입니다. |
+| 6 | **Role** | 관리자 계정의 권한입니다. |
+| 7 | **Registered At** | 계정이 등록된 일시입니다. |
+| 8 | **Updated At** | 마지막으로 수정된 일시입니다. |
 
-> `REGISTER 버튼` 클릭시 새로운 관리자 계정을 등록할 수 있는 등록 페이지로 이동합니다.<br/>
-> `DELETE 버튼` 클릭시 선택한 관리자 계정을 삭제합니다. (ROOT 관리자만 가능)<br/>
-> `CHANGE PASSWORD 버튼` 클릭시 선택한 관리자 계정의 비밀번호를 변경할 수 있습니다.
 <br/>
 
-### ▸ Admin 등록
+### 3.4.2. Admin 등록
 
-`Admin Management` 화면에서 **REGISTER** 버튼을 클릭하면, 아래와 같은 등록 화면으로 이동합니다.
+`REGISTER` 버튼을 클릭하면 등록 화면으로 이동합니다.
 
-<img src="./images/3-4.admin-registration.png" width="600"/>
+<img src="./images/3-4.admin-registration.png" width="800"/>
 
-| 항목                         | 설명                                                                |
-| --------------------------- | ------------------------------------------------------------------- |
-| **ID**                      | 등록할 관리자 계정의 ID입니다. 이메일 형식을 사용해야 합니다.         |
-| **Role**                    | 등록할 관리자 계정의 권한을 선택합니다. (예: Normal Admin)           |
-| **Password**                | 로그인 시 사용할 비밀번호를 입력합니다.                              |
-| **Re-enter Password**       | 비밀번호를 한 번 더 입력하여 일치 여부를 확인합니다.                |
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **ID*** | 관리자 계정의 ID입니다. 이메일 형식 3~30자를 사용합니다. 예: `operator@example.org` |
+| 2 | **Check Availability 버튼** | 입력한 ID가 중복되지 않는지 확인합니다. 등록하려면 확인을 통과해야 합니다. |
+| 3 | **Role** | 관리자 계정의 권한을 선택합니다. 예: `Normal Admin` |
+| 4 | **Password*** | 로그인에 사용할 비밀번호입니다(8~30자). 비밀번호 정책이 켜져 있으면 해당 규칙도 적용됩니다. |
+| 5 | **Re-enter Password*** | 비밀번호를 한 번 더 입력합니다. |
+| 6 | **REGISTER 버튼** | 입력한 정보로 관리자 계정을 등록합니다. |
+| 7 | **RESET 버튼** | 입력값을 초기화합니다. |
+| 8 | **CANCEL 버튼** | 등록을 취소하고 이전 화면으로 돌아갑니다. |
 
-> `REGISTER 버튼` 클릭시 입력한 정보를 바탕으로 관리자 계정을 등록합니다.<br>
-> `RESET 버튼` 클릭시 모든 입력값을 초기화합니다.<br>
-> `CANCEL 버튼` 클릭시 등록을 취소하고 이전 화면으로 돌아갑니다.
-
+<br/>
 
 ## 3.5. Log Management
 
-Wallet 등록이 완료되면 사이드바의 `Log Management`에서 API 호출 기록을 조회할 수 있습니다. 두 화면 모두 최신 기록부터 페이지별로 표시되며, 검색 조건을 선택하고 값을 입력한 뒤 검색할 수 있습니다. 새로고침으로 목록을 다시 불러오고, `Called At`을 클릭하면 상세 창이 열립니다. 로그는 조회 전용입니다.
+Wallet 등록이 완료되면 사이드바의 `Log Management`에서 API 호출 기록을 조회할 수 있습니다. 두 화면 모두 최신 기록부터 페이지별로 표시하고, 새로고침 버튼으로 목록을 다시 불러옵니다. `Called At`을 클릭하면 상세 창이 열립니다. 로그는 조회 전용입니다.
+
+<br/>
 
 ### 3.5.1. API Log
 
+`Log Management > API Log`(`/logs/api`)는 Wallet Agent API 호출 기록을 보여줍니다.
+
 <img src="./images/api-log-api-example.png" width="800"/>
 
-> 예시 데이터로 렌더링한 목록 화면입니다. 실제 로그와 계정 정보는 환경에 따라 다릅니다.
-
-`Log Management > API Log`는 Wallet Agent API 호출 기록을 보여줍니다. 목록에는 호출 시각(`Called At`), HTTP 메서드, URI, 상태 코드, 결과(`SUCCESS` 또는 `FAIL`), 요청자 ID가 표시됩니다. `URI` 또는 `Result`로 검색할 수 있습니다. 상세 창에서는 처리 시간, 클라이언트 IP, User Agent, 오류 메시지가 기록된 경우 함께 확인할 수 있습니다. 화면 경로는 `/logs/api`입니다.
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **검색** | `URI` 또는 `Result`(`SUCCESS`, `FAIL`)로 검색합니다. |
+| 2 | **Called At** | 호출 일시입니다. 클릭하면 상세 창이 열립니다. |
+| 3 | **Method** | HTTP 메서드입니다. |
+| 4 | **URI** | 호출한 URI입니다. |
+| 5 | **Status** | HTTP 상태 코드입니다. |
+| 6 | **Result** | `SUCCESS` 또는 `FAIL`입니다. |
+| 7 | **Requester ID** | 요청자 ID입니다. |
 
 <img src="./images/api-log-api-detail-example.png" width="800"/>
 
-> 호출 시각을 선택했을 때 표시되는 상세 창의 예시입니다.
+상세 창은 목록 항목에 더해 다음을 표시합니다.
+
+| 항목 | 설명 |
+| --- | --- |
+| **Duration Ms** | 처리 시간(밀리초)입니다. |
+| **Client IP** | 클라이언트 IP입니다. |
+| **User Agent** | 요청의 User Agent입니다. |
+| **Message** | 오류 메시지가 기록된 경우 표시합니다. |
+
+<br/>
 
 ### 3.5.2. Audit API Log
 
+`Log Management > Audit API Log`(`/logs/audit`)는 Admin API의 관리자 작업 기록을 보여줍니다.
+
 <img src="./images/api-log-audit-example.png" width="800"/>
 
-> 예시 데이터로 렌더링한 목록 화면입니다. 실제 로그와 계정 정보는 환경에 따라 다릅니다.
-
-`Log Management > Audit API Log`는 Admin API의 관리자 작업 기록을 보여줍니다. 목록에는 호출 시각, 요청자 ID, 작업 유형(`Action Type`), 대상 유형과 ID, 결과가 표시됩니다. `Action Type`, `Target Type`, `Result`, `Requester ID`로 검색할 수 있습니다. `Action Type`에는 `CREATE`, `UPDATE`, `DELETE`, `LOGIN`, `LOGOUT` 등의 값이 사용됩니다. 상세 창에서는 작업 설명, 클라이언트 IP, User Agent, 오류 메시지가 기록된 경우 함께 확인할 수 있습니다. 화면 경로는 `/logs/audit`입니다.
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **검색** | `Action Type`, `Target Type`, `Result`, `Requester ID`로 검색합니다. `Action Type`은 `NONE`, `CREATE`, `UPDATE`, `DELETE`, `LOGIN`, `LOGOUT` 중에서 선택합니다. |
+| 2 | **Called At** | 호출 일시입니다. 클릭하면 상세 창이 열립니다. |
+| 3 | **Requester ID** | 작업한 관리자 ID입니다. |
+| 4 | **Action Type** | 작업 유형입니다. |
+| 5 | **Target Type** | 작업 대상의 유형입니다. |
+| 6 | **Target ID** | 작업 대상의 ID입니다. |
+| 7 | **Result** | `SUCCESS` 또는 `FAIL`입니다. |
 
 <img src="./images/api-log-audit-detail-example.png" width="800"/>
 
-> 호출 시각을 선택했을 때 표시되는 상세 창의 예시입니다.
+상세 창은 목록 항목에 더해 다음을 표시합니다.
+
+| 항목 | 설명 |
+| --- | --- |
+| **Client IP** | 클라이언트 IP입니다. |
+| **Description** | 작업 설명입니다. |
+| **User Agent** | 요청의 User Agent입니다. |
+| **Message** | 오류 메시지가 기록된 경우 표시합니다. |
 
 > 로그는 서버의 `@ArticleLog`가 적용된 API 호출에서 생성됩니다. 결과가 `FAIL`이면 API Log의 상태 코드와 해당 로그의 상세 메시지를 확인하세요.
 
 ## 3.6. Server Configuration
 
-`Server Configuration`에서 외부 서버와의 연동 설정을 관리합니다.
+`Server Configuration`에서 외부 서버 연동용 API 키를 설정합니다.
 
 <img src="./images/server-configuration.png" width="800"/>
 
-- **API Key Settings > Ledger Service Server**: LSS(Ledger Service Server)에서 발급한 API Key를 입력하고 저장합니다. 값은 `API_KEY_LSS`로 저장되며, Wallet 서버가 LSS를 호출할 때(`lss` 프로파일) `X-API-Key` 헤더로 보냅니다.
-- 키를 등록하지 않으면 LSS 호출이 `SSRVWLT01101`로 실패합니다.
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **Ledger Service Server** | LSS에서 발급한 API Key를 입력합니다. `API_KEY_LSS`로 저장되며, Wallet 서버가 LSS를 호출할 때(`lss` 프로파일) `X-API-Key` 헤더로 보냅니다. |
+| 2 | **UPDATE 버튼** | 입력한 값을 저장합니다. |
+| 3 | **RESET 버튼** | 저장 전 입력값을 초기화합니다. |
+
+키를 등록하지 않으면 LSS 호출이 `SSRVWLT01101`로 실패합니다.
+
+> **주의**: API 키 값은 화면 캡처, 문서, 예시 설정에 포함하지 마세요.
 
 ## 3.7. Password Policy Settings
 
@@ -435,13 +464,14 @@ Wallet 등록이 완료되면 사이드바의 `Log Management`에서 API 호출 
 
 <img src="./images/password-policy.png" width="800"/>
 
-| 항목 | 설명 | 범위 |
-| ---- | ---- | ---- |
-| Minimum Length | 최소 글자 수 | 6~20 |
-| Uppercase Letters (A-Z) | 대문자 1자 이상 포함 | - |
-| Numbers (0-9) | 숫자 1자 이상 포함 | - |
-| Special Characters (!@#$%^&*) | 특수문자 1자 이상 포함 | - |
-| Password Expiration Period | 비밀번호 유효 기간(일) | 30~365일(기본 90일) |
-
+| 번호 | 항목 | 설명 |
+| --- | --- | --- |
+| 1 | **Minimum Length** | 비밀번호 최소 길이입니다. 6~20자로 설정합니다. 기본값은 8입니다. |
+| 2 | **Password Expiration Period** | 비밀번호 만료 기간입니다. 30~365일로 설정합니다. 기본값은 90입니다. |
+| 3 | **Uppercase Letters (A-Z)** | 대문자를 1자 이상 포함하게 합니다. 기본값은 꺼짐입니다. |
+| 4 | **Numbers (0-9)** | 숫자를 1자 이상 포함하게 합니다. 기본값은 꺼짐입니다. |
+| 5 | **Special Characters (!@#$%^&*)** | 특수문자를 1자 이상 포함하게 합니다. 기본값은 꺼짐입니다. |
+| 6 | **UPDATE 버튼** | 정책을 저장합니다. 아직 등록하지 않았다면 버튼 이름은 `REGISTER`입니다. |
+| 7 | **RESET 버튼** | 변경 전 입력 상태로 되돌립니다. |
 
 [Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md
