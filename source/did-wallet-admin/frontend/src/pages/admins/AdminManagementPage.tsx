@@ -203,7 +203,7 @@ const AdminManagementPage = (props: Props) => {
                       <Link
                       component="button"
                       variant='body2'
-                      onClick={() => navigate(`/admin-management/${params.row.id}`)}
+                      onClick={() => navigate(`/admins/admin-management/${params.row.id}`)}
                       sx={{ cursor: 'pointer', color: 'primary.main', textAlign: 'left' }}
                       >
                       {params.value}
@@ -235,7 +235,7 @@ const AdminManagementPage = (props: Props) => {
               ]}
               onSearch={handleSearch}
               onRefresh={getData}
-              onRegister={session?.user?.role === 'ROOT' ? () => navigate('/admin-management/admin-registration') : undefined}
+              onRegister={session?.user?.role === 'ROOT' ? () => navigate('/admins/admin-management/admin-registration') : undefined}
               onDelete={session?.user?.role === 'ROOT' ? handleDelete : undefined}
               additionalButtons={
                 session?.user?.role === 'ROOT'
