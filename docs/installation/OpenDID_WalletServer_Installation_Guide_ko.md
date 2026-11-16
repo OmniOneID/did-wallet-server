@@ -236,7 +236,7 @@ did-wallet-server
         │   ├── did-blockchain-sdk-server-2.0.0.jar
         │   ├── did-common-sdk-server-3.0.0.jar
         │   ├── did-core-sdk-server-2.0.0.jar
-        │   ├── did-crypto-sdk-server-2.0.0.jar
+        │   ├── did-crypto-sdk-server-3.0.0.jar
         │   ├── did-datamodel-sdk-server-2.0.0.jar
         │   ├── did-wallet-sdk-server-2.0.0.jar
         │   └── did-zkp-sdk-server-2.0.0.jar
