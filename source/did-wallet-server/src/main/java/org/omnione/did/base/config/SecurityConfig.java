@@ -87,6 +87,8 @@ public class SecurityConfig {
                                                          .AuthorizationManagerRequestMatcherRegistry configurer) {
         allowedUrlsConfigurer(configurer);
         configurer.requestMatchers(org.springframework.http.HttpMethod.POST,
+                        "/wallet/admin/v1/certificate-vc").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.POST,
                         "/wallet/admin/v1/login", "/wallet/admin/v1/refresh-token", "/wallet/admin/v1/logout",
                         "/wallet/admin/v1/password-reset/send-otp", "/wallet/admin/v1/password-reset/verify-otp").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.POST,
