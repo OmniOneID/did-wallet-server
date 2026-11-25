@@ -18,6 +18,7 @@ package org.omnione.did.wallet.v1.admin.controller;
 import org.omnione.did.base.annotation.ArticleLog;
 import org.omnione.did.base.constants.ActionType;
 import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.constants.UrlConstant;
@@ -125,8 +126,9 @@ public class AdminManagementController {
     @RequestMapping(value = "/admins", method = RequestMethod.DELETE)
     @ArticleLog(name = "[Admin Manage] Delete Admin", description = "Delete admin",
             targetType = "ADMIN", targetId = "#id", actionType = ActionType.DELETE)
-    public EmptyResDto deleteAdmin(@RequestParam Long id) {
-        return adminManagementService.deleteAdmin(id);
+    public EmptyResDto deleteAdmin(@RequestParam Long id, HttpServletRequest request) {
+        request.setAttribute("targetId", adminManagementService.deleteAdmin(id));
+        return new EmptyResDto();
     }
 
     /**

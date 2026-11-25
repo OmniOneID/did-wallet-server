@@ -143,12 +143,12 @@ public class AdminManagementService {
      * Deletes an admin account by ID.
      *
      * @param id the admin ID
-     * @return empty response upon successful deletion
+     * @return the deleted admin's login ID for the audit log
      */
-    public EmptyResDto deleteAdmin(Long id) {
-        adminQueryService.findById(id); // throws if not found
+    public String deleteAdmin(Long id) {
+        Admin admin = adminQueryService.findById(id); // throws if not found
         adminRepository.deleteById(id);
-        return new EmptyResDto();
+        return admin.getLoginId();
     }
 
     /**
