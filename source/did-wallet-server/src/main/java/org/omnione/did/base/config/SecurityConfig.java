@@ -89,6 +89,9 @@ public class SecurityConfig {
         configurer.requestMatchers(org.springframework.http.HttpMethod.POST,
                         "/wallet/admin/v1/login", "/wallet/admin/v1/refresh-token", "/wallet/admin/v1/logout",
                         "/wallet/admin/v1/password-reset/send-otp", "/wallet/admin/v1/password-reset/verify-otp").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.POST,
+                        "/wallet/admin/v1/admins", "/wallet/admin/v1/admins/root/reset-password").hasRole("ROOT")
+                .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/wallet/admin/v1/admins").hasRole("ROOT")
                 .requestMatchers("/wallet/admin/v1/**").hasAnyRole("NORMAL", "ROOT")
                 .anyRequest().permitAll();
     }
