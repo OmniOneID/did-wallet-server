@@ -39,3 +39,9 @@ management:
       show-details: "never"
     shutdown:
       enabled: true
+security:
+  jwt:
+    # Sample default; override with ADMIN_JWT_SECRET when needed.
+    secret: ${ADMIN_JWT_SECRET:opendidAdminJWTsecretPasswordSample}
+    access-ttl-seconds: 1800
+    refresh-ttl-seconds: 1209600

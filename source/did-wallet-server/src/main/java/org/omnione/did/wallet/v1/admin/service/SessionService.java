@@ -54,6 +54,10 @@ public class SessionService {
      * @param requestAdminLoginReqDto login request containing login ID and password
      * @return authenticated admin information (with isPasswordExpired flag if applicable)
      */
+    public AdminDto requestAdminLoginById(Long id) {
+        return AdminDto.fromAdmin(adminQueryService.findById(id));
+    }
+
     public AdminDto requestAdminLogin(RequestAdminLoginReqDto requestAdminLoginReqDto) {
         Admin admin = adminQueryService.findByLoginIdAndLoginPassword(
                 requestAdminLoginReqDto.getLoginId(),
